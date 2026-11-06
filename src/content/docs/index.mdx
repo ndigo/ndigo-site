@@ -1,0 +1,55 @@
+---
+title: Ndigo
+description: TypeScript framework for the web. One context, one dispatcher, one view model — shared by browser and Node.
+template: splash
+hero:
+  tagline: One context, one dispatcher, one view model — shared by browser and Node. Server-rendered islands, micro frontends, SPAs, and APIs on the same primitives.
+  image:
+    file: ../../assets/ndigo.svg
+  actions:
+    - text: Get Started
+      link: /guides/get-started/
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/ndigo/ndigo
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## What is Ndigo?
+
+Ndigo gives TypeScript applications the structure of a server framework and the reach of the web.
+Views, HTTP, ORM, auth, and telemetry are adopted only when needed — you pay for what you use.
+
+<CardGrid stagger>
+	<Card title="One context everywhere" icon="puzzle">
+		A single `ApplicationContext` powers dependency injection in both Node and the
+		browser. No separate client/server mental models.
+	</Card>
+	<Card title="Views as web components" icon="seti:html">
+		Views render to custom elements. Server-rendered islands hydrate in place.
+		Framework-agnostic output — works with React, Vue, Svelte, or plain HTML.
+	</Card>
+	<Card title="Adopt incrementally" icon="rocket">
+		Start with routing and context. Add ORM, auth, caching, jobs, or telemetry
+		only when your app needs them.
+	</Card>
+	<Card title="TypeScript first" icon="seti:typescript">
+		TC39 decorators, strict types, ESM-only. Built for Node ≥ 24.
+	</Card>
+</CardGrid>
+
+## Status
+
+Ndigo is in active development. Documentation and examples are being migrated to
+this site. In the meantime, explore the
+[example apps](https://github.com/ndigo/ndigo/tree/main/apps) and the
+[framework source](https://github.com/ndigo/ndigo).
+
+> **Coming soon:** full guides, API reference, and tutorials. Star or watch the
+> repository to follow progress.
+EOF
+echo done

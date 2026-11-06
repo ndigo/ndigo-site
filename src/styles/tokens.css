@@ -1,0 +1,158 @@
+/* ==========================================================================
+   Ndigo brand tokens
+   Single source of truth for color, typography, spacing, and radius.
+   Consumed by both Starlight (via customCss) and any embedded Web Awesome
+   components. Dark mode is the primary design target.
+   ========================================================================== */
+
+/* ---------- Font faces ---------- */
+@font-face {
+    font-family: 'Michroma';
+    src: url('/fonts/michroma.woff2') format('woff2'),
+         url('/fonts/michroma.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Fira Code is loaded from Google Fonts CDN (OFL, free). Swap for self-hosted
+   if you want zero third-party requests. */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ---------- Brand palette (from the logo mark) ---------- */
+:root {
+    --ndigo-indigo-deep: #293896;
+    --ndigo-violet: #5b3be0;
+    --ndigo-violet-bright: #9a38ff;
+    --ndigo-gradient: linear-gradient(135deg, #293896 0%, #5b3be0 45%, #9a38ff 100%);
+
+    /* Typography */
+    --ndigo-font-display: 'Michroma', 'Inter', system-ui, sans-serif;
+    --ndigo-font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --ndigo-font-mono: 'Fira Code', 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+
+    /* Spacing (4px base) */
+    --ndigo-space-1: 0.25rem;
+    --ndigo-space-2: 0.5rem;
+    --ndigo-space-3: 0.75rem;
+    --ndigo-space-4: 1rem;
+    --ndigo-space-6: 1.5rem;
+    --ndigo-space-8: 2rem;
+    --ndigo-space-12: 3rem;
+    --ndigo-space-16: 4rem;
+
+    /* Radius */
+    --ndigo-radius-sm: 0.25rem;
+    --ndigo-radius-md: 0.5rem;
+    --ndigo-radius-lg: 0.75rem;
+    --ndigo-radius-xl: 1rem;
+    --ndigo-radius-full: 9999px;
+}
+
+/* ---------- Dark mode (primary) ---------- */
+:root,
+:root[data-theme='dark'] {
+    --ndigo-bg: #0a0a14;
+    --ndigo-surface: #13132a;
+    --ndigo-surface-raised: #1c1c3a;
+    --ndigo-text: #e8e8f2;
+    --ndigo-text-muted: #9898b8;
+    --ndigo-border: #2a2a4a;
+    --ndigo-code-bg: #0f0f1f;
+    --ndigo-shadow: 0 4px 24px rgba(41, 56, 150, 0.18);
+    color-scheme: dark;
+}
+
+/* ---------- Light mode ---------- */
+:root[data-theme='light'] {
+    --ndigo-bg: #fafaff;
+    --ndigo-surface: #f2f2fa;
+    --ndigo-surface-raised: #ffffff;
+    --ndigo-text: #1a1a2e;
+    --ndigo-text-muted: #5a5a7a;
+    --ndigo-border: #e0e0f0;
+    --ndigo-code-bg: #f0f0f8;
+    --ndigo-shadow: 0 4px 24px rgba(41, 56, 150, 0.08);
+    color-scheme: light;
+}
+
+/* Respect OS preference when no explicit choice is stored */
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+        --ndigo-bg: #fafaff;
+        --ndigo-surface: #f2f2fa;
+        --ndigo-surface-raised: #ffffff;
+        --ndigo-text: #1a1a2e;
+        --ndigo-text-muted: #5a5a7a;
+        --ndigo-border: #e0e0f0;
+        --ndigo-code-bg: #f0f0f8;
+        --ndigo-shadow: 0 4px 24px rgba(41, 56, 150, 0.08);
+        color-scheme: light;
+    }
+}
+
+/* ---------- Base ---------- */
+html {
+    background: var(--ndigo-bg);
+    color: var(--ndigo-text);
+    font-family: var(--ndigo-font-sans);
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background: var(--ndigo-bg);
+    color: var(--ndigo-text);
+}
+
+code, pre, kbd, samp {
+    font-family: var(--ndigo-font-mono);
+}
+
+/* ---------- Starlight token mapping ---------- */
+/* Starlight exposes --sl-* custom properties; map them to Ndigo tokens so the
+   docs chrome (sidebar, search, header) matches the brand. */
+:root {
+    --sl-font: var(--ndigo-font-sans);
+    --sl-font-mono: var(--ndigo-font-mono);
+
+    /* Accent */
+    --sl-color-accent-low: rgba(91, 59, 224, 0.12);
+    --sl-color-accent: var(--ndigo-violet);
+    --sl-color-accent-high: var(--ndigo-violet-bright);
+
+    /* Backgrounds / text */
+    --sl-color-bg: var(--ndigo-bg);
+    --sl-color-bg-nav: var(--ndigo-surface);
+    --sl-color-bg-sidebar: var(--ndigo-surface);
+    --sl-color-hairline: var(--ndigo-border);
+    --sl-color-text: var(--ndigo-text);
+    --sl-color-text-accent: var(--ndigo-violet-bright);
+
+    /* Code */
+    --sl-color-bg-inline-code: var(--ndigo-code-bg);
+}
+
+/* Dark-mode Starlight overrides (Starlight defaults to dark) */
+:root[data-theme='dark'],
+html[data-theme='dark'] {
+    --sl-color-bg: var(--ndigo-bg);
+    --sl-color-bg-nav: var(--ndigo-surface);
+    --sl-color-bg-sidebar: var(--ndigo-surface);
+}
+
+/* ---------- Utility classes ---------- */
+.ndigo-gradient-text {
+    background: var(--ndigo-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.ndigo-gradient-bg {
+    background: var(--ndigo-gradient);
+}
+
+.ndigo-mark {
+    font-family: var(--ndigo-font-display);
+    letter-spacing: 0.02em;
+}
