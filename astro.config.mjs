@@ -24,7 +24,8 @@ export default defineConfig({
                     label: 'Start Here',
                     items: [
                         { label: 'Overview', slug: 'index' },
-                        { label: 'Get Started', slug: 'guides/get-started' },
+                        { label: 'Get Started', slug: 'get-started' },
+                        { label: 'Examples', slug: 'examples' },
                     ],
                 },
                 {
@@ -32,8 +33,19 @@ export default defineConfig({
                     items: [{ autogenerate: { directory: 'guides' } }],
                 },
                 {
+                    label: 'Concepts',
+                    items: [
+                        { autogenerate: { directory: 'concepts' } },
+                        { autogenerate: { directory: 'concepts/architecture' } },
+                    ],
+                },
+                {
                     label: 'Reference',
                     items: [{ autogenerate: { directory: 'reference' } }],
+                },
+                {
+                    label: 'Migrations',
+                    items: [{ autogenerate: { directory: 'migrations' } }],
                 },
             ],
         }),

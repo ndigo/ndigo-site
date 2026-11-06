@@ -1,0 +1,23 @@
+---
+title: Concepts
+description: How Ndigo is structured and why.
+order: 0
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid>
+	<Card title="Architecture overview" icon="open-book" href="/concepts/architecture-overview/">
+		The canonical system design: layers, patterns, dependency management, and
+		module visibility.
+	</Card>
+	<Card title="Style guide" icon="pencil" href="/concepts/style-guide/">
+		Naming, formatting, and code organization conventions.
+	</Card>
+	<Card title="Architecture topics" icon="seti:folder" href="/concepts/architecture/micro-frontends/">
+		Deep dives: micro-frontends, environment, security, lifecycle and
+		ownership.
+	</Card>
+</CardGrid>
+EOF
+echo done

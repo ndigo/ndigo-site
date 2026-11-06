@@ -1,0 +1,24 @@
+---
+title: Reference
+description: API reference, configuration, CLI, and migration guides.
+order: 0
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid>
+	<Card title="Changelog" icon="list-format" href="/reference/changelog/">
+		Chronological record of notable changes.
+	</Card>
+	<Card title="Contributing" icon="github" href="/reference/contributing/">
+		How to report bugs, propose features, and submit pull requests.
+	</Card>
+	<Card title="Migration guides" icon="right-arrow" href="/migrations/">
+		Breaking changes and upgrade paths.
+	</Card>
+	<Card title="Packages" icon="seti:package" href="/reference/packages/">
+		Per-package READMEs and generated API reference.
+	</Card>
+</CardGrid>
+EOF
+echo done

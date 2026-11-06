@@ -1,0 +1,71 @@
+---
+title: Packages
+description: Ndigo package index.
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+Ndigo is a monorepo of focused packages. Add only what your app needs.
+
+<CardGrid>
+	<Card title="@ndigo/core" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-core">
+		Core primitives, containers, and patterns.
+	</Card>
+	<Card title="@ndigo/context" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-context">
+		Application context, DI, event emitter.
+	</Card>
+	<Card title="@ndigo/router" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-router">
+		Routing and dispatch.
+	</Card>
+	<Card title="@ndigo/view" icon="seti:html" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-view">
+		View abstractions.
+	</Card>
+	<Card title="@ndigo/view-webcomponent" icon="seti:html" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-view-webcomponent">
+		Web component view engine.
+	</Card>
+	<Card title="@ndigo/dispatcher" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-dispatcher">
+		Controllers, route mapping, model and view.
+	</Card>
+	<Card title="@ndigo/orm" icon="seti:db" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-orm">
+		ORM and migrations.
+	</Card>
+	<Card title="@ndigo/auth-*" icon="seti:lock" href="https://github.com/ndigo/ndigo/tree/main/packages">
+		Authentication (core, client, server).
+	</Card>
+	<Card title="@ndigo/cache" icon="seti:clock" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-cache">
+		Caching store and decorators.
+	</Card>
+	<Card title="@ndigo/jobs" icon="seti:clock" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-jobs">
+		Jobs and transactional outbox.
+	</Card>
+	<Card title="@ndigo/locks" icon="seti:lock" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-locks">
+		Distributed locks.
+	</Card>
+	<Card title="@ndigo/socket" icon="seti:web" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-socket">
+		WebSockets and STOMP.
+	</Card>
+	<Card title="@ndigo/telemetry" icon="seti:graph" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-telemetry">
+		Logging, tracing, metrics.
+	</Card>
+	<Card title="@ndigo/http" icon="seti:web" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-http">
+		HTTP client.
+	</Card>
+	<Card title="@ndigo/signals" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-signals">
+		Reactive state.
+	</Card>
+	<Card title="@ndigo/flags" icon="seti:flag" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-flags">
+		Feature flags.
+	</Card>
+	<Card title="@ndigo/cli" icon="seti:shell" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-cli">
+		The ndigo CLI.
+	</Card>
+	<Card title="@ndigo/create-ndigo-app" icon="seti:package" href="https://github.com/ndigo/ndigo/tree/main/packages/create-ndigo-app">
+		Project scaffolder.
+	</Card>
+</CardGrid>
+
+> Generated API reference (TypeDoc) is published per package under
+> `packages/<name>/api/` in the framework repo. A consolidated API browser
+> will be added here in a later phase.
+EOF
+echo done
