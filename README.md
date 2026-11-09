@@ -16,7 +16,7 @@ framework for the web.
 ```bash
 npm install          # install deps
 npm run dev          # local dev server
-npm run sync         # pull docs from the ndigo monorepo (../ndigo)
+npm run sync         # pull docs and the UI registry from the ndigo monorepo (../ndigo)
 npm run build        # sync + build static site -> dist/
 npm run preview      # preview the built site
 ```
@@ -24,11 +24,19 @@ npm run preview      # preview the built site
 ## Content sync
 
 Documentation source of truth lives in the `ndigo` monorepo (`docs/`,
-`ARCHITECTURE.md`, `STYLE_GUIDE.md`, `CHANGELOG.md`, package READMEs, generated
-API reference). `npm run sync` (also runs as part of `npm run build`) copies
-and normalizes that content into `src/content/docs/synced/` (gitignored).
+`ARCHITECTURE.md`, `STYLE_GUIDE.md`, `CHANGELOG.md`). `npm run sync` (also runs
+as part of `npm run build`) copies and normalizes that content into
+`src/content/docs/` (gitignored).
+
+`npm run sync:registry` builds the shadcn channel in `public/r/` from
+`packages/ndigo-ui/registry.json` and generates the `/ui` catalogue into
+`src/content/docs/ui/`. Both outputs are gitignored; the canonical registry
+stays in the ndigo repo.
 
 Override the source repo path with `NDIGO_REPO=/path/to/ndigo npm run sync`.
+For local channel testing, set `NDIGO_REGISTRY_BASE=http://127.0.0.1:4321/r`
+before `npm run sync:registry` so item dependencies resolve against the local
+preview server.
 
 ## Brand assets
 

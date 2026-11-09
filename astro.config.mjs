@@ -29,6 +29,10 @@ export default defineConfig({
                     ],
                 },
                 {
+                    label: 'UI',
+                    items: [{ autogenerate: { directory: 'ui' } }],
+                },
+                {
                     label: 'Guides',
                     items: [{ autogenerate: { directory: 'guides' } }],
                 },
