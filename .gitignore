@@ -11,6 +11,10 @@ src/content/docs/migrations/*.md
 src/content/docs/reference/changelog.md
 src/content/docs/reference/contributing.md
 
+# generated UI registry channel and catalogue (npm run sync:registry)
+public/r/
+src/content/docs/ui/*.md
+
 # dependencies
 node_modules/
 

@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "npm run sync && astro dev",
     "start": "astro dev",
-    "sync": "node scripts/sync-content.mjs",
+    "sync": "npm run sync:content && npm run sync:registry",
+    "sync:content": "node scripts/sync-content.mjs",
+    "sync:registry": "node scripts/sync-registry.mjs",
     "build": "npm run sync && astro build",
     "preview": "astro preview",
     "astro": "astro"
