@@ -35,12 +35,15 @@ function titleFrom(text, fallback) {
 function injectFrontmatter(text, fallbackTitle, extra = {}) {
     if (hasFrontmatter(text)) return text;
     const title = titleFrom(text, fallbackTitle);
+    // Strip the first H1 from the body so the title is not rendered twice
+    // (Starlight renders the frontmatter title as the page H1).
+    const body = text.replace(/^#\s+[^\n]*\n+/, '');
     const lines = ['---', `title: ${JSON.stringify(title)}`];
     for (const [k, v] of Object.entries(extra)) {
         lines.push(`${k}: ${typeof v === 'string' ? JSON.stringify(v) : v}`);
     }
     lines.push('---', '');
-    return lines.join('\n') + text;
+    return lines.join('\n') + body;
 }
 
 function copyMd(srcFile, destFile, extra = {}) {
