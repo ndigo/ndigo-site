@@ -8,64 +8,163 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 Ndigo is a monorepo of focused packages. Add only what your app needs.
 
 <CardGrid>
-	<Card title="@ndigo/core" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-core">
-		Core primitives, containers, and patterns.
+	<Card title="create-ndigo-app" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/create-ndigo-app">
+		Scaffold a standalone Ndigo application (node or browser kind).
+	</Card>
+	<Card title="@ndigo/ai" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-ai">
+		Provider-agnostic agent contracts: chat messages, streaming events, structured output, and a tool-calling loop over MCP tools
+	</Card>
+	<Card title="@ndigo/ai-sdk" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-ai-sdk">
+		AI SDK integration layer for Ndigo: the only package that imports the Vercel AI SDK
+	</Card>
+	<Card title="@ndigo/auth-client" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-auth-client">
+		Client-side authentication for Ndigo — AuthClient, ClientAuthGuard, and OIDC adapter
+	</Card>
+	<Card title="@ndigo/auth-core" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-auth-core">
+		Core authentication types, interfaces, and passive decorators for Ndigo
+	</Card>
+	<Card title="@ndigo/auth-server" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-auth-server">
+		Server-side authentication for Ndigo — AuthServer, AuthRouteGuard, and JWT adapter
+	</Card>
+	<Card title="@ndigo/boot" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-boot">
+		Application bootstrap, profiles, and typed configuration for Ndigo
+	</Card>
+	<Card title="@ndigo/cache" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-cache">
+		Isomorphic caching for Ndigo — memory cache manager, memoize, and the @cached decorator
+	</Card>
+	<Card title="@ndigo/cli" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-cli">
+		The Ndigo framework CLI — app lifecycle, scaffolding, db migrations, and DX commands
+	</Card>
+	<Card title="@ndigo/cluster" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-cluster">
+		Process supervisor for Node.js applications — replicated worker slots with signal relay, graceful drains, and bounded-backoff restarts (A...
+	</Card>
+	<Card title="@ndigo/content" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-content">
+		i18n content keys, themes, and the MessageSource contract for Ndigo
+	</Card>
+	<Card title="@ndigo/content-i18next" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-content-i18next">
+		Ndigo Content i18next Adapter
 	</Card>
 	<Card title="@ndigo/context" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-context">
-		Application context, DI, event emitter.
+		Application context, environments, configuration, and events for Ndigo
 	</Card>
-	<Card title="@ndigo/router" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-router">
-		Routing and dispatch.
-	</Card>
-	<Card title="@ndigo/view" icon="seti:html" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-view">
-		View abstractions.
-	</Card>
-	<Card title="@ndigo/view-webcomponent" icon="seti:html" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-view-webcomponent">
-		Web component view engine.
+	<Card title="@ndigo/core" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-core">
+		Foundational primitives, contracts, and utilities for Ndigo
 	</Card>
 	<Card title="@ndigo/dispatcher" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-dispatcher">
-		Controllers, route mapping, model and view.
+		Request dispatch, parameter binding, and radix handler mappings for Ndigo
 	</Card>
-	<Card title="@ndigo/orm" icon="seti:db" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-orm">
-		ORM and migrations.
+	<Card title="@ndigo/dom" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-dom">
+		Ndigo DOM – Isomorphic DOM parsing integration layer
 	</Card>
-	<Card title="@ndigo/auth-*" icon="seti:lock" href="https://github.com/ndigo/ndigo/tree/main/packages">
-		Authentication (core, client, server).
+	<Card title="@ndigo/factory" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-factory">
+		IoC factory with scopes, lifecycle, and aware processors for Ndigo
 	</Card>
-	<Card title="@ndigo/cache" icon="seti:clock" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-cache">
-		Caching store and decorators.
+	<Card title="@ndigo/flags" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-flags">
+		Feature flags for Ndigo — the FlagEvaluator SPI (typed, async, never-throw), the property-backed local provider, and the @whenFeature gat...
 	</Card>
-	<Card title="@ndigo/jobs" icon="seti:clock" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-jobs">
-		Jobs and transactional outbox.
+	<Card title="@ndigo/flags-openfeature" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-flags-openfeature">
+		OpenFeature bridge for Ndigo flags — the FlagEvaluator over @openfeature/server-sdk (and the web SDK for the ./web entry), so vendor prov...
 	</Card>
-	<Card title="@ndigo/locks" icon="seti:lock" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-locks">
-		Distributed locks.
+	<Card title="@ndigo/host" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-host">
+		Ndigo Host — centralized micro frontend orchestration in the shell context
 	</Card>
-	<Card title="@ndigo/socket" icon="seti:web" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-socket">
-		WebSockets and STOMP.
+	<Card title="@ndigo/http" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-http">
+		Fetch-based HTTP client, interceptors, and content parsing for Ndigo
 	</Card>
-	<Card title="@ndigo/telemetry" icon="seti:graph" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-telemetry">
-		Logging, tracing, metrics.
+	<Card title="@ndigo/inspect" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-inspect">
+		Deterministic JSON manifest generator for Ndigo applications (routes, mappings, config keys)
 	</Card>
-	<Card title="@ndigo/http" icon="seti:web" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-http">
-		HTTP client.
+	<Card title="@ndigo/jobs" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-jobs">
+		Durable job queues, worker execution, and the transactional outbox for Node.js
+	</Card>
+	<Card title="@ndigo/locks" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-locks">
+		Distributed locks with fencing tokens for Node.js — the single-executor primitive behind multi-node @scheduled and cluster work
+	</Card>
+	<Card title="@ndigo/log" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-log">
+		Isomorphic logging core for Ndigo — logger abstraction, severity mappings, and threshold filtering on the OpenTelemetry API
+	</Card>
+	<Card title="@ndigo/management" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-management">
+		Ndigo management endpoints — /health and /metrics (actuator-style)
+	</Card>
+	<Card title="@ndigo/mcp" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-mcp">
+		Model Context Protocol tools projected from Ndigo dispatch metadata
+	</Card>
+	<Card title="@ndigo/openapi" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-openapi">
+		OpenAPI 3.0 documentation for Ndigo apps — spec generation from dispatch metadata + Swagger UI
+	</Card>
+	<Card title="@ndigo/orm" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-orm">
+		Ndigo ORM - Repository and Data Mapper persistence abstractions
+	</Card>
+	<Card title="@ndigo/orm-drizzle" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-orm-drizzle">
+		Ndigo ORM Drizzle – Drizzle ORM adapter for @ndigo/orm
+	</Card>
+	<Card title="@ndigo/oxlint-plugin" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-oxlint-plugin">
+		Consumer-facing oxlint rules for Ndigo applications — paradigm, view, route, and logging guards
+	</Card>
+	<Card title="@ndigo/platform-node" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-platform-node">
+		Node.js platform adapter for Ndigo — HTTP server, auto-configuration, static files, multipart
+	</Card>
+	<Card title="@ndigo/platform-web" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-platform-web">
+		Browser platform adapter for Ndigo — dispatcher glue, history/cookie resolvers, themes
+	</Card>
+	<Card title="@ndigo/proxy" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-proxy">
+		Container-managed method interception for Ndigo — metadata annotations, interceptor chains, and Proxy-based weaving
+	</Card>
+	<Card title="@ndigo/rate-limit" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-rate-limit">
+		Fixed-window rate limiting for Node.js — the policy contract, the in-process default limiter, and the shared-store driver seam for Ndigo
+	</Card>
+	<Card title="@ndigo/redis" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-redis">
+		Node-only Redis connections, namespaced shared cache adapters, WebSocket pub/sub fan-out, distributed-lock/job drivers, and the shared-st...
+	</Card>
+	<Card title="@ndigo/resilience" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-resilience">
+		Retry, circuit breaking, and backoff policies for Ndigo — interceptors built on @ndigo/proxy
+	</Card>
+	<Card title="@ndigo/router" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-router">
+		Route registry, path partitions, and feature routing for Ndigo
+	</Card>
+	<Card title="@ndigo/scheduler" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-scheduler">
+		Cron scheduling for Node.js — @scheduled tasks and the task registry
+	</Card>
+	<Card title="@ndigo/service" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-service">
+		Typed service clients and server-sent event streaming for Ndigo
 	</Card>
 	<Card title="@ndigo/signals" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-signals">
-		Reactive state.
+		Ndigo Signals – Reactive state management with signals, computed values, and effects
 	</Card>
-	<Card title="@ndigo/flags" icon="seti:flag" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-flags">
-		Feature flags.
+	<Card title="@ndigo/socket" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-socket">
+		Ndigo Socket — isomorphic WebSocket domain: client contract + implementation and server-side session contracts
 	</Card>
-	<Card title="@ndigo/cli" icon="seti:shell" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-cli">
-		The ndigo CLI.
+	<Card title="@ndigo/telemetry" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-telemetry">
+		Isomorphic telemetry core for Ndigo — API-only: logger, metrics, severity, tracing decorators
 	</Card>
-	<Card title="@ndigo/create-ndigo-app" icon="seti:package" href="https://github.com/ndigo/ndigo/tree/main/packages/create-ndigo-app">
-		Project scaffolder.
+	<Card title="@ndigo/telemetry-node" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-telemetry-node">
+		Node.js telemetry for Ndigo — NodeSDK configuration and Node platform instrumentations
+	</Card>
+	<Card title="@ndigo/telemetry-web" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-telemetry-web">
+		Browser telemetry for Ndigo — browser telemetry configuration and web instrumentations
+	</Card>
+	<Card title="@ndigo/test" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-test">
+		Ndigo integration test harness — MockMVC-style in-process request dispatch
+	</Card>
+	<Card title="@ndigo/ui" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-ui">
+		Ndigo UI — brand tokens, theme layers, and the design-system registry contract
+	</Card>
+	<Card title="@ndigo/util" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-util">
+		Zero-dependency helper utilities — type guards, strings, environment, crypto
+	</Card>
+	<Card title="@ndigo/view" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-view">
+		Views, view targets, and content negotiation for Ndigo
+	</Card>
+	<Card title="@ndigo/view-ejs" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-view-ejs">
+		Ndigo View EJS — server-side EJS template rendering as an isomorphic Ndigo view technology.
+	</Card>
+	<Card title="@ndigo/view-toon" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-view-toon">
+		TOON (Token-Oriented Object Notation) view technology for Ndigo — text/toon output, a negotiation resolver, and a prompt encoder.
+	</Card>
+	<Card title="@ndigo/view-webcomponent" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/ndigo-view-webcomponent">
+		Web Component view technology for Ndigo — component creation and event binding
 	</Card>
 </CardGrid>
 
 > Generated API reference (TypeDoc) is published per package under
-> `packages/<name>/api/` in the framework repo. A consolidated API browser
-> will be added here in a later phase.
-EOF
-echo done
+> `packages/<name>/api/` in the framework repo.

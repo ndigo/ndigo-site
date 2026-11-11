@@ -12,9 +12,17 @@ jobs:
     permissions:
       contents: read
       deployments: write
+    env:
+      NDIGO_REPO: ${{ github.workspace }}/ndigo
     steps:
-      - name: Checkout
+      - name: Checkout site
         uses: actions/checkout@v4
+
+      - name: Checkout framework (source of truth for docs + registry)
+        uses: actions/checkout@v4
+        with:
+          repository: ndigo/ndigo
+          path: ndigo
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -35,5 +43,3 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=ndigo-site
-EOF
-echo done
