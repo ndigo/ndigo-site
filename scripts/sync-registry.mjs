@@ -88,6 +88,12 @@ for (const item of ordered) {
     writeFileSync(join(DOCS_UI, `${item.name}.md`), renderItem(item), 'utf8');
 }
 
+// Concatenate all registry component CSS into one stylesheet for the live demo page.
+const componentsCss = items
+    .flatMap((item) => item.files.filter((f) => f.path.endsWith('.css')))
+    .map((file) => `/* ${file.path} */\n` + readFileSync(join(UI_ROOT, file.path), 'utf8'))
+    .join('\n\n');
+writeFileSync(join(ROOT, 'src', 'styles', 'ndigo-components.css'), componentsCss, 'utf8');
 console.log(`  built ${items.length} registry items -> public/r`);
 console.log(`  generated ${ordered.length + 1} catalogue pages -> src/content/docs/ui`);
 console.log(`Synced the ndigo-ui registry from ${REPO}`);
@@ -213,6 +219,10 @@ function renderItem(item) {
         '| Source | Target | Type |',
         '| :--- | :--- | :--- |',
         ...item.files.map((file) => `| \`${file.path}\` | \`${file.target ?? ''}\` | \`${file.type}\` |`),
+        '',
+        '## Live example',
+        '',
+        'See this component rendered live on the [live examples page](/ui/demo/).',
         '',
         '## Dependencies',
         '',

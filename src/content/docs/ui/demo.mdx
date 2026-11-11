@@ -8,82 +8,252 @@ sidebar:
 
 import { Aside } from '@astrojs/starlight/components';
 
-The native-first items in the registry (`button`, `input`, `field`, `card`, …) are
-just token-driven CSS on platform elements. The examples below use the same tokens
-and the opt-in base layer that the registry ships.
+The native-first items in the registry are markup plus CSS on platform elements.
+Every example below uses the same tokens and component CSS that the registry
+ships, so what you see here is what you get after
+`npx shadcn@latest add @ndigo/<item>`.
 
 <style>{`
+  @import '../styles/ndigo-components.css';
   .demo-row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin: 1rem 0; }
-  .demo-btn {
-    font-family: var(--nd-font-sans);
-    font-size: var(--nd-text-sm);
-    font-weight: var(--nd-weight-medium);
-    padding: var(--nd-space-2) var(--nd-space-4);
-    border-radius: var(--nd-radius-md);
-    border: 1px solid var(--nd-color-border);
-    background: var(--nd-color-surface);
-    color: var(--nd-color-text);
-    cursor: pointer;
-    transition: background var(--nd-duration-fast) var(--nd-ease-standard);
-  }
-  .demo-btn:hover { background: var(--nd-color-accent-soft); }
-  .demo-btn-primary {
-    background: var(--nd-color-accent);
-    color: var(--nd-color-on-accent);
-    border-color: var(--nd-color-accent);
-  }
-  .demo-btn-primary:hover { background: var(--nd-color-accent-strong); }
-  .demo-input {
-    font-family: var(--nd-font-sans);
-    font-size: var(--nd-text-sm);
-    padding: var(--nd-space-2) var(--nd-space-3);
-    border-radius: var(--nd-radius-md);
-    border: 1px solid var(--nd-color-border);
-    background: var(--nd-color-surface);
-    color: var(--nd-color-text);
-    width: 12rem;
-  }
-  .demo-input:focus {
-    outline: none;
-    box-shadow: 0 0 0 var(--nd-focus-ring-width) var(--nd-focus-ring-color);
-  }
-  .demo-card {
-    background: var(--nd-color-surface-raised);
-    border: 1px solid var(--nd-color-border);
-    border-radius: var(--nd-radius-lg);
-    padding: var(--nd-space-4);
-    box-shadow: var(--nd-shadow-sm);
-    max-width: 24rem;
-  }
 `}</style>
 
 ## Buttons
 
 <div class="demo-row">
-  <button class="demo-btn">Default</button>
-  <button class="demo-btn demo-btn-primary">Primary</button>
-  <button class="demo-btn" disabled>Disabled</button>
+  <button class="nd-button" type="button">Default</button>
+  <button class="nd-button" data-variant="primary" type="button">Primary</button>
+  <button class="nd-button" data-variant="ghost" type="button">Ghost</button>
+  <button class="nd-button" disabled type="button">Disabled</button>
 </div>
 
-## Inputs
+## Badges
 
 <div class="demo-row">
-  <input class="demo-input" type="text" placeholder="Enter a value…" />
-  <input class="demo-input" type="email" placeholder="you@example.com" />
+  <span class="nd-badge">Draft</span>
+  <span class="nd-badge" data-variant="accent">New</span>
+  <span class="nd-badge" data-variant="success">Paid</span>
+  <span class="nd-badge" data-variant="warning">Pending</span>
+  <span class="nd-badge" data-variant="danger">Overdue</span>
 </div>
+
+## Alerts
+
+<div class="nd-alert" data-variant="info" role="status">
+  <span class="nd-alert__icon" aria-hidden="true">ℹ</span>
+  <div class="nd-alert__content">
+    <p class="nd-alert__title">Heads up</p>
+    <p class="nd-alert__description">This is an informational message.</p>
+  </div>
+</div>
+
+<div class="nd-alert" data-variant="success" role="status" style="margin-top:0.75rem">
+  <span class="nd-alert__icon" aria-hidden="true">✓</span>
+  <div class="nd-alert__content">
+    <p class="nd-alert__title">Saved</p>
+    <p class="nd-alert__description">The invoice was updated.</p>
+  </div>
+</div>
+
+<div class="nd-alert" data-variant="warning" role="status" style="margin-top:0.75rem">
+  <span class="nd-alert__icon" aria-hidden="true">!</span>
+  <div class="nd-alert__content">
+    <p class="nd-alert__title">Pending</p>
+    <p class="nd-alert__description">Review before publishing.</p>
+  </div>
+</div>
+
+<div class="nd-alert" data-variant="danger" role="status" style="margin-top:0.75rem">
+  <span class="nd-alert__icon" aria-hidden="true">✕</span>
+  <div class="nd-alert__content">
+    <p class="nd-alert__title">Error</p>
+    <p class="nd-alert__description">Something went wrong.</p>
+  </div>
+</div>
+
+## Inputs and fields
+
+<div class="nd-field">
+  <label class="nd-label" for="demo-email" data-required>Email</label>
+  <input class="nd-input" id="demo-email" name="email" type="email" placeholder="you@example.com" />
+  <p class="nd-help" id="demo-email-help">We only use this for account notices.</p>
+</div>
+
+<div class="demo-row" style="margin-top:0.75rem">
+  <textarea class="nd-textarea" id="demo-notes" name="notes" placeholder="Notes…" rows="3" style="width:16rem"></textarea>
+</div>
+
+## Checkbox and radio
+
+<div class="demo-row">
+  <label class="nd-choice">
+    <input class="nd-checkbox" type="checkbox" name="updates" checked />
+    <span class="nd-label">Product updates</span>
+  </label>
+  <label class="nd-choice">
+    <input class="nd-checkbox" type="checkbox" name="marketing" />
+    <span class="nd-label">Marketing emails</span>
+  </label>
+</div>
+
+<fieldset class="nd-choice-group" style="border:0;padding:0;margin:0">
+  <legend class="nd-label">Plan</legend>
+  <label class="nd-choice">
+    <input class="nd-radio" type="radio" name="plan" value="free" checked />
+    <span class="nd-label">Free</span>
+  </label>
+  <label class="nd-choice">
+    <input class="nd-radio" type="radio" name="plan" value="pro" />
+    <span class="nd-label">Pro</span>
+  </label>
+</fieldset>
 
 ## Card
 
-<div class="demo-card">
-  <h3 style="margin:0 0 0.5rem 0; font-family: var(--nd-font-display);">Card title</h3>
-  <p style="margin:0; color: var(--nd-color-text-muted); font-size: var(--nd-text-sm);">
-    A surface built entirely from <code>--nd-*</code> tokens.
-  </p>
+<article class="nd-card" style="max-width:24rem">
+  <div class="nd-card__header">
+    <h3 class="nd-card__title">Quarterly report</h3>
+    <p class="nd-card__description">Revenue and retention for Q3.</p>
+  </div>
+  <div class="nd-card__content">
+    <p>Download the PDF or open the dashboard.</p>
+  </div>
+  <div class="nd-card__footer">
+    <button class="nd-button" data-variant="primary" type="button">Open</button>
+    <button class="nd-button" data-variant="ghost" type="button">Share</button>
+  </div>
+</article>
+
+## Item list
+
+<ul class="nd-list" style="list-style:none;padding:0;max-width:24rem">
+  <li class="nd-item nd-item--bordered">
+    <span class="nd-item__media">AL</span>
+    <div class="nd-item__content">
+      <span class="nd-item__title">Ada Lovelace</span>
+      <span class="nd-item__description">Engineering</span>
+    </div>
+    <div class="nd-item__actions">
+      <button class="nd-button" data-variant="ghost" data-size="sm" type="button">Edit</button>
+    </div>
+  </li>
+  <li class="nd-item nd-item--bordered">
+    <span class="nd-item__media">GT</span>
+    <div class="nd-item__content">
+      <span class="nd-item__title">Grace Hopper</span>
+      <span class="nd-item__description">Compilers</span>
+    </div>
+    <div class="nd-item__actions">
+      <button class="nd-button" data-variant="ghost" data-size="sm" type="button">Edit</button>
+    </div>
+  </li>
+</ul>
+
+## Typography
+
+<article class="nd-prose" style="max-width:32rem">
+  <h2>Release notes</h2>
+  <p>The registry now ships <strong>39 items</strong>.</p>
+  <ul>
+    <li>New tokens</li>
+    <li>Copy-in components</li>
+  </ul>
+  <blockquote>Own the code you ship.</blockquote>
+</article>
+
+## Keyboard
+
+<p>Press <kbd class="nd-kbd">Ctrl</kbd> + <kbd class="nd-kbd">K</kbd> to search.</p>
+
+<span class="nd-kbd-group">
+  <kbd class="nd-kbd">⌘</kbd>
+  <kbd class="nd-kbd">K</kbd>
+</span>
+
+## Separator
+
+<hr class="nd-separator" />
+
+<div class="demo-row">
+  <span>Left</span>
+  <div class="nd-separator" data-orientation="vertical" role="separator" aria-orientation="vertical" style="height:1.5rem"></div>
+  <span>Right</span>
+</div>
+
+## Breadcrumb
+
+<nav class="nd-breadcrumb" aria-label="Breadcrumb">
+  <ol class="nd-breadcrumb__list">
+    <li class="nd-breadcrumb__item"><a class="nd-breadcrumb__link" href="/">Home</a></li>
+    <li class="nd-breadcrumb__item"><a class="nd-breadcrumb__link" href="/docs">Docs</a></li>
+    <li class="nd-breadcrumb__item"><span aria-current="page">Components</span></li>
+  </ol>
+</nav>
+
+## Skeleton
+
+<div aria-hidden="true" class="demo-row" style="flex-direction:column;align-items:stretch;max-width:16rem">
+  <span class="nd-skeleton" data-shape="text" style="inline-size:60%"></span>
+  <span class="nd-skeleton" data-shape="text" style="inline-size:40%"></span>
+  <span class="nd-skeleton" data-shape="circle"></span>
+  <span class="nd-skeleton" data-shape="rect"></span>
+</div>
+
+## Spinner
+
+<div class="demo-row">
+  <span class="nd-spinner" role="status" aria-label="Loading"></span>
+  <span class="nd-spinner" data-size="sm" role="status" aria-label="Saving"></span>
+  <span class="nd-spinner" data-size="lg" role="status" aria-label="Loading results"></span>
+</div>
+
+## Pagination
+
+<nav class="nd-pagination" aria-label="Pagination">
+  <ul class="nd-pagination__list">
+    <li><span class="nd-pagination__link" data-direction="previous" aria-disabled="true">‹ Previous</span></li>
+    <li><a class="nd-pagination__link" href="?page=1">1</a></li>
+    <li><span class="nd-pagination__link" aria-current="page">2</span></li>
+    <li><a class="nd-pagination__link" href="?page=3">3</a></li>
+    <li><span class="nd-pagination__ellipsis" aria-hidden="true">…</span></li>
+    <li><a class="nd-pagination__link" href="?page=8">8</a></li>
+    <li><a class="nd-pagination__link" data-direction="next" href="?page=3">Next ›</a></li>
+  </ul>
+</nav>
+
+## Table
+
+<div class="nd-table-wrap">
+  <table class="nd-table">
+    <caption class="nd-table__caption">Open invoices</caption>
+    <thead>
+      <tr>
+        <th scope="col">Invoice</th>
+        <th scope="col">Customer</th>
+        <th scope="col" data-numeric>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>INV-001</td>
+        <td>Acme</td>
+        <td data-numeric>$120.00</td>
+      </tr>
+      <tr>
+        <td>INV-002</td>
+        <td>Globex</td>
+        <td data-numeric>$85.00</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <Aside type="tip">
-  Behaviour primitives (dialog, menu, select, …) need the Zag.js machine and are
-  not rendered here. Install one and run the
+  Behaviour primitives (dialog, menu, select, combobox, drawer, tabs, accordion,
+  popover, tooltip, slider, switch, scroll-area, navigation-menu, tags-input,
+  file-upload, date-picker, command, data-table, app-shell, sidebar, code-block,
+  a2ui-surface) need the Zag.js machine and are not rendered here. Install one
+  and run the
   <a href="https://github.com/ndigo/ndigo/tree/main/apps/20-ndigo-ui-lab">UI lab</a>
   to see them live.
 </Aside>
