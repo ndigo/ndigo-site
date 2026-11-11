@@ -56,6 +56,17 @@ h1, h2, h3, h4, h5, h6 {
     font-family: var(--nd-font-display);
 }
 
+/* Small guide number label shown above guide titles */
+.guide-label {
+    font-family: var(--nd-font-sans);
+    font-size: var(--nd-text-xs);
+    font-weight: var(--nd-weight-semibold);
+    letter-spacing: var(--nd-tracking-wide);
+    text-transform: uppercase;
+    color: var(--nd-color-text-muted);
+    margin: 0 0 var(--nd-space-1) 0;
+}
+
 /* ---------- Light theme refinements ----------
    The default token palette keeps bg/surface/surface-raised all near-white,
    which makes cards and sidebars blend into the page. Deepen the tints and

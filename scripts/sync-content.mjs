@@ -34,10 +34,18 @@ function titleFrom(text, fallback) {
 
 function injectFrontmatter(text, fallbackTitle, extra = {}) {
     if (hasFrontmatter(text)) return text;
-    const title = titleFrom(text, fallbackTitle);
+    const rawTitle = titleFrom(text, fallbackTitle);
+    // Guides use "Guide NN — Title"; split so the number becomes a small label
+    // and the title stays short enough to fit on one line.
+    const guideMatch = rawTitle.match(/^Guide\s+(\d+)\s*[—–-]\s*(.+)$/);
+    const title = guideMatch ? guideMatch[2].trim() : rawTitle;
+    const guideLabel = guideMatch ? `Guide ${guideMatch[1]}` : '';
     // Strip the first H1 from the body so the title is not rendered twice
     // (Starlight renders the frontmatter title as the page H1).
-    const body = text.replace(/^#\s+[^\n]*\n+/, '');
+    let body = text.replace(/^#\s+[^\n]*\n+/, '');
+    if (guideLabel) {
+        body = `<p class="guide-label">${guideLabel}</p>\n\n` + body;
+    }
     const lines = ['---', `title: ${JSON.stringify(title)}`];
     for (const [k, v] of Object.entries(extra)) {
         lines.push(`${k}: ${typeof v === 'string' ? JSON.stringify(v) : v}`);
