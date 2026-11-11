@@ -55,3 +55,22 @@
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--nd-font-display);
 }
+
+/* ---------- Light theme refinements ----------
+   The default token palette keeps bg/surface/surface-raised all near-white,
+   which makes cards and sidebars blend into the page. Deepen the tints and
+   strengthen borders so layers read clearly in light mode. */
+:root[data-theme='light'] {
+    --nd-color-bg: #f4f4fc;
+    --nd-color-surface: #eaeaf4;
+    --nd-color-surface-raised: #ffffff;
+    --nd-color-border: #d0d0e8;
+    --nd-color-code-bg: #ececf4;
+    --nd-color-text-muted: #4a4a6a;
+}
+
+/* Subtle elevation on cards/raised surfaces in light mode for depth */
+:root[data-theme='light'] .sl-markdown-content .demo-card,
+:root[data-theme='light'] article {
+    box-shadow: 0 1px 3px rgb(41 56 150 / 0.06);
+}
