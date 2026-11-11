@@ -117,22 +117,6 @@ function syncArchitectureTopics() {
     console.log('  synced architecture topics');
 }
 
-function syncMigrations() {
-    const srcDir = join(REPO, 'docs', 'migrations');
-    const destDir = join(DOCS, 'migrations');
-    cleanDir(destDir);
-    try {
-        if (statSync(srcDir).isDirectory()) {
-            for (const entry of readdirSync(srcDir, { withFileTypes: true })) {
-                if (entry.isFile() && entry.name.endsWith('.md') && entry.name.toLowerCase() !== 'readme.md') {
-                    copyMd(join(srcDir, entry.name), join(destDir, entry.name));
-                }
-            }
-        }
-    } catch { /* skip missing */ }
-    console.log('  synced migrations');
-}
-
 function syncTokens() {
     const pairs = [
         ['packages/ndigo-ui/tokens/ndigo-tokens.css', join(ROOT, 'src', 'styles', 'ndigo-tokens.css')],
@@ -241,13 +225,11 @@ try { rmSync(join(DOCS, 'synced'), { recursive: true, force: true }); } catch {}
 ensureDir(join(DOCS, 'guides'));
 ensureDir(join(DOCS, 'concepts'));
 ensureDir(join(DOCS, 'concepts', 'architecture'));
-ensureDir(join(DOCS, 'migrations'));
 ensureDir(join(DOCS, 'reference'));
 
 syncGuides();
 syncTopLevel();
 syncArchitectureTopics();
-syncMigrations();
 syncTokens();
 syncPackages();
 syncExamples();
