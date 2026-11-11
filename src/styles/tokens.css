@@ -13,6 +13,15 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Michroma';
+    src: url('/fonts/michroma.woff2') format('woff2'),
+         url('/fonts/michroma.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     --sl-font: var(--nd-font-sans);
     --sl-font-mono: var(--nd-font-mono);
