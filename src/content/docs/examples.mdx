@@ -9,60 +9,67 @@ The `apps/` directory in the framework repo contains runnable demos covering
 every major feature. Use them as starting templates.
 
 <CardGrid>
-	<Card title="01 Hello" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/01-ndigo-hello">
-		Minimal single-page app: context, one route, and a Web Component view.
+	<Card title="@ndigo/hello — Ndigo Hello" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/01-ndigo-hello">
+		Minimal Ndigo single-page app: context, one route, and a Web Component view.
 	</Card>
-	<Card title="02 Hello Node" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/02-ndigo-hello-node">
-		Minimal Node HTTP server on the Ndigo Node platform.
+	<Card title="@ndigo/hello-node — Ndigo Hello Node" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/02-ndigo-hello-node">
+		Minimal Node HTTP server on the Ndigo Node platform foundation.
 	</Card>
-	<Card title="03 Todo Web" icon="list-format" href="https://github.com/ndigo/ndigo/tree/main/apps/03-ndigo-todo-web">
-		TodoMVC on the full browser stack with a micro frontend shell.
+	<Card title="@ndigo/todo-web — Ndigo Demo Web" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/03-ndigo-todo-web">
+		TodoMVC built on the full Ndigo browser stack with a micro frontend shell.
 	</Card>
-	<Card title="04 Todo API" icon="list-format" href="https://github.com/ndigo/ndigo/tree/main/apps/04-ndigo-todo-api">
-		Todo-Backend REST spec implementation.
+	<Card title="@ndigo/todo-api — Ndigo Todo-Backend" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/04-ndigo-todo-api">
+		Implementation of the [Todo-Backend](https://www.todobackend.com/specs/index.html) REST spec: five JSON operations, verified by the proje...
 	</Card>
-	<Card title="05 Ndigo API" icon="seti:server" href="https://github.com/ndigo/ndigo/tree/main/apps/05-ndigo-api">
-		Node server showcase: auth, ORM, content negotiation, problem+json.
+	<Card title="@ndigo/api — Ndigo API" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/05-ndigo-api">
+		Node server showcase: controllers, opaque session-token auth, ORM-backed notes, content negotiation, and problem+json errors.
 	</Card>
-	<Card title="06 Host Demo" icon="seti:folder" href="https://github.com/ndigo/ndigo/tree/main/apps/06-ndigo-host-demo">
-		Micro frontend host shell with lazy-loaded feature chunks.
+	<Card title="@ndigo/host-demo — Micro Frontend Host" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/06-ndigo-host-demo">
+		Micro frontend host shell that mounts lazy-loaded feature chunks via `@ndigo/host`.
 	</Card>
-	<Card title="07 Island" icon="seti:html" href="https://github.com/ndigo/ndigo/tree/main/apps/07-ndigo-island">
-		Hybrid SSR + client island with SSE model push.
+	<Card title="ndigo-island — Hybrid Island Demo" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/07-ndigo-island">
+		Hybrid SSR + client island demo: EJS server shell, hydrated Web Component, and SSE model push.
 	</Card>
-	<Card title="08 Views" icon="seti:html" href="https://github.com/ndigo/ndigo/tree/main/apps/08-ndigo-views">
-		View resolution: one resolver chain over three view locations.
+	<Card title="ndigo-views — View Resolution Demo" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/08-ndigo-views">
+		View-resolution demo: one ordered resolver chain over three view locations —
 	</Card>
-	<Card title="09 HTTPBin" icon="seti:web" href="https://github.com/ndigo/ndigo/tree/main/apps/09-ndigo-httpbin">
-		HTTP semantics playground.
+	<Card title="@ndigo/httpbin — Ndigo HTTPBin" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/09-ndigo-httpbin">
+		HTTP semantics playground: echo what you sent, shape the response back.
 	</Card>
-	<Card title="10/11 Conduit" icon="seti:web" href="https://github.com/ndigo/ndigo/tree/main/apps/10-ndigo-conduit-web">
-		RealWorld (Conduit) frontend + backend on Ndigo.
+	<Card title="@ndigo/conduit-web — RealWorld (Conduit) frontend" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/10-ndigo-conduit-web">
+		The [RealWorld](https://github.com/realworld-apps/realworld) “Conduit” frontend on Ndigo — a hash-routed browser app whose controllers bu...
 	</Card>
-	<Card title="12 PetClinic" icon="seti:server" href="https://github.com/ndigo/ndigo/tree/main/apps/12-ndigo-petclinic">
-		Server-rendered Spring PetClinic vertical.
+	<Card title="@ndigo/conduit-api — RealWorld (Conduit) API" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/11-ndigo-conduit-api">
+		The [RealWorld](https://github.com/gothinkster/realworld) “Conduit” backend — users, JWT auth, articles, tags, comments, follows and favo...
 	</Card>
-	<Card title="13 Chat" icon="seti:web" href="https://github.com/ndigo/ndigo/tree/main/apps/13-ndigo-chat">
-		Real-time room chat over WebSockets.
+	<Card title="@ndigo/petclinic — PetClinic (server-rendered)" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/12-ndigo-petclinic">
+		The [spring-petclinic](https://github.com/spring-projects/spring-petclinic) vertical — owners, their pets,
 	</Card>
-	<Card title="14 Kanban" icon="seti:db" href="https://github.com/ndigo/ndigo/tree/main/apps/14-ndigo-kanban">
-		Collaborative board with versioned ORM entities.
+	<Card title="ndigo-chat — Real-Time Room Chat" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/13-ndigo-chat">
+		WebSocket chat rooms with a browser Web Component client: path-bound rooms,
 	</Card>
-	<Card title="15 Resilience Lab" icon="seti:graph" href="https://github.com/ndigo/ndigo/tree/main/apps/15-ndigo-resilience-lab">
-		Retry, backoff, and circuit breaking control plane.
+	<Card title="ndigo-kanban — Collaborative Board" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/14-ndigo-kanban">
+		A kanban board whose cards are versioned `@ndigo/orm` entities: optimistic
 	</Card>
-	<Card title="16 Redis Fanout" icon="seti:db" href="https://github.com/ndigo/ndigo/tree/main/apps/16-ndigo-redis-fanout">
-		Two nodes, one cache, one board.
+	<Card title="@ndigo/resilience-lab — Ndigo Resilience Lab" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/15-ndigo-resilience-lab">
+		Retry, backoff and circuit breaking, driven from a control plane that shows
 	</Card>
-	<Card title="17 Telemetry Lab" icon="seti:graph" href="https://github.com/ndigo/ndigo/tree/main/apps/17-ndigo-telemetry-lab">
-		Distributed tracing across browser and server.
+	<Card title="@ndigo/redis-fanout — Ndigo Redis Fanout" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/16-ndigo-redis-fanout">
+		Two nodes, one cache, one board. Run the same app twice: the cache values are
 	</Card>
-	<Card title="18 Auth Playground" icon="seti:lock" href="https://github.com/ndigo/ndigo/tree/main/apps/18-ndigo-auth-playground">
-		Six authentication modes side by side.
+	<Card title="@ndigo/telemetry-lab — Ndigo Telemetry Lab" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/17-ndigo-telemetry-lab">
+		A browser action opens a client span, propagates it as W3C `traceparent`, the
 	</Card>
-	<Card title="19 Hacker News" icon="seti:web" href="https://github.com/ndigo/ndigo/tree/main/apps/19-ndigo-hn">
-		Hacker News reader on the browser stack.
+	<Card title="@ndigo/auth-playground — Ndigo Auth Playground" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/18-ndigo-auth-playground">
+		Six authentication modes side by side, in one Node process: an opaque cookie
+	</Card>
+	<Card title="@ndigo/hn — Hacker News Reader" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/19-ndigo-hn">
+		A Hacker News client built on the Ndigo browser stack, over the official
+	</Card>
+	<Card title="@ndigo/ui-lab — Ndigo UI lab" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/20-ndigo-ui-lab">
+		A browser lab for the owned design system: every registry item installed as copy-in source, no framework runtime.
+	</Card>
+	<Card title="Agent Lab" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/21-ndigo-agent-lab">
+		Local-model tool calling over MCP tools, streamed over SSE, with one GenAI
 	</Card>
 </CardGrid>
-EOF
-echo done

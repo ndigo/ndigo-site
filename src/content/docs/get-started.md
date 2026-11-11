@@ -68,8 +68,9 @@ before continuing.
 
 ## Next steps
 
-- Read the [Architecture overview](/guides/architecture/) to understand how
+- Read the [Architecture overview](/concepts/architecture-overview/) to understand how
   context, routing, and views fit together.
+- Scaffold with the CLI instead: `ndigo new my-app --kind node` (see guide 37).
 - Browse the [example apps](https://github.com/ndigo/ndigo/tree/main/apps) for
   working patterns (auth, ORM, caching, real-time, and more).
 - Explore the [API reference](/reference/) for package-level documentation.

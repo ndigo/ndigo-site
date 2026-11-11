@@ -65,9 +65,12 @@ function syncGuides() {
     for (const entry of readdirSync(srcDir, { withFileTypes: true })) {
         if (!entry.isFile()) continue;
         if (!/^\d{2,}-.*\.md$/.test(entry.name)) continue; // skip README etc.
+        const srcPath = join(srcDir, entry.name);
+        const raw = readFileSync(srcPath, 'utf8');
+        if (raw.includes('<!-- guide-redirect -->')) continue; // skip redirect stubs
         const m = entry.name.match(/^(\d+)-/);
         const order = m ? parseInt(m[1], 10) : undefined;
-        copyMd(join(srcDir, entry.name), join(destDir, entry.name), order ? { order } : {});
+        copyMd(srcPath, join(destDir, entry.name), order ? { order } : {});
     }
     console.log('  synced guides');
 }
@@ -119,6 +122,108 @@ function syncMigrations() {
     console.log('  synced migrations');
 }
 
+function syncTokens() {
+    const pairs = [
+        ['packages/ndigo-ui/tokens/ndigo-tokens.css', join(ROOT, 'src', 'styles', 'ndigo-tokens.css')],
+        ['packages/ndigo-ui/theme/base.css', join(ROOT, 'src', 'styles', 'ndigo-base.css')],
+    ];
+    for (const [relSrc, dest] of pairs) {
+        const src = join(REPO, relSrc);
+        try {
+            if (statSync(src).isFile()) {
+                ensureDir(join(dest, '..'));
+                writeFileSync(dest, readFileSync(src, 'utf8'), 'utf8');
+            }
+        } catch { /* skip missing */ }
+    }
+    console.log('  synced tokens');
+}
+
+function syncPackages() {
+    const pkgsDir = join(REPO, 'packages');
+    const dirs = readdirSync(pkgsDir, { withFileTypes: true })
+        .filter((e) => e.isDirectory())
+        .map((e) => e.name)
+        .sort();
+    const cards = [];
+    for (const dir of dirs) {
+        let meta = {};
+        try { meta = JSON.parse(readFileSync(join(pkgsDir, dir, 'package.json'), 'utf8')); }
+        catch { continue; }
+        if (!meta.name) continue;
+        const desc = (meta.description || '').replace(/\s+/g, ' ').trim();
+        const short = desc.length > 140 ? desc.slice(0, 137) + '...' : desc;
+        cards.push(`\t<Card title="${meta.name}" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/${dir}">\n\t\t${short}\n\t</Card>`);
+    }
+    const body = [
+        '---',
+        'title: Packages',
+        'description: Ndigo package index.',
+        '---',
+        '',
+        "import { Card, CardGrid } from '@astrojs/starlight/components';",
+        '',
+        'Ndigo is a monorepo of focused packages. Add only what your app needs.',
+        '',
+        '<CardGrid>',
+        cards.join('\n'),
+        '</CardGrid>',
+        '',
+        '> Generated API reference (TypeDoc) is published per package under',
+        '> `packages/<name>/api/` in the framework repo.',
+        '',
+    ].join('\n');
+    ensureDir(join(DOCS, 'reference'));
+    writeFileSync(join(DOCS, 'reference', 'packages.mdx'), body, 'utf8');
+    console.log('  synced packages');
+}
+
+function syncExamples() {
+    const appsDir = join(REPO, 'apps');
+    const dirs = readdirSync(appsDir, { withFileTypes: true })
+        .filter((e) => e.isDirectory() && /^\d{2}-/.test(e.name))
+        .map((e) => e.name)
+        .sort();
+    const cards = [];
+    for (const dir of dirs) {
+        const readmePath = join(appsDir, dir, 'README.md');
+        let title = dir;
+        let desc = '';
+        try {
+            const raw = readFileSync(readmePath, 'utf8');
+            const h1 = raw.match(/^#\s+(.+)$/m);
+            if (h1) title = h1[1].trim();
+            const bq = raw.match(/^>\s*(.+)$/m);
+            if (bq) desc = bq[1].trim();
+            else {
+                const lines = raw.split('\n').map((l) => l.trim()).filter(Boolean);
+                const idx = lines.findIndex((l) => l.startsWith('#'));
+                if (idx >= 0 && lines[idx + 1]) desc = lines[idx + 1];
+            }
+        } catch { /* skip */ }
+        const short = desc.length > 140 ? desc.slice(0, 137) + '...' : desc;
+        cards.push(`\t<Card title="${title}" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/${dir}">\n\t\t${short}\n\t</Card>`);
+    }
+    const body = [
+        '---',
+        'title: Examples',
+        'description: Demo applications built with Ndigo.',
+        '---',
+        '',
+        "import { Card, CardGrid } from '@astrojs/starlight/components';",
+        '',
+        'The `apps/` directory in the framework repo contains runnable demos covering',
+        'every major feature. Use them as starting templates.',
+        '',
+        '<CardGrid>',
+        cards.join('\n'),
+        '</CardGrid>',
+        '',
+    ].join('\n');
+    writeFileSync(join(DOCS, 'examples.mdx'), body, 'utf8');
+    console.log('  synced examples');
+}
+
 // Remove legacy synced/ dump from Phase 1
 try { rmSync(join(DOCS, 'synced'), { recursive: true, force: true }); } catch {}
 
@@ -132,5 +237,8 @@ syncGuides();
 syncTopLevel();
 syncArchitectureTopics();
 syncMigrations();
+syncTokens();
+syncPackages();
+syncExamples();
 
 console.log(`Synced publishable content from ${REPO}`);
