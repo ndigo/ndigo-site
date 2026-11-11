@@ -64,10 +64,6 @@ export default defineConfig({
                     label: 'Reference',
                     items: [{ autogenerate: { directory: 'reference' } }],
                 },
-                {
-                    label: 'Migrations',
-                    items: [{ autogenerate: { directory: 'migrations' } }],
-                },
             ],
         }),
     ],
