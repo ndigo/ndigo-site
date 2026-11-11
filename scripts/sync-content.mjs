@@ -54,11 +54,72 @@ function injectFrontmatter(text, fallbackTitle, extra = {}) {
     return lines.join('\n') + body;
 }
 
+function rewriteLinks(text) {
+    const replacements = [
+        [/\.\.\/\.\.\/ARCHITECTURE\.md/g, '/concepts/architecture-overview/'],
+        [/\.\.\/ARCHITECTURE\.md/g, '/concepts/architecture-overview/'],
+        [/\.\.\/\.\.\/STYLE_GUIDE\.md/g, '/concepts/style-guide/'],
+        [/\.\.\/STYLE_GUIDE\.md/g, '/concepts/style-guide/'],
+        [/\.\.\/\.\.\/CONTRIBUTING\.md/g, '/reference/contributing/'],
+        [/\.\.\/CONTRIBUTING\.md/g, '/reference/contributing/'],
+        [/\.\.\/\.\.\/CHANGELOG\.md/g, '/reference/changelog/'],
+        [/\.\.\/CHANGELOG\.md/g, '/reference/changelog/'],
+        [/\.\.\/\.\.\/API\.md/g, 'https://github.com/ndigo/ndigo/blob/main/API.md'],
+        [/\.\.\/API\.md/g, 'https://github.com/ndigo/ndigo/blob/main/API.md'],
+        [/\.\.\/\.\.\/BENCHMARKS\.md/g, 'https://github.com/ndigo/ndigo/blob/main/BENCHMARKS.md'],
+        [/\.\/ARCHITECTURE\.md/g, '/concepts/architecture-overview/'],
+        [/\.\/STYLE_GUIDE\.md/g, '/concepts/style-guide/'],
+        [/\.\/CONTRIBUTING\.md/g, '/reference/contributing/'],
+        [/\.\/CHANGELOG\.md/g, '/reference/changelog/'],
+        [/\.\/API\.md/g, 'https://github.com/ndigo/ndigo/blob/main/API.md'],
+        [/\.\/README\.md/g, '/'],
+        [/docs\/decisions\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/docs/decisions/README.md'],
+        [/docs\/decisions\//g, 'https://github.com/ndigo/ndigo/blob/main/docs/decisions/'],
+        [/docs\/plans\//g, 'https://github.com/ndigo/ndigo/blob/main/docs/plans/'],
+        [/docs\/audits\//g, 'https://github.com/ndigo/ndigo/blob/main/docs/audits/'],
+        [/docs\/reference\//g, 'https://github.com/ndigo/ndigo/blob/main/docs/reference/'],
+        [/docs\/guides\/README\.md/g, '/'],
+        [/src\/oxlint\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/src/oxlint/README.md'],
+        [/tools\/generators\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/tools/generators/README.md'],
+    ];
+    for (const [re, to] of replacements) {
+        text = text.replace(re, to);
+    }
+    // Rewrite guide-to-guide links: ](NN-slug.md) or ](./NN-slug.md) -> ](/guides/NN-slug/)
+    text = text.replace(/\]\((\.\/)?(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g, (m, dot, slug, hash) => {
+        const h = hash || '';
+        return `](/guides/${slug}/${h})`;
+    });
+    // Rewrite docs/guides/XX.md links
+    text = text.replace(/\]\((\.\/)?docs\/guides\/(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g, (m, dot, slug, hash) => {
+        const h = hash || '';
+        return `](/guides/${slug}/${h})`;
+    });
+    // Rewrite docs/architecture/XX.md links
+    text = text.replace(/\]\((\.\/)?docs\/architecture\/([a-z0-9-]+)\.md(#[^)]*)?\)/g, (m, dot, name, hash) => {
+        const h = hash || '';
+        return `](/concepts/architecture/${name}/${h})`;
+    });
+    // Rewrite ./docs/README.md
+    text = text.replace(/\]\((\.\/)?docs\/README\.md\)/g, '](/)');
+    // Generic fallback: rewrite any remaining relative .md links to GitHub
+    text = text.replace(/\]\((\.\.\/)+([^)]+\.md)(#[^)]*)?\)/g, (m, dots, path, hash) => {
+        const h = hash || '';
+        return `](https://github.com/ndigo/ndigo/blob/main/${path}${h})`;
+    });
+    text = text.replace(/\]\((\.\/)?(packages|apps|agent-local)\/([^)]+\.md)(#[^)]*)?\)/g, (m, dot, dir, path, hash) => {
+        const h = hash || '';
+        return `](https://github.com/ndigo/ndigo/blob/main/${dir}/${path}${h})`;
+    });
+    return text;
+}
+
 function copyMd(srcFile, destFile, extra = {}) {
     ensureDir(join(destFile, '..'));
     const raw = readFileSync(srcFile, 'utf8');
     const fallback = basename(srcFile, extname(srcFile));
-    writeFileSync(destFile, injectFrontmatter(raw, fallback, extra), 'utf8');
+    const rewritten = rewriteLinks(raw);
+    writeFileSync(destFile, injectFrontmatter(rewritten, fallback, extra), 'utf8');
 }
 
 function cleanDir(p) {
