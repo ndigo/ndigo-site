@@ -37,3 +37,7 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# agent skill tooling (local only)
+.agents/
+skills-lock.json
