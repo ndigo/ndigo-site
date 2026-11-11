@@ -50,3 +50,8 @@
     font-family: var(--nd-font-display);
     letter-spacing: var(--nd-tracking-wide);
 }
+
+/* Brand display font on headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--nd-font-display);
+}
