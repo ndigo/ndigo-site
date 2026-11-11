@@ -18,11 +18,14 @@ jobs:
       - name: Checkout site
         uses: actions/checkout@v4
 
+      # The framework repo is private, so the default GITHUB_TOKEN cannot read
+      # it. Provide a PAT with read access via the NDIGO_REPO_TOKEN secret.
       - name: Checkout framework (source of truth for docs + registry)
         uses: actions/checkout@v4
         with:
           repository: ndigo/ndigo
           path: ndigo
+          token: ${{ secrets.NDIGO_REPO_TOKEN }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
