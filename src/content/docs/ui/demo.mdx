@@ -1,0 +1,89 @@
+---
+title: Live examples
+description: Native elements styled with the Ndigo tokens and base layer.
+sidebar:
+  label: Live examples
+  order: 99
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The native-first items in the registry (`button`, `input`, `field`, `card`, …) are
+just token-driven CSS on platform elements. The examples below use the same tokens
+and the opt-in base layer that the registry ships.
+
+<style>{`
+  .demo-row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin: 1rem 0; }
+  .demo-btn {
+    font-family: var(--nd-font-sans);
+    font-size: var(--nd-text-sm);
+    font-weight: var(--nd-weight-medium);
+    padding: var(--nd-space-2) var(--nd-space-4);
+    border-radius: var(--nd-radius-md);
+    border: 1px solid var(--nd-color-border);
+    background: var(--nd-color-surface);
+    color: var(--nd-color-text);
+    cursor: pointer;
+    transition: background var(--nd-duration-fast) var(--nd-ease-standard);
+  }
+  .demo-btn:hover { background: var(--nd-color-accent-soft); }
+  .demo-btn-primary {
+    background: var(--nd-color-accent);
+    color: var(--nd-color-on-accent);
+    border-color: var(--nd-color-accent);
+  }
+  .demo-btn-primary:hover { background: var(--nd-color-accent-strong); }
+  .demo-input {
+    font-family: var(--nd-font-sans);
+    font-size: var(--nd-text-sm);
+    padding: var(--nd-space-2) var(--nd-space-3);
+    border-radius: var(--nd-radius-md);
+    border: 1px solid var(--nd-color-border);
+    background: var(--nd-color-surface);
+    color: var(--nd-color-text);
+    width: 12rem;
+  }
+  .demo-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 var(--nd-focus-ring-width) var(--nd-focus-ring-color);
+  }
+  .demo-card {
+    background: var(--nd-color-surface-raised);
+    border: 1px solid var(--nd-color-border);
+    border-radius: var(--nd-radius-lg);
+    padding: var(--nd-space-4);
+    box-shadow: var(--nd-shadow-sm);
+    max-width: 24rem;
+  }
+`}</style>
+
+## Buttons
+
+<div class="demo-row">
+  <button class="demo-btn">Default</button>
+  <button class="demo-btn demo-btn-primary">Primary</button>
+  <button class="demo-btn" disabled>Disabled</button>
+</div>
+
+## Inputs
+
+<div class="demo-row">
+  <input class="demo-input" type="text" placeholder="Enter a value…" />
+  <input class="demo-input" type="email" placeholder="you@example.com" />
+</div>
+
+## Card
+
+<div class="demo-card">
+  <h3 style="margin:0 0 0.5rem 0; font-family: var(--nd-font-display);">Card title</h3>
+  <p style="margin:0; color: var(--nd-color-text-muted); font-size: var(--nd-text-sm);">
+    A surface built entirely from <code>--nd-*</code> tokens.
+  </p>
+</div>
+
+<Aside type="tip">
+  Behaviour primitives (dialog, menu, select, …) need the Zag.js machine and are
+  not rendered here. Install one and run the
+  <a href="https://github.com/ndigo/ndigo/tree/main/apps/20-ndigo-ui-lab">UI lab</a>
+  to see them live.
+</Aside>

@@ -77,8 +77,11 @@ for (const item of items) {
 }
 
 mkdirSync(DOCS_UI, { recursive: true });
+const generatedNames = new Set(['index.md', 'index.mdx', ...items.map((item) => `${item.name}.md`), ...items.map((item) => `${item.name}.mdx`)]);
 for (const entry of readdirSync(DOCS_UI)) {
-    if (entry.endsWith('.md') || entry.endsWith('.mdx')) rmSync(join(DOCS_UI, entry), { force: true });
+    if ((entry.endsWith('.md') || entry.endsWith('.mdx')) && generatedNames.has(entry)) {
+        rmSync(join(DOCS_UI, entry), { force: true });
+    }
 }
 writeFileSync(join(DOCS_UI, 'index.md'), renderIndex(), 'utf8');
 for (const item of ordered) {
