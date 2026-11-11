@@ -74,10 +74,6 @@ function rewriteLinks(text) {
         [/\.\/API\.md/g, 'https://github.com/ndigo/ndigo/blob/main/API.md'],
         [/\.\/README\.md/g, '/'],
         [/docs\/decisions\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/docs/decisions/README.md'],
-        [/docs\/decisions\//g, 'https://github.com/ndigo/ndigo/blob/main/docs/decisions/'],
-        [/docs\/plans\//g, 'https://github.com/ndigo/ndigo/blob/main/docs/plans/'],
-        [/docs\/audits\//g, 'https://github.com/ndigo/ndigo/blob/main/docs/audits/'],
-        [/docs\/reference\//g, 'https://github.com/ndigo/ndigo/blob/main/docs/reference/'],
         [/docs\/guides\/README\.md/g, '/'],
         [/src\/oxlint\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/src/oxlint/README.md'],
         [/tools\/generators\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/tools/generators/README.md'],
@@ -102,6 +98,11 @@ function rewriteLinks(text) {
     });
     // Rewrite ./docs/README.md
     text = text.replace(/\]\((\.\/)?docs\/README\.md\)/g, '](/)');
+    // Rewrite any remaining docs/...md links to GitHub
+    text = text.replace(/\]\((docs\/[A-Za-z0-9_./-]+\.md)(#[^)]*)?\)/g, (m, path, hash) => {
+        const h = hash || '';
+        return `](https://github.com/ndigo/ndigo/blob/main/${path}${h})`;
+    });
     // Generic fallback: rewrite any remaining relative .md links to GitHub
     text = text.replace(/\]\((\.\.\/)+([^)]+\.md)(#[^)]*)?\)/g, (m, dots, path, hash) => {
         const h = hash || '';
