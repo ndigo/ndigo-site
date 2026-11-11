@@ -19,6 +19,7 @@ src/content/docs/ui/*.md
 # generated token files (npm run sync)
 src/styles/ndigo-tokens.css
 src/styles/ndigo-base.css
+src/styles/ndigo-components.css
 
 # dependencies
 node_modules/
