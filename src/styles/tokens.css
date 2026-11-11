@@ -78,6 +78,9 @@ h1, h2, h3, h4, h5, h6 {
     --nd-color-border: #d0d0e8;
     --nd-color-code-bg: #ececf4;
     --nd-color-text-muted: #4a4a6a;
+    /* Darker, more distinct header/nav bar in light mode */
+    --sl-color-bg-nav: #d8d8ec;
+    --sl-color-bg-sidebar: #e4e4f0;
 }
 
 /* Subtle elevation on cards/raised surfaces in light mode for depth */
