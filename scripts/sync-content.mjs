@@ -6,7 +6,7 @@
  * Override source repo: NDIGO_REPO=/path/to/ndigo npm run sync
  *
  * Only content suitable for a public docs site is synced:
- *   - guides/              <- docs/guides/NN-*.md  (30 numbered guides)
+ *   - guides/              <- docs/guides/NN-*.md (numbered guides)
  *   - concepts/            <- ARCHITECTURE.md, STYLE_GUIDE.md, docs/architecture/*
  *   - migrations/          <- docs/migrations/*
  *   - reference/           <- CHANGELOG.md, CONTRIBUTING.md
@@ -15,13 +15,57 @@
  * NOT synced — they stay in the framework repo. Synced files are gitignored;
  * hand-authored pages (index.mdx, get-started.md, *-index.mdx) are committed.
  */
-import { cpSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync, rmSync } from 'node:fs';
-import { join, relative, basename, extname } from 'node:path';
+import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync, rmSync } from 'node:fs';
+import { join, basename, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const REPO = process.env.NDIGO_REPO || join(ROOT, '..', 'ndigo');
 const DOCS = join(ROOT, 'src', 'content', 'docs');
+
+/**
+ * The public Concepts pages. The four architecture topics are flattened into
+ * concepts/ so the site has one shallow section; `title` overrides the source
+ * H1 where the repo title is longer than a navigation label should be.
+ */
+const CONCEPT_PAGES = [
+    {
+        src: 'ARCHITECTURE.md',
+        dest: 'architecture-overview.md',
+        title: 'Architecture Overview',
+        description: 'Layers, principles, package map, and design patterns.',
+    },
+    {
+        src: 'docs/architecture/environment.md',
+        dest: 'environment.md',
+        title: 'Environment & Configuration',
+        description: 'Configuration precedence, profiles, typed binding, and fail-loud validation.',
+    },
+    {
+        src: 'docs/architecture/lifecycle-and-ownership.md',
+        dest: 'lifecycle-and-ownership.md',
+        title: 'Lifecycle & Ownership',
+        description: 'Initialization, shutdown, and who owns each resource.',
+    },
+    {
+        src: 'docs/architecture/micro-frontends.md',
+        dest: 'micro-frontends.md',
+        title: 'Micro Frontends',
+        description: 'Hosted feature contexts, islands, and the boundaries between them.',
+    },
+    {
+        src: 'docs/architecture/security.md',
+        dest: 'security.md',
+        title: 'Security',
+        description: 'Trust boundaries and the defense layers that protect an application.',
+    },
+    {
+        src: 'STYLE_GUIDE.md',
+        dest: 'style-guide.md',
+        title: 'Style Guide',
+        description: 'Naming, formatting, and code organization conventions.',
+    },
+];
 
 function ensureDir(p) { mkdirSync(p, { recursive: true }); }
 
@@ -32,13 +76,13 @@ function titleFrom(text, fallback) {
     return m ? m[1].trim() : fallback;
 }
 
-function injectFrontmatter(text, fallbackTitle, extra = {}) {
+function injectFrontmatter(text, fallbackTitle, extra = {}, titleOverride = '') {
     if (hasFrontmatter(text)) return text;
     const rawTitle = titleFrom(text, fallbackTitle);
     // Guides use "Guide NN — Title"; split so the number becomes a small label
     // and the title stays short enough to fit on one line.
     const guideMatch = rawTitle.match(/^Guide\s+(\d+)\s*[—–-]\s*(.+)$/);
-    const title = guideMatch ? guideMatch[2].trim() : rawTitle;
+    const title = titleOverride || (guideMatch ? guideMatch[2].trim() : rawTitle);
     const guideLabel = guideMatch ? `Guide ${guideMatch[1]}` : '';
     // Strip the first H1 from the body so the title is not rendered twice
     // (Starlight renders the frontmatter title as the page H1).
@@ -56,6 +100,7 @@ function injectFrontmatter(text, fallbackTitle, extra = {}) {
 
 function rewriteLinks(text) {
     const replacements = [
+        // Repo-root documents.
         [/\.\.\/\.\.\/ARCHITECTURE\.md/g, '/concepts/architecture-overview/'],
         [/\.\.\/ARCHITECTURE\.md/g, '/concepts/architecture-overview/'],
         [/\.\.\/\.\.\/STYLE_GUIDE\.md/g, '/concepts/style-guide/'],
@@ -67,37 +112,39 @@ function rewriteLinks(text) {
         [/\.\.\/\.\.\/API\.md/g, 'https://github.com/ndigo/ndigo/blob/main/API.md'],
         [/\.\.\/API\.md/g, 'https://github.com/ndigo/ndigo/blob/main/API.md'],
         [/\.\.\/\.\.\/BENCHMARKS\.md/g, 'https://github.com/ndigo/ndigo/blob/main/BENCHMARKS.md'],
+        [/\.\.\/BENCHMARKS\.md/g, 'https://github.com/ndigo/ndigo/blob/main/BENCHMARKS.md'],
+        [/\]\(BENCHMARKS\.md(#[^)]*)?\)/g, '](https://github.com/ndigo/ndigo/blob/main/BENCHMARKS.md$1)'],
         [/\.\/ARCHITECTURE\.md/g, '/concepts/architecture-overview/'],
         [/\.\/STYLE_GUIDE\.md/g, '/concepts/style-guide/'],
         [/\.\/CONTRIBUTING\.md/g, '/reference/contributing/'],
         [/\.\/CHANGELOG\.md/g, '/reference/changelog/'],
         [/\.\/API\.md/g, 'https://github.com/ndigo/ndigo/blob/main/API.md'],
         [/\.\/README\.md/g, '/'],
+        // Internal indexes: keep the path on GitHub for contributors reading
+        // the repo, not for visitors (decision docs are not published).
+        [/\.\/docs\/decisions\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/docs/decisions/README.md'],
         [/docs\/decisions\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/docs/decisions/README.md'],
-        [/docs\/guides\/README\.md/g, '/'],
+        [/docs\/guides\/README\.md/g, '/guides/00-core-concepts/'],
         [/src\/oxlint\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/src/oxlint/README.md'],
         [/tools\/generators\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/tools/generators/README.md'],
     ];
     for (const [re, to] of replacements) {
         text = text.replace(re, to);
     }
-    // Rewrite guide-to-guide links: ](NN-slug.md) or ](./NN-slug.md) -> ](/guides/NN-slug/)
+    // Guide-to-guide links: ](NN-slug.md), ](./NN-slug.md), ../guides/NN-slug.md,
+    // and ../../docs/guides/NN-slug.md all become /guides/NN-slug/.
+    text = text.replace(/\]\((?:\.\.\/)*(?:\.\/)?(?:docs\/)?guides\/(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g, (m, slug, hash) => {
+        return `](/guides/${slug}/${hash || ''})`;
+    });
     text = text.replace(/\]\((\.\/)?(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g, (m, dot, slug, hash) => {
-        const h = hash || '';
-        return `](/guides/${slug}/${h})`;
+        return `](/guides/${slug}/${hash || ''})`;
     });
-    // Rewrite docs/guides/XX.md links
-    text = text.replace(/\]\((\.\/)?docs\/guides\/(\d{2}-[a-z0-9-]+)\.md(#[^)]*)?\)/g, (m, dot, slug, hash) => {
-        const h = hash || '';
-        return `](/guides/${slug}/${h})`;
-    });
-    // Rewrite docs/architecture/XX.md links
-    text = text.replace(/\]\((\.\/)?docs\/architecture\/([a-z0-9-]+)\.md(#[^)]*)?\)/g, (m, dot, name, hash) => {
-        const h = hash || '';
-        return `](/concepts/architecture/${name}/${h})`;
+    // Architecture topics are flattened into concepts/.
+    text = text.replace(/\]\((?:\.\.\/)*(?:\.\/)?(?:docs\/)?architecture\/([a-z0-9-]+)\.md(#[^)]*)?\)/g, (m, name, hash) => {
+        return `](/concepts/${name}/${hash || ''})`;
     });
     // Rewrite ./docs/README.md
-    text = text.replace(/\]\((\.\/)?docs\/README\.md\)/g, '](/)');
+    text = text.replace(/\]\((\.\/)?docs\/README\.md\)/g, '](/reference/contributing/)');
     // Rewrite any remaining docs/...md links to GitHub
     text = text.replace(/\]\((docs\/[A-Za-z0-9_./-]+\.md)(#[^)]*)?\)/g, (m, path, hash) => {
         const h = hash || '';
@@ -108,19 +155,19 @@ function rewriteLinks(text) {
         const h = hash || '';
         return `](https://github.com/ndigo/ndigo/blob/main/${path}${h})`;
     });
-    text = text.replace(/\]\((\.\/)?(packages|apps|agent-local)\/([^)]+\.md)(#[^)]*)?\)/g, (m, dot, dir, path, hash) => {
-        const h = hash || '';
-        return `](https://github.com/ndigo/ndigo/blob/main/${dir}/${path}${h})`;
+    // Non-markdown repo assets (schemas, generated data) live on GitHub.
+    text = text.replace(/\]\((?:\.\.\/)+(packages|scripts|apps|agent-local)\/([^)\s]+)\)/g, (m, dir, path) => {
+        return `](https://github.com/ndigo/ndigo/blob/main/${dir}/${path})`;
     });
     return text;
 }
 
-function copyMd(srcFile, destFile, extra = {}) {
+function copyMd(srcFile, destFile, extra = {}, titleOverride = '') {
     ensureDir(join(destFile, '..'));
     const raw = readFileSync(srcFile, 'utf8');
     const fallback = basename(srcFile, extname(srcFile));
     const rewritten = rewriteLinks(raw);
-    writeFileSync(destFile, injectFrontmatter(rewritten, fallback, extra), 'utf8');
+    writeFileSync(destFile, injectFrontmatter(rewritten, fallback, extra, titleOverride), 'utf8');
 }
 
 function cleanDir(p) {
@@ -148,10 +195,30 @@ function syncGuides() {
     console.log('  synced guides');
 }
 
-function syncTopLevel() {
+function syncConcepts() {
+    const destDir = join(DOCS, 'concepts');
+    ensureDir(destDir);
+    // Every .md in concepts/ is generated; index.mdx is hand-authored.
+    for (const f of readdirSync(destDir)) {
+        if (f.endsWith('.md')) rmSync(join(destDir, f), { force: true });
+    }
+    // Remove the old subfolder layout from earlier syncs.
+    rmSync(join(destDir, 'architecture'), { recursive: true, force: true });
+
+    for (const page of CONCEPT_PAGES) {
+        const src = join(REPO, page.src);
+        try {
+            if (!statSync(src).isFile()) continue;
+            copyMd(src, join(destDir, page.dest), { description: page.description }, page.title);
+        } catch {
+            console.warn(`  skipped missing concept: ${page.src}`);
+        }
+    }
+    console.log('  synced concepts');
+}
+
+function syncReferenceTopLevel() {
     const pairs = [
-        ['ARCHITECTURE.md', join(DOCS, 'concepts', 'architecture-overview.md')],
-        ['STYLE_GUIDE.md', join(DOCS, 'concepts', 'style-guide.md')],
         ['CHANGELOG.md', join(DOCS, 'reference', 'changelog.md')],
         ['CONTRIBUTING.md', join(DOCS, 'reference', 'contributing.md')],
     ];
@@ -160,23 +227,7 @@ function syncTopLevel() {
             if (statSync(join(REPO, name)).isFile()) copyMd(join(REPO, name), dest);
         } catch { /* skip missing */ }
     }
-    console.log('  synced top-level docs');
-}
-
-function syncArchitectureTopics() {
-    const srcDir = join(REPO, 'docs', 'architecture');
-    const destDir = join(DOCS, 'concepts', 'architecture');
-    cleanDir(destDir);
-    try {
-        if (statSync(srcDir).isDirectory()) {
-            for (const entry of readdirSync(srcDir, { withFileTypes: true })) {
-                if (entry.isFile() && entry.name.endsWith('.md') && entry.name.toLowerCase() !== 'readme.md') {
-                    copyMd(join(srcDir, entry.name), join(destDir, entry.name));
-                }
-            }
-        }
-    } catch { /* skip missing */ }
-    console.log('  synced architecture topics');
+    console.log('  synced reference docs');
 }
 
 function syncTokens() {
@@ -286,12 +337,11 @@ try { rmSync(join(DOCS, 'synced'), { recursive: true, force: true }); } catch {}
 
 ensureDir(join(DOCS, 'guides'));
 ensureDir(join(DOCS, 'concepts'));
-ensureDir(join(DOCS, 'concepts', 'architecture'));
 ensureDir(join(DOCS, 'reference'));
 
 syncGuides();
-syncTopLevel();
-syncArchitectureTopics();
+syncConcepts();
+syncReferenceTopLevel();
 syncTokens();
 syncPackages();
 syncExamples();

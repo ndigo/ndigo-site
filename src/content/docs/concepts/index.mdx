@@ -7,17 +7,23 @@ order: 0
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
 <CardGrid>
-	<Card title="Architecture overview" icon="open-book" href="/concepts/architecture-overview/">
-		The canonical system design: layers, patterns, dependency management, and
-		module visibility.
+	<Card title="Architecture Overview" icon="open-book" href="/concepts/architecture-overview/">
+		Layers, principles, package map, and design patterns.
 	</Card>
-	<Card title="Style guide" icon="pencil" href="/concepts/style-guide/">
+	<Card title="Environment & Configuration" icon="seti:config" href="/concepts/environment/">
+		Configuration precedence, profiles, typed binding, and fail-loud
+		validation.
+	</Card>
+	<Card title="Lifecycle & Ownership" icon="seti:clock" href="/concepts/lifecycle-and-ownership/">
+		Initialization, shutdown, and who owns each resource.
+	</Card>
+	<Card title="Micro Frontends" icon="seti:folder" href="/concepts/micro-frontends/">
+		Hosted feature contexts, islands, and the boundaries between them.
+	</Card>
+	<Card title="Security" icon="seti:lock" href="/concepts/security/">
+		Trust boundaries and the defense layers that protect an application.
+	</Card>
+	<Card title="Style Guide" icon="pencil" href="/concepts/style-guide/">
 		Naming, formatting, and code organization conventions.
 	</Card>
-	<Card title="Architecture topics" icon="seti:folder" href="/concepts/architecture/micro-frontends/">
-		Deep dives: micro-frontends, environment, security, lifecycle and
-		ownership.
-	</Card>
 </CardGrid>
-EOF
-echo done

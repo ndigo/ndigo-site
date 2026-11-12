@@ -1,14 +1,25 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import mermaid from 'astro-mermaid';
+import starlightLinksValidator from 'starlight-links-validator';
 
 // https://astro.build/config
 export default defineConfig({
     site: 'https://ndigo.dev',
+    // Old Concepts layout; the four architecture pages are flat now.
+    redirects: {
+        '/concepts/architecture/environment': '/concepts/environment',
+        '/concepts/architecture/lifecycle-and-ownership': '/concepts/lifecycle-and-ownership',
+        '/concepts/architecture/micro-frontends': '/concepts/micro-frontends',
+        '/concepts/architecture/security': '/concepts/security',
+    },
     integrations: [
+        mermaid({ autoTheme: true }),
         starlight({
             title: 'Ndigo',
             description: 'TypeScript framework for the web. One context, one dispatcher, one view model — shared by browser and Node.',
+            plugins: [starlightLinksValidator()],
             logo: {
                 src: './src/assets/ndigo.svg',
                 alt: 'Ndigo',
@@ -56,8 +67,12 @@ export default defineConfig({
                 {
                     label: 'Concepts',
                     items: [
-                        { autogenerate: { directory: 'concepts' } },
-                        { autogenerate: { directory: 'concepts/architecture' } },
+                        { label: 'Architecture Overview', slug: 'concepts/architecture-overview' },
+                        { label: 'Environment & Configuration', slug: 'concepts/environment' },
+                        { label: 'Lifecycle & Ownership', slug: 'concepts/lifecycle-and-ownership' },
+                        { label: 'Micro Frontends', slug: 'concepts/micro-frontends' },
+                        { label: 'Security', slug: 'concepts/security' },
+                        { label: 'Style Guide', slug: 'concepts/style-guide' },
                     ],
                 },
                 {
