@@ -19,6 +19,7 @@ export default defineConfig({
         starlight({
             title: 'Ndigo',
             description: 'TypeScript framework for the web. One context, one dispatcher, one view model — shared by browser and Node.',
+            favicon: '/favicon.svg',
             plugins: [starlightLinksValidator()],
             logo: {
                 src: './src/assets/ndigo.svg',
@@ -44,6 +45,22 @@ export default defineConfig({
                         rel: 'stylesheet',
                         href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap',
                     },
+                },
+                {
+                    tag: 'link',
+                    attrs: { rel: 'icon', href: '/favicon.ico', sizes: '48x48' },
+                },
+                {
+                    tag: 'link',
+                    attrs: { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+                },
+                {
+                    tag: 'link',
+                    attrs: { rel: 'manifest', href: '/site.webmanifest' },
+                },
+                {
+                    tag: 'meta',
+                    attrs: { name: 'theme-color', content: '#0B0D12' },
                 },
             ],
             defaultLocale: 'root',

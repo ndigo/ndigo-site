@@ -50,6 +50,9 @@ preview server.
 ## Brand assets
 
 - `public/brand/ndigo.svg` — logo mark (copy of `ndigo/assets/images/Ndigo.svg`).
+- `public/favicon.svg` — simplified N favicon; `favicon.ico`,
+  `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`, and
+  `site.webmanifest` are the matching platform icons.
 - `public/fonts/michroma.*` — Michroma display typeface (moved from
   `ndigo/assets/fonts/`). OFL 1.1; see `public/fonts/OFL.txt`.
 - `src/assets/ndigo.svg` — logo used by Starlight's header/hero.
