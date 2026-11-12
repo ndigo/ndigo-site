@@ -32,6 +32,11 @@
     --sl-color-hairline: var(--nd-color-border);
     --sl-color-text: var(--nd-color-text);
     --sl-color-text-accent: var(--nd-color-accent-strong);
+    /* Starlight puts `--sl-color-text-invert` on the active sidebar item's
+       accent background. Its dark default is `--sl-color-accent-low`, which we
+       map to the translucent `--nd-color-accent-soft`; use the page background
+       instead so the selected label stays readable in both themes. */
+    --sl-color-text-invert: var(--nd-color-bg);
     --sl-color-bg-inline-code: var(--nd-color-code-bg);
 }
 
