@@ -50,7 +50,7 @@ preview server.
 ## Brand assets
 
 - `public/brand/ndigo.svg` — logo mark (copy of `ndigo/assets/images/Ndigo.svg`).
-- `public/favicon.svg` — `{N}` favicon; `favicon.ico`,
+- `public/favicon.svg` — N favicon; `favicon.ico`,
   `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`, and
   `site.webmanifest` are the matching platform icons.
 - `public/fonts/michroma.*` — Michroma display typeface (moved from
