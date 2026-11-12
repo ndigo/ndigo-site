@@ -3,7 +3,7 @@ title: Get Started
 description: Install Ndigo and run your first application in under five minutes.
 ---
 
-import { Steps, Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+import { Steps, Aside } from '@astrojs/starlight/components';
 
 Ndigo targets **Node.js ≥ 24** and **pnpm ≥ 12**. Make sure both are installed
 before continuing.
@@ -70,7 +70,8 @@ before continuing.
 
 - Read the [Architecture overview](/concepts/architecture-overview/) to understand how
   context, routing, and views fit together.
-- Scaffold with the CLI instead: `ndigo new my-app --kind node` (see guide 37).
+- Scaffold with the CLI instead: `ndigo new my-app --kind node` (see
+  [Guide 37 — The `ndigo` CLI](/guides/37-ndigo-cli/)).
 - Browse the [example apps](https://github.com/ndigo/ndigo/tree/main/apps) for
   working patterns (auth, ORM, caching, real-time, and more).
 - Explore the [API reference](/reference/) for package-level documentation.
@@ -80,5 +81,3 @@ before continuing.
   `@ndigo/auth-*`, `@ndigo/cache`, `@ndigo/jobs`, `@ndigo/socket`, and more.
   Add only what your app needs.
 </Aside>
-EOF
-echo done

@@ -71,5 +71,3 @@ Custom domain `ndigo.dev` is configured in the Cloudflare Pages dashboard.
 
 - The CLI may use `{N}` as a terminal prompt/prefix glyph (brand mark) while
   printing the full name "Ndigo" in `--version` output. (Future enhancement.)
-EOF
-echo done
