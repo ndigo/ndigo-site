@@ -1,92 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Ndigo">
   <defs>
-    <!-- Diagonal Gradient matching the top-right Violet to bottom-left Indigo transition -->
-    <linearGradient id="ndigo-grad" x1="15%" y1="85%" x2="85%" y2="15%">
-      <stop offset="0%" stop-color="#293896" />
-      <stop offset="45%" stop-color="#5B3BE0" />
+    <linearGradient id="ndigo-grad" x1="10%" y1="90%" x2="90%" y2="10%">
+      <stop offset="0%" stop-color="#5B3BE0" />
       <stop offset="100%" stop-color="#9A38FF" />
     </linearGradient>
   </defs>
-
-  <g fill="url(#ndigo-grad)">
-    <!-- Left Curly Bracket '{' -->
-    <path d="
-      M 233 200
-      L 198 200
-      C 138 200, 103 238, 103 300
-      L 103 402
-      C 103 414, 98 424, 90 432
-      L 30 492
-      Q 14 508, 30 524
-      L 90 584
-      C 98 592, 103 602, 103 614
-      L 103 712
-      C 103 774, 138 812, 198 812
-      L 233 812
-      L 233 743
-      L 210 743
-      C 184 743, 172 728, 172 700
-      L 172 588
-      C 172 572, 166 560, 154 548
-      L 114 508
-      L 154 468
-      C 166 456, 172 444, 172 428
-      L 172 312
-      C 172 284, 184 269, 210 269
-      L 233 269
-      Z
-    " />
-
-    <!-- Right Curly Bracket '}' -->
-    <path d="
-      M 785 200
-      L 820 200
-      C 880 200, 915 238, 915 300
-      L 915 402
-      C 915 414, 920 424, 928 432
-      L 988 492
-      Q 1004 508, 988 524
-      L 928 584
-      C 920 592, 915 602, 915 614
-      L 915 712
-      C 915 774, 880 812, 820 812
-      L 785 812
-      L 785 743
-      L 808 743
-      C 834 743, 846 728, 846 700
-      L 846 588
-      C 846 572, 852 560, 864 548
-      L 904 508
-      L 864 468
-      C 852 456, 846 444, 846 428
-      L 846 312
-      C 846 284, 834 269, 808 269
-      L 785 269
-      Z
-    " />
-
-    <!-- Stylized 'N' - Left Vertical Stem & Upper Diagonal (Vertical Cut at x=570) -->
-    <path d="
-      M 277 200
-      L 363 200
-      L 570 413
-      L 570 538
-      L 363 325
-      L 363 812
-      L 277 812
-      Z
-    " />
-
-    <!-- Stylized 'N' - Right Vertical Stem & Lower Diagonal (Vertical Cut at x=430) -->
-    <path d="
-      M 741 812
-      L 648 812
-      L 430 594
-      L 430 469
-      L 654 693
-      L 654 200
-      L 741 200
-      Z
-    " />
+  <rect width="64" height="64" rx="14" fill="#0B0D12" />
+  <g fill="url(#ndigo-grad)" transform="translate(18.35 14) scale(0.058824) translate(-277 -200)">
+    <path d="M 277 200 L 363 200 L 570 413 L 570 538 L 363 325 L 363 812 L 277 812 Z" />
+    <path d="M 741 812 L 648 812 L 430 594 L 430 469 L 654 693 L 654 200 L 741 200 Z" />
   </g>
 </svg>
