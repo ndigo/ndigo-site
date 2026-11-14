@@ -300,7 +300,13 @@ function syncExamples() {
         try {
             const raw = readFileSync(readmePath, 'utf8');
             const h1 = raw.match(/^#\s+(.+)$/m);
-            if (h1) title = h1[1].trim();
+            if (h1) {
+                title = h1[1].trim();
+                // Drop the package/app-id prefix ("@ndigo/hello — Ndigo Hello"
+                // -> "Ndigo Hello"); keep single-segment titles as-is.
+                const parts = title.split(/\s*—\s*/);
+                if (parts.length > 1) title = parts[parts.length - 1].trim();
+            }
             const bq = raw.match(/^>\s*(.+)$/m);
             if (bq) desc = bq[1].trim();
             else {
@@ -310,7 +316,8 @@ function syncExamples() {
             }
         } catch { /* skip */ }
         const short = desc.length > 140 ? desc.slice(0, 137) + '...' : desc;
-        cards.push(`\t<Card title="${title}" icon="rocket" href="https://github.com/ndigo/ndigo/tree/main/apps/${dir}">\n\t\t${short}\n\t</Card>`);
+        const esc = (v) => v.replace(/"/g, '&quot;');
+        cards.push(`\t<LinkCard title="${esc(title)}" href="https://github.com/ndigo/ndigo/tree/main/apps/${dir}" description="${esc(short)}" />`);
     }
     const body = [
         '---',
@@ -318,7 +325,7 @@ function syncExamples() {
         'description: Demo applications built with Ndigo.',
         '---',
         '',
-        "import { Card, CardGrid } from '@astrojs/starlight/components';",
+        "import { LinkCard, CardGrid } from '@astrojs/starlight/components';",
         '',
         'The `apps/` directory in the framework repo contains runnable demos covering',
         'every major feature. Use them as starting templates.',
