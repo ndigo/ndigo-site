@@ -1,22 +1,18 @@
 ---
 title: Reference
-description: API reference, configuration, CLI, and migration guides.
+description: Changelog, contributing guide, package index, and upgrade paths.
 order: 0
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+Reference material for Ndigo: release history, how to contribute, the package
+catalogue, and guides for upgrading or using the CLI.
 
 <CardGrid>
-	<Card title="Changelog" icon="list-format" href="/reference/changelog/">
-		Chronological record of notable changes.
-	</Card>
-	<Card title="Contributing" icon="github" href="/reference/contributing/">
-		How to report bugs, propose features, and submit pull requests.
-	</Card>
-	<Card title="Migration guides" icon="right-arrow" href="/migrations/">
-		Breaking changes and upgrade paths.
-	</Card>
-	<Card title="Packages" icon="seti:package" href="/reference/packages/">
-		Per-package READMEs and generated API reference.
-	</Card>
+	<LinkCard title="Changelog" href="/reference/changelog/" description="Chronological record of notable changes, releases, and breaking changes." />
+	<LinkCard title="Contributing" href="/reference/contributing/" description="How to report bugs, propose features, and submit pull requests." />
+	<LinkCard title="Packages" href="/reference/packages/" description="Per-package READMEs and the generated API reference for every published module." />
+	<LinkCard title="Upgrading" href="/guides/46-upgrading/" description="Upgrade paths between releases and what to change when APIs move." />
+	<LinkCard title="Ndigo CLI" href="/guides/37-ndigo-cli/" description="Command-line tooling for scaffolding, migrations, and project tasks." />
 </CardGrid>
