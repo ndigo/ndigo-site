@@ -11,15 +11,6 @@
     font-display: swap;
 }
 
-@font-face {
-    font-family: 'Michroma';
-    src: url('/fonts/michroma.woff2') format('woff2'),
-         url('/fonts/michroma.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
 :root {
     --sl-font: var(--nd-font-sans);
     --sl-font-mono: var(--nd-font-mono);
@@ -56,9 +47,24 @@
     letter-spacing: var(--nd-tracking-wide);
 }
 
-/* Brand display font on headings */
+/* Brand display font on headings. Michroma ships a single weight (400), so
+   never request a heavier weight here — that would synthesize a faux bold. */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--nd-font-display);
+    font-weight: var(--nd-weight-regular);
+    text-wrap: balance;
+}
+
+/* Font smoothing once on the root (better-typography). */
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Long-form content: avoid lone last-line words and runaway long tokens. */
+.sl-markdown-content p {
+    text-wrap: pretty;
+    overflow-wrap: break-word;
 }
 
 /* Small guide number label shown above guide titles */
@@ -83,9 +89,26 @@ h1, h2, h3, h4, h5, h6 {
     --nd-color-border: #d0d0e8;
     --nd-color-code-bg: #ececf4;
     --nd-color-text-muted: #4a4a6a;
+    /* The deepened light surfaces need a darker success to keep AA contrast. */
+    --nd-color-success: #166534;
     /* Darker, more distinct header/nav bar in light mode */
     --sl-color-bg-nav: #d8d8ec;
     --sl-color-bg-sidebar: #e4e4f0;
+}
+
+/* Mirror the light refinements for OS-follow (no explicit data-theme). */
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+        --nd-color-bg: #f4f4fc;
+        --nd-color-surface: #eaeaf4;
+        --nd-color-surface-raised: #ffffff;
+        --nd-color-border: #d0d0e8;
+        --nd-color-code-bg: #ececf4;
+        --nd-color-text-muted: #4a4a6a;
+        --nd-color-success: #166534;
+        --sl-color-bg-nav: #d8d8ec;
+        --sl-color-bg-sidebar: #e4e4f0;
+    }
 }
 
 /* Subtle elevation on cards/raised surfaces in light mode for depth */

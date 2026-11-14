@@ -60,7 +60,7 @@ export default defineConfig({
                 },
                 {
                     tag: 'meta',
-                    attrs: { name: 'theme-color', content: '#0B0D12' },
+                    attrs: { name: 'theme-color', content: '#0c0c1e' },
                 },
             ],
             defaultLocale: 'root',
