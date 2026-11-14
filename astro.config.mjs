@@ -74,10 +74,6 @@ export default defineConfig({
                     ],
                 },
                 {
-                    label: 'UI',
-                    items: [{ autogenerate: { directory: 'ui' } }],
-                },
-                {
                     label: 'Guides',
                     items: [{ autogenerate: { directory: 'guides' } }],
                 },
@@ -91,6 +87,11 @@ export default defineConfig({
                         { label: 'Security', slug: 'concepts/security' },
                         { label: 'Style Guide', slug: 'concepts/style-guide' },
                     ],
+                },
+                {
+                    label: 'UI',
+                    collapsed: true,
+                    items: [{ autogenerate: { directory: 'ui' } }],
                 },
                 {
                     label: 'Reference',
