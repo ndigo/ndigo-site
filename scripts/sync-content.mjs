@@ -82,7 +82,7 @@ function injectFrontmatter(text, fallbackTitle, extra = {}, titleOverride = '') 
     // Guides use "Guide NN — Title"; split so the number becomes a small label
     // and the title stays short enough to fit on one line.
     const guideMatch = rawTitle.match(/^Guide\s+(\d+)\s*[—–-]\s*(.+)$/);
-    const title = titleOverride || (guideMatch ? guideMatch[2].trim() : rawTitle);
+    const title = (titleOverride || (guideMatch ? guideMatch[2].trim() : rawTitle)).replace(/`/g, '');
     const guideLabel = guideMatch ? `Guide ${guideMatch[1]}` : '';
     // Strip the first H1 from the body so the title is not rendered twice
     // (Starlight renders the frontmatter title as the page H1).
@@ -261,7 +261,8 @@ function syncPackages() {
         if (!meta.name) continue;
         const desc = (meta.description || '').replace(/\s+/g, ' ').trim();
         const short = desc.length > 140 ? desc.slice(0, 137) + '...' : desc;
-        cards.push(`\t<Card title="${meta.name}" icon="seti:typescript" href="https://github.com/ndigo/ndigo/tree/main/packages/${dir}">\n\t\t${short}\n\t</Card>`);
+        const escPkg = (v) => v.replace(/"/g, '&quot;');
+        cards.push(`\t<LinkCard title="${escPkg(meta.name)}" href="https://github.com/ndigo/ndigo/tree/main/packages/${dir}" description="${escPkg(short)}" />`);
     }
     const body = [
         '---',
@@ -269,7 +270,7 @@ function syncPackages() {
         'description: Ndigo package index.',
         '---',
         '',
-        "import { Card, CardGrid } from '@astrojs/starlight/components';",
+        "import { LinkCard, CardGrid } from '@astrojs/starlight/components';",
         '',
         'Ndigo is a monorepo of focused packages. Add only what your app needs.',
         '',
