@@ -175,6 +175,62 @@ function cleanDir(p) {
     ensureDir(p);
 }
 
+const GUIDE_ORDER_OVERRIDES = {
+    "00-core-concepts.md": 0,
+    "01-building-a-node-api.md": 1,
+    "02-building-a-browser-app.md": 2,
+    "03-environment-configuration.md": 3,
+    "43-live-configuration-and-secrets.md": 4,
+    "49-configuration-layering-and-context-composition.md": 5,
+    "04-dependency-injection-and-lifecycle.md": 6,
+    "05-routing-and-route-conditions.md": 7,
+    "06-argument-binding.md": 8,
+    "07-request-validation.md": 9,
+    "08-errors-and-problem-details.md": 10,
+    "09-views-and-content-negotiation.md": 11,
+    "50-view-targeting.md": 12,
+    "41-custom-view-engines.md": 13,
+    "10-static-files.md": 14,
+    "11-http-client.md": 15,
+    "12-openapi-and-api-docs.md": 16,
+    "13-dto-conversion.md": 17,
+    "14-multipart-and-file-upload.md": 18,
+    "15-websockets.md": 19,
+    "42-stomp.md": 20,
+    "16-typed-service-clients-and-sse.md": 21,
+    "17-i18n-and-content.md": 22,
+    "18-forms-end-to-end.md": 23,
+    "19-caching.md": 24,
+    "20-orm-and-migrations.md": 25,
+    "21-persistence-and-shared-stores.md": 26,
+    "22-jobs-and-outbox.md": 27,
+    "23-scheduling.md": 28,
+    "24-distributed-locks.md": 29,
+    "25-clustering.md": 30,
+    "26-authentication-and-sessions.md": 31,
+    "27-browser-authentication-and-oidc.md": 32,
+    "28-security-hardening.md": 33,
+    "29-signals-and-islands.md": 34,
+    "30-component-integration.md": 35,
+    "31-micro-frontends.md": 36,
+    "32-telemetry.md": 37,
+    "33-management-endpoints.md": 38,
+    "34-feature-flags.md": 39,
+    "35-method-interception-and-resilience.md": 40,
+    "36-testing.md": 41,
+    "37-ndigo-cli.md": 42,
+    "38-deployment-and-production-readiness.md": 43,
+    "39-quality-guardrails.md": 44,
+    "40-troubleshooting-and-faq.md": 45,
+    "44-accessibility.md": 46,
+    "45-performance-and-scaling.md": 47,
+    "46-upgrading.md": 48,
+    "47-ai-agents.md": 49,
+    "48-agent-facing-surfaces.md": 50,
+    "90-package-documentation.md": 90,
+    "91-application-conventions.md": 91
+};
+
 function syncGuides() {
     const srcDir = join(REPO, 'docs', 'guides');
     const destDir = join(DOCS, 'guides');
@@ -189,8 +245,9 @@ function syncGuides() {
         const raw = readFileSync(srcPath, 'utf8');
         if (raw.includes('<!-- guide-redirect -->')) continue; // skip redirect stubs
         const m = entry.name.match(/^(\d+)-/);
-        const order = m ? parseInt(m[1], 10) : undefined;
-        copyMd(srcPath, join(destDir, entry.name), order ? { order } : {});
+        const override = GUIDE_ORDER_OVERRIDES[entry.name];
+        const order = override !== undefined ? override : (m ? parseInt(m[1], 10) : undefined);
+        copyMd(srcPath, join(destDir, entry.name), order !== undefined ? { order } : {});
     }
     console.log('  synced guides');
 }
