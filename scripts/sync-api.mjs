@@ -10,6 +10,7 @@
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, posix } from 'node:path';
+import { slug as githubSlug } from 'github-slugger';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -81,16 +82,25 @@ for (const dir of packages) {
         // relative .md links to root-relative URLs so they resolve on the site.
         raw = raw.replace(/\]\(([^)]+\.md)(#[^)]*)?\)/g, (m, linkPath, hash) => {
             const h = hash || '';
-            const resolved = posix.normalize(posix.join(relDir, linkPath.toLowerCase()));
-            let route = resolved.replace(/\.md$/, '');
+            const resolved = posix.normalize(posix.join(relDir, linkPath));
+            const slugPath = resolved
+                .split('/')
+                .filter(Boolean)
+                .map((seg) => {
+                    const isMd = seg.toLowerCase().endsWith('.md');
+                    const name = isMd ? seg.slice(0, -3) : seg;
+                    return githubSlug(name);
+                })
+                .join('/');
+            let route = slugPath;
             if (route.endsWith('/index')) route = route.slice(0, -6);
             if (!route.endsWith('/')) route += '/';
             return `](/reference/api/${dir}/${route}${h})`;
         });
         const title = titleFor(file, raw);
-        const base = destFile.split('/').pop();
-        const lowerBase = base.toLowerCase().replace('readme.md', 'index.md');
-        const finalDest = destFile.slice(0, -base.length) + lowerBase;
+        const finalDest = destFile.endsWith('README.md')
+            ? destFile.replace(/README\.md$/, 'index.md')
+            : destFile;
         mkdirSync(dirname(finalDest), { recursive: true });
         writeFileSync(finalDest, injectFrontmatter(raw, title), 'utf8');
     }
