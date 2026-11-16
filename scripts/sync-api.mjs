@@ -69,10 +69,16 @@ for (const dir of packages) {
         let raw = readFileSync(file, 'utf8');
         // TypeDoc links to README.md; Astro serves directory indexes as index.md.
         raw = raw.replace(/README\.md/g, 'index.md');
+        // Astro routes are case-sensitive and lower-case file names; rewrite
+        // link targets to match the lower-cased file names below.
+        raw = raw.replace(/\]\(([^)]+\.md)(#[^)]*)?\)/g, (m, path, hash) => {
+            const h = hash || '';
+            return `](${path.toLowerCase()}${h})`;
+        });
         const title = titleFor(file, raw);
-        const finalDest = destFile.endsWith('README.md')
-            ? destFile.replace(/README\.md$/, 'index.md')
-            : destFile;
+        const base = destFile.split('/').pop();
+        const lowerBase = base.toLowerCase().replace('readme.md', 'index.md');
+        const finalDest = destFile.slice(0, -base.length) + lowerBase;
         mkdirSync(dirname(finalDest), { recursive: true });
         writeFileSync(finalDest, injectFrontmatter(raw, title), 'utf8');
     }
