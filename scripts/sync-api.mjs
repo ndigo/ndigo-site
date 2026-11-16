@@ -9,7 +9,7 @@
  * `packages/<pkg>/api/` exists. In CI this is a build step.
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { dirname, join, relative } from 'node:path';
+import { dirname, join, relative, posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -67,13 +67,19 @@ for (const dir of packages) {
         const destFile = join(destApi, rel);
         mkdirSync(dirname(destFile), { recursive: true });
         let raw = readFileSync(file, 'utf8');
+        const relFile = posix.relative(srcApi, file);
+        const relDir = posix.dirname(relFile);
         // TypeDoc links to README.md; Astro serves directory indexes as index.md.
         raw = raw.replace(/README\.md/g, 'index.md');
         // Astro routes are case-sensitive and lower-case file names; rewrite
-        // link targets to match the lower-cased file names below.
-        raw = raw.replace(/\]\(([^)]+\.md)(#[^)]*)?\)/g, (m, path, hash) => {
+        // relative .md links to root-relative URLs so they resolve on the site.
+        raw = raw.replace(/\]\(([^)]+\.md)(#[^)]*)?\)/g, (m, linkPath, hash) => {
             const h = hash || '';
-            return `](${path.toLowerCase()}${h})`;
+            const resolved = posix.normalize(posix.join(relDir, linkPath.toLowerCase()));
+            let route = resolved.replace(/\.md$/, '');
+            if (route.endsWith('/index')) route = route.slice(0, -6);
+            if (!route.endsWith('/')) route += '/';
+            return `](/reference/api/${dir}/${route}${h})`;
         });
         const title = titleFor(file, raw);
         const base = destFile.split('/').pop();
