@@ -66,9 +66,13 @@ for (const dir of packages) {
 
     const manifest = JSON.parse(readFileSync(join(PACKAGES, dir, 'package.json'), 'utf8'));
 
+    let skippedRoot = 0;
     for (const file of walk(srcApi)) {
         // Skip the package root README; we generated a module index instead.
-        if (file.split('/').pop() === 'README.md' && dirname(file) === srcApi) continue;
+        if (file.split('/').pop() === 'README.md' && dirname(file) === srcApi) {
+            skippedRoot++;
+            continue;
+        }
         const rel = relative(srcApi, file);
         const destFile = join(destApi, rel);
         mkdirSync(dirname(destFile), { recursive: true });
@@ -114,6 +118,7 @@ for (const dir of packages) {
     for (const f of walk(destApi)) {
         if (f.endsWith('/README.md') && dirname(f) === destApi) rmSync(f, { force: true });
     }
+    if (skippedRoot === 0) console.log(`  WARNING: no root README skipped for ${dir}`);
     // Generate a module-level index instead of copying TypeDoc's flat root index.
     // Written after the loop so it overwrites any copied root README.md.
     const moduleDirs = readdirSync(srcApi, { withFileTypes: true })
