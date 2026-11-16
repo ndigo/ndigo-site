@@ -20,7 +20,9 @@ export default defineConfig({
             title: 'Ndigo',
             description: 'TypeScript framework for the web. One context, one dispatcher, one view model — shared by browser and Node.',
             favicon: '/favicon.svg',
-            plugins: [starlightLinksValidator()],
+            plugins: [starlightLinksValidator({
+                exclude: ({ file }) => file.includes('/reference/api/'),
+            })],
             logo: {
                 src: './src/assets/ndigo.svg',
                 alt: 'Ndigo',
@@ -95,7 +97,10 @@ export default defineConfig({
                 },
                 {
                     label: 'Reference',
-                    items: [{ autogenerate: { directory: 'reference' } }],
+                    items: [
+                        { autogenerate: { directory: 'reference' } },
+                        { label: 'API reference', link: '/reference/api/' },
+                    ],
                 },
             ],
         }),

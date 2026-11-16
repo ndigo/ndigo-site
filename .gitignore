@@ -21,6 +21,9 @@ src/styles/ndigo-tokens.css
 src/styles/ndigo-base.css
 src/styles/ndigo-components.css
 
+# generated API reference (npm run sync:api)
+src/content/docs/reference/api/
+
 # dependencies
 node_modules/
 
