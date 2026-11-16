@@ -71,6 +71,12 @@ for (const dir of packages) {
         const relDir = posix.dirname(relFile);
         // TypeDoc links to README.md; Astro serves directory indexes as index.md.
         raw = raw.replace(/README\.md/g, 'index.md');
+        // Prefer "Exports" over TypeDoc's "Re-exports" in module indexes.
+        raw = raw.replace(/Re-exports/g, 'Exports');
+        // Add a back link to the API reference index on package root pages.
+        if (relFile === 'README.md') {
+            raw = `[← API reference](/reference/api/)\n\n${raw}`;
+        }
         // Astro routes are case-sensitive and lower-case file names; rewrite
         // relative .md links to root-relative URLs so they resolve on the site.
         raw = raw.replace(/\]\(([^)]+\.md)(#[^)]*)?\)/g, (m, linkPath, hash) => {
