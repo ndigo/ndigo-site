@@ -64,33 +64,7 @@ for (const dir of packages) {
     const destApi = join(DEST, dir);
     mkdirSync(destApi, { recursive: true });
 
-    // Generate a module-level index instead of copying TypeDoc's flat root index.
-    const moduleDirs = readdirSync(srcApi, { withFileTypes: true })
-        .filter((e) => e.isDirectory() && e.name !== 'index' && existsSync(join(srcApi, e.name, 'README.md')))
-        .map((e) => e.name)
-        .sort();
     const manifest = JSON.parse(readFileSync(join(PACKAGES, dir, 'package.json'), 'utf8'));
-    const moduleLines = [
-        '---',
-        `title: ${JSON.stringify(manifest.name)}`,
-        '---',
-        '',
-        `[← API reference](/reference/api/)`,
-        '',
-        `# ${manifest.name}`,
-        '',
-        manifest.description ? `${manifest.description}` : '',
-        '',
-        '## Modules',
-        '',
-    ];
-    for (const mod of moduleDirs) {
-        const modReadme = readFileSync(join(srcApi, mod, 'README.md'), 'utf8');
-        const modTitle = titleFor(join(srcApi, mod, 'README.md'), modReadme);
-        moduleLines.push(`- [${modTitle}](/reference/api/${dir}/${githubSlug(mod)}/)`);
-    }
-    moduleLines.push('');
-    writeFileSync(join(destApi, 'index.md'), moduleLines.join('\n'), 'utf8');
 
     for (const file of walk(srcApi)) {
         // Skip the package root README; we generated a module index instead.
@@ -135,6 +109,34 @@ for (const dir of packages) {
         mkdirSync(dirname(finalDest), { recursive: true });
         writeFileSync(finalDest, injectFrontmatter(raw, title), 'utf8');
     }
+
+    // Generate a module-level index instead of copying TypeDoc's flat root index.
+    // Written after the loop so it overwrites any copied root README.md.
+    const moduleDirs = readdirSync(srcApi, { withFileTypes: true })
+        .filter((e) => e.isDirectory() && e.name !== 'index' && existsSync(join(srcApi, e.name, 'README.md')))
+        .map((e) => e.name)
+        .sort();
+    const moduleLines = [
+        '---',
+        `title: ${JSON.stringify(manifest.name)}`,
+        '---',
+        '',
+        `[← API reference](/reference/api/)`,
+        '',
+        `# ${manifest.name}`,
+        '',
+        manifest.description ? `${manifest.description}` : '',
+        '',
+        '## Modules',
+        '',
+    ];
+    for (const mod of moduleDirs) {
+        const modReadme = readFileSync(join(srcApi, mod, 'README.md'), 'utf8');
+        const modTitle = titleFor(join(srcApi, mod, 'README.md'), modReadme);
+        moduleLines.push(`- [${modTitle}](/reference/api/${dir}/${githubSlug(mod)}/)`);
+    }
+    moduleLines.push('');
+    writeFileSync(join(destApi, 'index.md'), moduleLines.join('\n'), 'utf8');
 }
 
 // Package layers (mirrors the Core Concepts guide).
