@@ -33,10 +33,24 @@ jobs:
           node-version: '24'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install site dependencies
         run: npm ci
 
-      - name: Build
+      - name: Install framework dependencies
+        run: cd ndigo && pnpm install --frozen-lockfile
+
+      - name: Build framework
+        run: cd ndigo && pnpm build
+
+      - name: Generate API docs
+        run: cd ndigo && pnpm doc:api
+
+      - name: Build site
         run: npm run build
 
       - name: Deploy to Cloudflare Pages
