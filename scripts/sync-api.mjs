@@ -136,7 +136,7 @@ for (const dir of packages) {
         '',
         manifest.description ? `${manifest.description}` : '',
         '',
-        '## Modules',
+        '## Modules (CUSTOM INDEX)',
         '',
     ];
     for (const mod of moduleDirs) {
