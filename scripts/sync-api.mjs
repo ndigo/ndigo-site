@@ -119,6 +119,12 @@ for (const dir of packages) {
         if (f.endsWith('/README.md') && dirname(f) === destApi) rmSync(f, { force: true });
     }
     console.log(`  destApi files for ${dir}: ${readdirSync(destApi).join(', ')}`);
+    // List all files recursively
+    const allFiles = [];
+    function walkAll(d) { for (const e of readdirSync(d, { withFileTypes: true })) { const f = join(d, e.name); if (e.isDirectory()) walkAll(f); else allFiles.push(relative(destApi, f)); } }
+    walkAll(destApi);
+    const readmes = allFiles.filter((f) => f.endsWith('README.md'));
+    if (readmes.length) console.log(`  WARNING: README.md files remain: ${readmes.join(', ')}`);
     if (skippedRoot === 0) console.log(`  WARNING: no root README skipped for ${dir}`);
     // Generate a module-level index instead of copying TypeDoc's flat root index.
     // Written after the loop so it overwrites any copied root README.md.
