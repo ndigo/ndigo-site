@@ -68,7 +68,7 @@ for (const dir of packages) {
 
     for (const file of walk(srcApi)) {
         // Skip the package root README; we generated a module index instead.
-        if (relative(srcApi, file) === 'README.md') continue;
+        if (file.split('/').pop() === 'README.md' && dirname(file) === srcApi) continue;
         const rel = relative(srcApi, file);
         const destFile = join(destApi, rel);
         mkdirSync(dirname(destFile), { recursive: true });
