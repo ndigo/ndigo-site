@@ -110,6 +110,10 @@ for (const dir of packages) {
         writeFileSync(finalDest, injectFrontmatter(raw, title), 'utf8');
     }
 
+    // Remove any root README.md that was copied despite the skip condition.
+    for (const f of walk(destApi)) {
+        if (f.endsWith('/README.md') && dirname(f) === destApi) rmSync(f, { force: true });
+    }
     // Generate a module-level index instead of copying TypeDoc's flat root index.
     // Written after the loop so it overwrites any copied root README.md.
     const moduleDirs = readdirSync(srcApi, { withFileTypes: true })
