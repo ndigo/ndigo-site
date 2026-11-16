@@ -17,35 +17,57 @@ hero:
       variant: minimal
 ---
 
-import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+<style>{`
+  .nd-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; margin: 1rem 0; }
+`}</style>
 
-<Aside type="caution" title="Pre-release">
-  Ndigo is in pre-release and still subject to changes. APIs may change between
-  commits; Semantic Versioning guarantees arrive at `1.0.0`.
-</Aside>
+<div class="nd-alert" data-variant="warning" role="status">
+  <span class="nd-alert__icon" aria-hidden="true">!</span>
+  <div class="nd-alert__content">
+    <p class="nd-alert__title">Pre-release</p>
+    <p class="nd-alert__description">Ndigo is in pre-release and still subject to changes. APIs may change between commits; Semantic Versioning guarantees arrive at <code>1.0.0</code>.</p>
+  </div>
+</div>
 
 ## What is Ndigo?
 
 Ndigo gives TypeScript applications the structure of a server framework and the reach of the web.
 Views, HTTP, ORM, auth, and telemetry are adopted only when needed — you pay for what you use.
 
-<CardGrid stagger>
-	<Card title="One context everywhere" icon="puzzle">
-		A single `ApplicationContext` powers dependency injection in both Node and the
-		browser. No separate client/server mental models.
-	</Card>
-	<Card title="Views as web components" icon="seti:html">
-		Views render to custom elements. Server-rendered islands hydrate in place.
-		Framework-agnostic output — works with React, Vue, Svelte, or plain HTML.
-	</Card>
-	<Card title="Adopt incrementally" icon="rocket">
-		Start with routing and context. Add ORM, auth, caching, jobs, or telemetry
-		only when your app needs them.
-	</Card>
-	<Card title="TypeScript first" icon="seti:typescript">
-		TC39 decorators, strict types, ESM-only. Built for Node ≥ 24.
-	</Card>
-</CardGrid>
+<div class="nd-card-grid">
+  <article class="nd-card">
+    <div class="nd-card__header">
+      <h3 class="nd-card__title">One context everywhere</h3>
+    </div>
+    <div class="nd-card__content">
+      <p>A single <code>ApplicationContext</code> powers dependency injection in both Node and the browser. No separate client/server mental models.</p>
+    </div>
+  </article>
+  <article class="nd-card">
+    <div class="nd-card__header">
+      <h3 class="nd-card__title">Views as web components</h3>
+    </div>
+    <div class="nd-card__content">
+      <p>Views render to custom elements. Server-rendered islands hydrate in place. Framework-agnostic output — works with React, Vue, Svelte, or plain HTML.</p>
+    </div>
+  </article>
+  <article class="nd-card">
+    <div class="nd-card__header">
+      <h3 class="nd-card__title">Adopt incrementally</h3>
+    </div>
+    <div class="nd-card__content">
+      <p>Start with routing and context. Add ORM, auth, caching, jobs, or telemetry only when your app needs them.</p>
+    </div>
+  </article>
+  <article class="nd-card">
+    <div class="nd-card__header">
+      <h3 class="nd-card__title">TypeScript first</h3>
+    </div>
+    <div class="nd-card__content">
+      <p>TC39 decorators, strict types, ESM-only. Built for Node ≥ 24.</p>
+    </div>
+  </article>
+</div>
 
 ## Status
 

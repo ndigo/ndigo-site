@@ -14,21 +14,68 @@
 :root {
     --sl-font: var(--nd-font-sans);
     --sl-font-mono: var(--nd-font-mono);
-    --sl-color-accent-low: var(--nd-color-accent-soft);
-    --sl-color-accent: var(--nd-color-accent);
-    --sl-color-accent-high: var(--nd-color-accent-strong);
-    --sl-color-bg: var(--nd-color-bg);
-    --sl-color-bg-nav: var(--nd-color-surface);
-    --sl-color-bg-sidebar: var(--nd-color-surface);
-    --sl-color-hairline: var(--nd-color-border);
-    --sl-color-text: var(--nd-color-text);
-    --sl-color-text-accent: var(--nd-color-accent-strong);
+    --sl-color-accent-low: var(--nd-color-accent-soft) !important;
+    --sl-color-accent: var(--nd-color-accent) !important;
+    --sl-color-accent-high: var(--nd-color-accent-strong) !important;
+    --sl-color-bg: var(--nd-color-bg) !important;
+    --sl-color-bg-nav: var(--nd-color-surface) !important;
+    --sl-color-bg-sidebar: var(--nd-color-surface-raised) !important;
+    --sl-color-hairline: var(--nd-color-border) !important;
+    --sl-color-text: var(--nd-color-text) !important;
+    --sl-color-text-accent: var(--nd-color-accent-strong) !important;
+    /* Ndigo palette overrides (dark mode). */
+    --nd-color-bg: #0c0c1e !important;
+    --nd-color-surface: #141430 !important;
+    --nd-color-surface-raised: #1c1c42 !important;
+    --nd-color-text: #f4f4fa !important;
+    --nd-color-text-muted: #9499b8 !important;
+    --nd-color-border: #23234d !important;
+    --nd-color-code-bg: #080814 !important;
+    --nd-color-accent: #8b7cff !important;
+    --nd-color-accent-strong: #aba0ff !important;
+    --nd-focus-ring-color: var(--nd-color-accent-secondary) !important;
+    --nd-color-accent-soft: rgb(139 124 255 / 0.18) !important;
+    --nd-color-on-accent: #0f0f26 !important;
+    --nd-color-success: #6ee7b7 !important;
+    --nd-color-warning: #fcd34d !important;
+    --nd-color-danger: #fda4af !important;
+    --nd-color-info: #7dd3fc !important;
+    --nd-color-tip: #d8b4fe !important;
+    --nd-color-accent-secondary: #2dd4bf !important;
+    --nd-color-accent-secondary-strong: #2dd4bf !important;
+    --nd-color-accent-secondary-soft: rgb(45 212 191 / 0.18) !important;
+    --nd-color-on-secondary: #0f0f26 !important;
+    /* Code-block background (dark mode). */
+    --ec-frm-edBg: #080814 !important;
+    --ec-frm-trmBg: #080814 !important;
+    --ec-frm-edTabBarBg: #141430 !important;
+    --ec-frm-edActTabBg: #080814 !important;
+    --ec-frm-trmTtbBg: #141430 !important;
+    /* Align Starlight's aside/status hues with Ndigo's semantic colors. */
+    --sl-hue-blue: 199;
+    --sl-hue-purple: 172;
+    --sl-hue-orange: 46;
+    --sl-hue-red: 353;
+    --sl-hue-green: 156;
+    /* Aside color overrides (dark mode). */
+    --sl-color-blue-low: rgb(125 211 252 / 0.08) !important;
+    --sl-color-blue: #38bdf8 !important;
+    --sl-color-blue-high: #7dd3fc !important;
+    --sl-color-purple-low: rgb(45 212 191 / 0.08) !important;
+    --sl-color-purple: #2dd4bf !important;
+    --sl-color-purple-high: #5eead4 !important;
+    --sl-color-orange-low: rgb(252 211 77 / 0.08) !important;
+    --sl-color-orange: #fbbf24 !important;
+    --sl-color-orange-high: #fcd34d !important;
+    --sl-color-red-low: rgb(253 164 175 / 0.08) !important;
+    --sl-color-red: #fb7185 !important;
+    --sl-color-red-high: #fda4af !important;
     /* Starlight puts `--sl-color-text-invert` on the active sidebar item's
        accent background. Its dark default is `--sl-color-accent-low`, which we
-       map to the translucent `--nd-color-accent-soft`; use the page background
+       map to the translucent `--nd-color-accent-soft` !important; use the page background
        instead so the selected label stays readable in both themes. */
-    --sl-color-text-invert: var(--nd-color-bg);
-    --sl-color-bg-inline-code: var(--nd-color-code-bg);
+    --sl-color-text-invert: var(--nd-color-bg) !important;
+    --sl-color-bg-inline-code: var(--nd-color-code-bg) !important;
 }
 
 .ndigo-gradient-text {
@@ -74,7 +121,7 @@ html {
     font-weight: var(--nd-weight-semibold);
     letter-spacing: var(--nd-tracking-wide);
     text-transform: uppercase;
-    color: var(--nd-color-text-muted);
+    color: var(--nd-color-text-muted) !important;
     margin: 0 0 var(--nd-space-1) 0;
 }
 
@@ -83,31 +130,186 @@ html {
    which makes cards and sidebars blend into the page. Deepen the tints and
    strengthen borders so layers read clearly in light mode. */
 :root[data-theme='light'] {
-    --nd-color-bg: #f4f4fc;
-    --nd-color-surface: #eaeaf4;
-    --nd-color-surface-raised: #ffffff;
-    --nd-color-border: #d0d0e8;
-    --nd-color-code-bg: #ececf4;
-    --nd-color-text-muted: #4a4a6a;
-    /* The deepened light surfaces need a darker success to keep AA contrast. */
-    --nd-color-success: #166534;
-    /* Darker, more distinct header/nav bar in light mode */
-    --sl-color-bg-nav: #d8d8ec;
-    --sl-color-bg-sidebar: #e4e4f0;
+    /* Ndigo palette (light mode). */
+    --nd-color-bg: #ffffff !important;
+    --nd-color-surface: #f6f6fc !important;
+    --nd-color-surface-raised: #ffffff !important;
+    --nd-color-text: #0f0f26 !important;
+    --nd-color-text-muted: #525875 !important;
+    --nd-color-border: #ddddf0 !important;
+    --nd-color-code-bg: #efeff8 !important;
+    --nd-color-accent: #4f46e5 !important;
+    --nd-color-accent-strong: #4338ca !important;
+    --nd-focus-ring-color: var(--nd-color-accent-secondary) !important;
+    --nd-color-accent-soft: rgb(79 70 229 / 0.1) !important;
+    --nd-color-on-accent: #ffffff !important;
+    --nd-color-success: #059669 !important;
+    --nd-color-warning: #b45309 !important;
+    --nd-color-danger: #e11d48 !important;
+    --nd-color-info: #0284c7 !important;
+    --nd-color-tip: #7e22ce !important;
+    --nd-color-accent-secondary: #0d9488 !important;
+    --nd-color-accent-secondary-strong: #0f766e !important;
+    --nd-color-accent-secondary-soft: rgb(13 148 136 / 0.1) !important;
+    --nd-color-on-secondary: #ffffff !important;
+    /* Header/nav */
+    --sl-color-bg-nav: #f3f3fb !important;
+    --sl-color-bg-sidebar: #f3f3fb !important;
+    /* Aside color overrides (light mode). */
+    --sl-color-blue-low: #f0f9ff !important;
+    --sl-color-blue: #0284c7 !important;
+    --sl-color-blue-high: #0369a1 !important;
+    --sl-color-purple-low: #f0fdfa !important;
+    --sl-color-purple: #0d9488 !important;
+    --sl-color-purple-high: #0f766e !important;
+    --sl-color-orange-low: #fffbeb !important;
+    --sl-color-orange: #d97706 !important;
+    --sl-color-orange-high: #b45309 !important;
+    --sl-color-red-low: #fff1f2 !important;
+    --sl-color-red: #e11d48 !important;
+    --sl-color-red-high: #be123c !important;
+    /* Code-block background (light mode). */
+    --ec-frm-edBg: #efeff8 !important;
+    --ec-frm-trmBg: #efeff8 !important;
+    --ec-frm-edTabBarBg: #e6e6f4 !important;
+    --ec-frm-edActTabBg: #efeff8 !important;
+    --ec-frm-trmTtbBg: #e6e6f4 !important;
 }
 
 /* Mirror the light refinements for OS-follow (no explicit data-theme). */
 @media (prefers-color-scheme: light) {
     :root:not([data-theme]) {
-        --nd-color-bg: #f4f4fc;
-        --nd-color-surface: #eaeaf4;
-        --nd-color-surface-raised: #ffffff;
-        --nd-color-border: #d0d0e8;
-        --nd-color-code-bg: #ececf4;
-        --nd-color-text-muted: #4a4a6a;
-        --nd-color-success: #166534;
-        --sl-color-bg-nav: #d8d8ec;
-        --sl-color-bg-sidebar: #e4e4f0;
+        --nd-color-bg: #ffffff !important;
+        --nd-color-surface: #f6f6fc !important;
+        --nd-color-surface-raised: #ffffff !important;
+        --nd-color-text: #0f0f26 !important;
+        --nd-color-text-muted: #525875 !important;
+        --nd-color-border: #ddddf0 !important;
+        --nd-color-code-bg: #efeff8 !important;
+        --nd-color-accent: #4f46e5 !important;
+        --nd-color-accent-strong: #4338ca !important;
+    --nd-focus-ring-color: var(--nd-color-accent-secondary) !important;
+        --nd-color-accent-soft: rgb(79 70 229 / 0.1) !important;
+        --nd-color-on-accent: #ffffff !important;
+        --nd-color-success: #059669 !important;
+        --nd-color-warning: #b45309 !important;
+        --nd-color-danger: #e11d48 !important;
+        --nd-color-info: #0284c7 !important;
+        --nd-color-tip: #7e22ce !important;
+        --nd-color-accent-secondary: #0d9488 !important;
+        --nd-color-accent-secondary-strong: #0f766e !important;
+        --nd-color-accent-secondary-soft: rgb(13 148 136 / 0.1) !important;
+        --nd-color-on-secondary: #ffffff !important;
+        --sl-color-bg-nav: #f3f3fb !important;
+        --sl-color-bg-sidebar: #f3f3fb !important;
+        --sl-color-blue-low: #f0f9ff !important;
+        --sl-color-blue: #0284c7 !important;
+        --sl-color-blue-high: #0369a1 !important;
+        --sl-color-purple-low: #f0fdfa !important;
+        --sl-color-purple: #0d9488 !important;
+        --sl-color-purple-high: #0f766e !important;
+        --sl-color-orange-low: #fffbeb !important;
+        --sl-color-orange: #d97706 !important;
+        --sl-color-orange-high: #b45309 !important;
+        --sl-color-red-low: #fff1f2 !important;
+        --sl-color-red: #e11d48 !important;
+        --sl-color-red-high: #be123c !important;
+        --ec-frm-edBg: #efeff8 !important;
+        --ec-frm-trmBg: #efeff8 !important;
+        --ec-frm-edTabBarBg: #e6e6f4 !important;
+        --ec-frm-edActTabBg: #efeff8 !important;
+        --ec-frm-trmTtbBg: #e6e6f4 !important;
+        --ec-brdCol: #ddddf0 !important;
+    }
+}
+
+/* Keep Starlight's primary link-button label readable on the accent fill. */
+.sl-link-button.primary,
+.sl-link-button.primary:hover {
+    color: var(--sl-color-black);
+}
+
+/* Starlight's sidebar active item uses the secondary teal accent. */
+:where(.astro-rmhv4bp6)[aria-current=page],
+:where(.astro-rmhv4bp6)[aria-current=page]:hover,
+:where(.astro-rmhv4bp6)[aria-current=page]:focus {
+    color: var(--nd-color-on-secondary) !important;
+    background-color: var(--nd-color-accent-secondary) !important;
+    font-weight: 600;
+}
+
+/* Inline prose links use the secondary teal accent. */
+.sl-markdown-content a,
+.sl-markdown-content a:visited {
+    color: var(--nd-color-accent-secondary-strong);
+}
+.sl-markdown-content a:hover {
+    color: var(--nd-color-accent-secondary);
+}
+
+/* TOC active link. */
+.right-sidebar a[aria-current="true"] {
+    color: var(--nd-color-accent-secondary-strong);
+    font-weight: 600;
+}
+
+/* Text selection uses a teal tint. */
+::selection {
+    background: rgb(45 212 191 / 0.25);
+    color: inherit;
+}
+:root[data-theme='light'] ::selection {
+    background: rgb(13 148 136 / 0.18);
+}
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) ::selection {
+        background: rgb(13 148 136 / 0.18);
+    }
+}
+
+/* Starlight asides: crisp left border + subtle perimeter border. */
+.starlight-aside {
+    border: 1px solid color-mix(in srgb, var(--sl-color-asides-border) 20%, transparent) !important;
+    border-inline-start: 3px solid var(--sl-color-asides-border) !important;
+    border-radius: var(--nd-radius-md) !important;
+}
+
+/* Search modal uses the raised surface so it floats above the navbar. */
+#starlight__search dialog {
+    background-color: var(--nd-color-surface-raised) !important;
+    box-shadow: 0 12px 32px rgb(15 15 38 / 0.12) !important;
+    border: 1px solid #ddddf0 !important;
+}
+
+/* Expressive Code frames: warm gray, complementary to the cool blue accent. */
+:root:not([data-theme='light']) .expressive-code,
+:root:not([data-theme='light']) .expressive-code .frame {
+    --ec-frm-edBg: #080814 !important;
+    --ec-frm-trmBg: #080814 !important;
+    --ec-frm-edTabBarBg: #141430 !important;
+    --ec-frm-edActTabBg: #080814 !important;
+    --ec-frm-trmTtbBg: #141430 !important;
+    --ec-brdCol: #23234d !important;
+}
+
+:root[data-theme='light'] .expressive-code,
+:root[data-theme='light'] .expressive-code .frame {
+    --ec-frm-edBg: #efeff8 !important;
+    --ec-frm-trmBg: #efeff8 !important;
+    --ec-frm-edTabBarBg: #e6e6f4 !important;
+    --ec-frm-edActTabBg: #efeff8 !important;
+    --ec-frm-trmTtbBg: #e6e6f4 !important;
+    --ec-brdCol: #ddddf0 !important;
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) .expressive-code,
+    :root:not([data-theme]) .expressive-code .frame {
+        --ec-frm-edBg: #efeff8 !important;
+        --ec-frm-trmBg: #efeff8 !important;
+        --ec-frm-edTabBarBg: #ffffff !important;
+        --ec-frm-edActTabBg: #efeff8 !important;
+        --ec-frm-trmTtbBg: #ffffff !important;
     }
 }
 

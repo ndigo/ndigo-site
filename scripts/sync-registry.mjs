@@ -90,7 +90,7 @@ for (const item of ordered) {
 
 // Concatenate all registry component CSS into one stylesheet for the live demo page.
 const componentsCss = items
-    .flatMap((item) => item.files.filter((f) => f.path.endsWith('.css')))
+    .flatMap((item) => item.files.filter((f) => f.path.endsWith('.css') && f.path !== 'theme/base.css'))
     .map((file) => `/* ${file.path} */\n` + readFileSync(join(UI_ROOT, file.path), 'utf8'))
     .join('\n\n');
 writeFileSync(join(ROOT, 'src', 'styles', 'ndigo-components.css'), componentsCss, 'utf8');
