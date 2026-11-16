@@ -118,6 +118,7 @@ for (const dir of packages) {
     for (const f of walk(destApi)) {
         if (f.endsWith('/README.md') && dirname(f) === destApi) rmSync(f, { force: true });
     }
+    console.log(`  destApi files for ${dir}: ${readdirSync(destApi).join(', ')}`);
     if (skippedRoot === 0) console.log(`  WARNING: no root README skipped for ${dir}`);
     // Generate a module-level index instead of copying TypeDoc's flat root index.
     // Written after the loop so it overwrites any copied root README.md.
