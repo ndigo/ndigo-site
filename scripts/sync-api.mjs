@@ -63,7 +63,38 @@ for (const dir of packages) {
     const srcApi = join(PACKAGES, dir, 'api');
     const destApi = join(DEST, dir);
     mkdirSync(destApi, { recursive: true });
+
+    // Generate a module-level index instead of copying TypeDoc's flat root index.
+    const moduleDirs = readdirSync(srcApi, { withFileTypes: true })
+        .filter((e) => e.isDirectory() && e.name !== 'index' && existsSync(join(srcApi, e.name, 'README.md')))
+        .map((e) => e.name)
+        .sort();
+    const manifest = JSON.parse(readFileSync(join(PACKAGES, dir, 'package.json'), 'utf8'));
+    const moduleLines = [
+        '---',
+        `title: ${JSON.stringify(manifest.name)}`,
+        '---',
+        '',
+        `[← API reference](/reference/api/)`,
+        '',
+        `# ${manifest.name}`,
+        '',
+        manifest.description ? `${manifest.description}` : '',
+        '',
+        '## Modules',
+        '',
+    ];
+    for (const mod of moduleDirs) {
+        const modReadme = readFileSync(join(srcApi, mod, 'README.md'), 'utf8');
+        const modTitle = titleFor(join(srcApi, mod, 'README.md'), modReadme);
+        moduleLines.push(`- [${modTitle}](/reference/api/${dir}/${githubSlug(mod)}/)`);
+    }
+    moduleLines.push('');
+    writeFileSync(join(destApi, 'index.md'), moduleLines.join('\n'), 'utf8');
+
     for (const file of walk(srcApi)) {
+        // Skip the package root README; we generated a module index instead.
+        if (file === join(srcApi, 'README.md')) continue;
         const rel = relative(srcApi, file);
         const destFile = join(destApi, rel);
         mkdirSync(dirname(destFile), { recursive: true });
@@ -74,9 +105,9 @@ for (const dir of packages) {
         raw = raw.replace(/README\.md/g, 'index.md');
         // Prefer "Exports" over TypeDoc's "Re-exports" in module indexes.
         raw = raw.replace(/Re-exports/g, 'Exports');
-        // Add a back link to the API reference index on package root pages.
+        // Add a back link to the package index on module root pages.
         if (file.split('/').pop() === 'README.md') {
-            raw = `[← API reference](/reference/api/)\n\n${raw}`;
+            raw = `[← ${manifest.name}](/reference/api/${dir}/)\n\n${raw}`;
         }
         // Astro routes are case-sensitive and lower-case file names; rewrite
         // relative .md links to root-relative URLs so they resolve on the site.
@@ -98,9 +129,9 @@ for (const dir of packages) {
             return `](/reference/api/${dir}/${route}${h})`;
         });
         const title = titleFor(file, raw);
-        const finalDest = destFile.endsWith('README.md')
-            ? destFile.replace(/README\.md$/, 'index.md')
-            : destFile;
+        const base = destFile.split('/').pop();
+        const lowerBase = base.toLowerCase().replace('readme.md', 'index.md');
+        const finalDest = destFile.slice(0, -base.length) + lowerBase;
         mkdirSync(dirname(finalDest), { recursive: true });
         writeFileSync(finalDest, injectFrontmatter(raw, title), 'utf8');
     }
