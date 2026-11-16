@@ -146,6 +146,7 @@ for (const dir of packages) {
     }
     moduleLines.push('');
     writeFileSync(join(destApi, 'index.md'), moduleLines.join('\n'), 'utf8');
+    console.log(`  wrote custom index: ${join(destApi, 'index.md')}`);
 }
 
 // Package layers (mirrors the Core Concepts guide).
