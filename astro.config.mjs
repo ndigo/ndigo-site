@@ -98,8 +98,10 @@ export default defineConfig({
                 {
                     label: 'Reference',
                     items: [
-                        { autogenerate: { directory: 'reference' } },
-                        { label: 'API reference', link: '/reference/api/' },
+                        { label: 'API', link: '/reference/api/' },
+                        { label: 'Packages', link: '/reference/packages/' },
+                        { label: 'Changelog', link: '/reference/changelog/' },
+                        { label: 'Contributing to Ndigo', link: '/reference/contributing/' },
                     ],
                 },
             ],
