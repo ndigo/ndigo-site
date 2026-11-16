@@ -66,23 +66,31 @@ for (const dir of packages) {
 
     const manifest = JSON.parse(readFileSync(join(PACKAGES, dir, 'package.json'), 'utf8'));
 
-    let skippedRoot = 0;
     for (const file of walk(srcApi)) {
         // Skip the package root README; we generated a module index instead.
         if (file.split('/').pop() === 'README.md' && dirname(file) === srcApi) {
-            skippedRoot++;
             continue;
         }
-        const rel = relative(srcApi, file);
-        const destFile = join(destApi, rel);
+        const relSrc = posix.relative(srcApi, file);
+        // TypeDoc's "index" module is the package's flat export list. Its directory
+        // name collides with Astro/Starlight's index handling (a file at
+        // <pkg>/index/index.md is served as <pkg>/), so publish it under "exports".
+        const relParts = relSrc.split('/').filter(Boolean);
+        if (relParts[0] === 'index') relParts[0] = 'exports';
+        const rel = relParts.join('/');
+        const destFile = join(destApi, ...relParts);
         mkdirSync(dirname(destFile), { recursive: true });
         let raw = readFileSync(file, 'utf8');
-        const relFile = posix.relative(srcApi, file);
+        const relFile = relSrc;
         const relDir = posix.dirname(relFile);
         // TypeDoc links to README.md; Astro serves directory indexes as index.md.
         raw = raw.replace(/README\.md/g, 'index.md');
         // Prefer "Exports" over TypeDoc's "Re-exports" in module indexes.
         raw = raw.replace(/Re-exports/g, 'Exports');
+        // Rename the colliding "index" module so its heading matches its route.
+        if (relSrc.startsWith('index/') && file.split('/').pop() === 'README.md') {
+            raw = raw.replace(/^#\s+index\s*$/m, '# Exports');
+        }
         // Add a back link to the package index on module root pages.
         if (file.split('/').pop() === 'README.md') {
             raw = `[← ${manifest.name}](/reference/api/${dir}/)\n\n${raw}`;
@@ -92,9 +100,13 @@ for (const dir of packages) {
         raw = raw.replace(/\]\(([^)]+\.md)(#[^)]*)?\)/g, (m, linkPath, hash) => {
             const h = hash || '';
             const resolved = posix.normalize(posix.join(relDir, linkPath));
-            const slugPath = resolved
-                .split('/')
-                .filter(Boolean)
+            const parts = resolved.split('/').filter(Boolean);
+            // TypeDoc's "index" module is published as "exports" (its directory name
+            // collides with Astro/Starlight index handling). A link to the package
+            // root README (rewritten to index.md) must keep pointing at the root.
+            const isIndexModule = parts[0] === 'index' && parts.length > 1;
+            if (isIndexModule) parts[0] = 'exports';
+            const slugPath = parts
                 .map((seg) => {
                     const isMd = seg.toLowerCase().endsWith('.md');
                     const name = isMd ? seg.slice(0, -3) : seg;
@@ -102,8 +114,9 @@ for (const dir of packages) {
                 })
                 .join('/');
             let route = slugPath;
-            if (route.endsWith('/index')) route = route.slice(0, -6);
-            if (!route.endsWith('/')) route += '/';
+            if (route === 'index') route = '';
+            else if (route.endsWith('/index')) route = route.slice(0, -6);
+            if (route !== '' && !route.endsWith('/')) route += '/';
             return `](/reference/api/${dir}/${route}${h})`;
         });
         const title = titleFor(file, raw);
@@ -118,14 +131,6 @@ for (const dir of packages) {
     for (const f of walk(destApi)) {
         if (f.endsWith('/README.md') && dirname(f) === destApi) rmSync(f, { force: true });
     }
-    console.log(`  destApi files for ${dir}: ${readdirSync(destApi).join(', ')}`);
-    // List all files recursively
-    const allFiles = [];
-    function walkAll(d) { for (const e of readdirSync(d, { withFileTypes: true })) { const f = join(d, e.name); if (e.isDirectory()) walkAll(f); else allFiles.push(relative(destApi, f)); } }
-    walkAll(destApi);
-    const readmes = allFiles.filter((f) => f.endsWith('README.md'));
-    if (readmes.length) console.log(`  WARNING: README.md files remain: ${readmes.join(', ')}`);
-    if (skippedRoot === 0) console.log(`  WARNING: no root README skipped for ${dir}`);
     // Generate a module-level index instead of copying TypeDoc's flat root index.
     // Written after the loop so it overwrites any copied root README.md.
     const moduleDirs = readdirSync(srcApi, { withFileTypes: true })
@@ -143,7 +148,7 @@ for (const dir of packages) {
         '',
         manifest.description ? `${manifest.description}` : '',
         '',
-        '## Modules (CUSTOM INDEX)',
+        '## Modules',
         '',
     ];
     for (const mod of moduleDirs) {
@@ -151,9 +156,13 @@ for (const dir of packages) {
         const modTitle = titleFor(join(srcApi, mod, 'README.md'), modReadme);
         moduleLines.push(`- [${modTitle}](/reference/api/${dir}/${githubSlug(mod)}/)`);
     }
+    if (existsSync(join(srcApi, 'index', 'README.md'))) {
+        moduleLines.push('');
+        moduleLines.push('## Exports', '');
+        moduleLines.push(`- [Exports](/reference/api/${dir}/exports/)`);
+    }
     moduleLines.push('');
     writeFileSync(join(destApi, 'index.md'), moduleLines.join('\n'), 'utf8');
-    console.log(`  wrote custom index: ${join(destApi, 'index.md')}`);
 }
 
 // Package layers (mirrors the Core Concepts guide).
