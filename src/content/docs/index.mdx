@@ -17,6 +17,14 @@ hero:
       variant: minimal
 ---
 
+<div class="nd-alert" data-variant="warning" role="status">
+  <span class="nd-alert__icon" aria-hidden="true">!</span>
+  <div class="nd-alert__content">
+    <p class="nd-alert__title">Pre-release</p>
+    <p class="nd-alert__description">Ndigo is in pre-release and still subject to changes. APIs may change between commits; Semantic Versioning guarantees arrive at <code>1.0.0</code>.</p>
+  </div>
+</div>
+
 ## What is Ndigo?
 
 Ndigo gives TypeScript applications the structure of a server framework and the reach of the web.
@@ -78,15 +86,6 @@ Views, HTTP, ORM, auth, and telemetry are adopted only when needed — you pay f
       <span>pnpm create ndigo-app my-app</span>
       <span>cd my-app &amp;&amp; pnpm install</span>
       <span>pnpm dev</span>
-    </span>
-    <span class="bento__arrow" aria-hidden="true">→</span>
-  </a>
-
-  <a class="bento__tile bento__tile--full bento__tile--notice" href="/reference/changelog/">
-    <span class="bento__icon" aria-hidden="true">!</span>
-    <span class="bento__notice">
-      <span class="bento__title">Pre-release</span>
-      <span class="bento__text">APIs may change between commits; Semantic Versioning guarantees arrive at 1.0.0.</span>
     </span>
     <span class="bento__arrow" aria-hidden="true">→</span>
   </a>

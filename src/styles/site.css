@@ -395,41 +395,7 @@ html[data-has-hero] .hero h1#_top {
     align-self: flex-end;
 }
 
-/* The pre-release strip keeps the alert's warning affordance. */
-.bento .bento__tile--notice {
-    flex-direction: row;
-    align-items: center;
-    gap: var(--nd-space-3);
-    background: color-mix(in srgb, var(--site-color-warning) 6%, var(--site-color-surface));
-    border-color: color-mix(in srgb, var(--site-color-warning) 22%, var(--site-color-border));
-}
-
-.bento__tile--notice .bento__title {
-    color: var(--site-color-warning);
-}
-
-.bento__icon {
-    display: grid;
-    flex: none;
-    place-items: center;
-    inline-size: 1.5rem;
-    block-size: 1.5rem;
-    font-size: 0.8125rem;
-    font-weight: var(--nd-weight-bold);
-    color: var(--site-color-warning);
-    background: color-mix(in srgb, var(--site-color-warning) 16%, transparent);
-    border-radius: var(--nd-radius-full);
-}
-
-.bento__notice {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 0.125rem;
-}
-
-.bento__tile--wide,
-.bento__tile--full {
+.bento__tile--wide {
     grid-column: 1 / -1;
 }
 
