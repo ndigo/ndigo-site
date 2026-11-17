@@ -1,0 +1,403 @@
+/* ==========================================================================
+   Ndigo site presentation layer.
+
+   Loaded after the generated component styles. It maps the semantic --site-*
+   palette into Starlight and --nd-*, then applies the type scale, elevation,
+   and chrome refinements for the visual refresh.
+
+   Palette values live in tokens.css; nothing here hardcodes a brand colour.
+   ========================================================================== */
+
+/* ---------- Token mapping ----------
+   The generated component styles declare --nd-* on :root[data-theme='dark'],
+   so a plain :root mapping would lose on specificity. Match the theme
+   selector here instead; these rules are unlayered, so they also beat the
+   framework's layered defaults. */
+:root,
+:root[data-theme],
+:root:not([data-theme]) {
+    --sl-font: var(--nd-font-sans);
+    --sl-font-mono: var(--nd-font-mono);
+
+    --sl-color-bg: var(--site-color-bg);
+    --sl-color-bg-nav: var(--site-color-bg-sidebar);
+    --sl-color-bg-sidebar: var(--site-color-bg-sidebar);
+    --sl-color-bg-inline-code: var(--site-color-code-bg);
+    --sl-color-hairline: var(--site-color-border);
+    --sl-color-hairline-shade: var(--site-color-border);
+    --sl-color-text: var(--site-color-text);
+    --sl-color-white: var(--site-color-text);
+    --sl-color-black: var(--site-color-bg);
+    --sl-color-text-accent: var(--site-color-link);
+    --sl-color-text-invert: var(--site-color-on-accent);
+    --sl-color-accent-low: var(--site-color-accent-soft);
+    --sl-color-accent: var(--site-color-accent);
+    --sl-color-accent-high: var(--site-color-accent-text);
+    --sl-color-gray-2: var(--site-color-text-muted);
+
+    --nd-color-bg: var(--site-color-bg);
+    --nd-color-surface: var(--site-color-surface);
+    --nd-color-surface-raised: var(--site-color-surface-raised);
+    --nd-color-text: var(--site-color-text);
+    --nd-color-text-muted: var(--site-color-text-muted);
+    --nd-color-border: var(--site-color-border);
+    --nd-color-code-bg: var(--site-color-code-bg);
+    --nd-color-accent: var(--site-color-accent);
+    --nd-color-accent-strong: var(--site-color-accent-text);
+    --nd-color-accent-soft: var(--site-color-accent-soft);
+    --nd-color-on-accent: var(--site-color-on-accent);
+    --nd-color-success: var(--site-color-success);
+    --nd-color-warning: var(--site-color-warning);
+    --nd-color-danger: var(--site-color-danger);
+    --nd-color-info: var(--site-color-info);
+    --nd-color-tip: var(--site-color-tip);
+    --nd-focus-ring-color: var(--site-color-focus);
+
+    /* Expressive Code frames. */
+    --ec-frm-edBg: var(--site-color-code-bg);
+    --ec-frm-trmBg: var(--site-color-code-bg);
+    --ec-frm-edTabBarBg: var(--site-color-surface);
+    --ec-frm-edActTabBg: var(--site-color-code-bg);
+    --ec-frm-trmTtbBg: var(--site-color-surface);
+    --ec-brdCol: var(--site-color-border);
+
+    /* Aside hues, aligned with the semantic palette. */
+    --sl-hue-blue: 199;
+    --sl-hue-purple: 172;
+    --sl-hue-orange: 46;
+    --sl-hue-red: 353;
+    --sl-hue-green: 156;
+    --sl-color-blue-low: light-dark(#f0f9ff, rgb(125 211 252 / 0.08));
+    --sl-color-blue: light-dark(#0284c7, #38bdf8);
+    --sl-color-blue-high: light-dark(#0369a1, #7dd3fc);
+    --sl-color-purple-low: light-dark(#f0fdfa, rgb(45 212 191 / 0.08));
+    --sl-color-purple: light-dark(#0d9488, #2dd4bf);
+    --sl-color-purple-high: light-dark(#0f766e, #5eead4);
+    --sl-color-orange-low: light-dark(#fffbeb, rgb(252 211 77 / 0.08));
+    --sl-color-orange: light-dark(#d97706, #fbbf24);
+    --sl-color-orange-high: light-dark(#b45309, #fcd34d);
+    --sl-color-red-low: light-dark(#fff1f2, rgb(253 164 175 / 0.08));
+    --sl-color-red: light-dark(#e11d48, #fb7185);
+    --sl-color-red-high: light-dark(#be123c, #fda4af);
+    --sl-color-green-low: light-dark(#ecfdf5, rgb(110 231 183 / 0.08));
+    --sl-color-green: light-dark(#059669, #34d399);
+    --sl-color-green-high: light-dark(#047857, #6ee7b7);
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+/* Michroma is a display face. Keep it for the one hero moment; UI and
+   long-form headings use Inter so they scan like docs. */
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--nd-font-sans);
+    font-weight: var(--nd-weight-semibold);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+}
+
+/* The wordmark is an SVG, so only the splash hero needs the display face. */
+.hero h1,
+[data-page-title] {
+    font-family: var(--nd-font-display);
+    font-weight: var(--nd-weight-regular);
+    letter-spacing: 0;
+}
+
+/* Documentation page titles: large enough to lead, tight enough to scan. */
+h1#_top {
+    font-size: clamp(1.875rem, 1.6rem + 1.1vw, 2.375rem);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+}
+
+/* The splash hero is the one place the display face leads. */
+html[data-has-hero] .hero h1 {
+    font-size: clamp(2.25rem, 1.7rem + 2.4vw, 3.25rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+}
+
+/* Tighter docs rhythm than Starlight's default display scale. */
+.sl-markdown-content h2 {
+    margin-block: 2.5rem 0.875rem;
+    font-size: clamp(1.5rem, 1.4rem + 0.35vw, 1.75rem);
+    line-height: 1.25;
+}
+
+.sl-markdown-content h3 {
+    margin-block: 2rem 0.625rem;
+    font-size: 1.3125rem;
+    line-height: 1.35;
+}
+
+.sl-markdown-content h4 {
+    margin-block: 1.75rem 0.5rem;
+    font-size: 1.0625rem;
+    line-height: 1.45;
+}
+
+.sl-markdown-content p {
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+}
+
+/* Card titles are UI text; never inherit a display heading face or the
+   docs h3 scale. */
+.sl-markdown-content .nd-card__title,
+.card .title {
+    font-family: var(--nd-font-sans);
+    font-size: 1.25rem;
+    font-weight: var(--nd-weight-semibold);
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+}
+
+/* Sidebar group labels and the table of contents read as quiet UI labels. */
+#starlight__sidebar .group-label .large,
+.right-sidebar h2 {
+    font-family: var(--nd-font-sans);
+    font-size: var(--nd-text-xs);
+    font-weight: var(--nd-weight-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--site-color-text-muted);
+}
+
+.right-sidebar h2 {
+    margin-block-end: var(--nd-space-2);
+}
+
+/* Guide number eyebrow: the one warm accent in Phase 1, with a short rule
+   that gives guide pages an editorial marker. */
+.guide-label {
+    margin: 0 0 var(--nd-space-1);
+    font-family: var(--nd-font-sans);
+    font-size: var(--nd-text-xs);
+    font-weight: var(--nd-weight-semibold);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--site-color-warm);
+}
+
+.guide-label::after {
+    content: '';
+    display: block;
+    width: 2.25rem;
+    height: 2px;
+    margin-block-start: 0.55rem;
+    background: currentColor;
+    opacity: 0.5;
+}
+
+/* ==========================================================================
+   Surfaces and elevation
+   ========================================================================== */
+
+.nd-card,
+.card {
+    background: var(--site-color-surface);
+    border: 1px solid var(--site-color-border);
+    border-radius: var(--nd-radius-lg);
+    box-shadow: var(--site-shadow-card);
+}
+
+.card {
+    padding: clamp(1rem, calc(0.5rem + 2vw), 1.75rem);
+    gap: var(--nd-space-3);
+}
+
+/* Starlight's Card picks a different hue per child; one quiet icon treatment
+   is calmer and keeps the palette to indigo and teal. */
+.card .icon {
+    border-color: var(--site-color-border-strong);
+    border-radius: var(--nd-radius-sm);
+    background: var(--site-color-accent-soft);
+    color: var(--site-color-accent-text);
+}
+
+.nd-card--interactive {
+    transition:
+        transform var(--nd-duration-fast) var(--nd-ease-standard),
+        border-color var(--nd-duration-fast) var(--nd-ease-standard),
+        box-shadow var(--nd-duration-fast) var(--nd-ease-standard);
+}
+
+.nd-card--interactive:hover,
+.nd-card--interactive:focus-within {
+    border-color: var(--site-color-border-strong);
+    box-shadow: var(--site-shadow-glow);
+    transform: translateY(-2px);
+}
+
+.starlight-aside {
+    border: 1px solid color-mix(in srgb, var(--sl-color-asides-border) 22%, transparent);
+    border-inline-start: 3px solid var(--sl-color-asides-border);
+    border-radius: var(--nd-radius-md);
+    background: color-mix(in srgb, var(--sl-color-asides-border) 5%, var(--site-color-surface));
+    box-shadow: var(--site-shadow-card);
+}
+
+.expressive-code .frame {
+    box-shadow: var(--site-shadow-card);
+}
+
+#starlight__search {
+    --pagefind-ui-background: var(--site-color-surface-sunken);
+    --pagefind-ui-border: var(--site-color-border);
+    --pagefind-ui-tag: var(--site-color-surface-sunken);
+}
+
+#starlight__search dialog {
+    background-color: var(--site-color-surface-overlay);
+    border: 1px solid var(--site-color-border-strong);
+    box-shadow: var(--site-shadow-raised);
+}
+
+#starlight__search .pagefind-ui__search-input {
+    border-color: var(--site-color-border-strong);
+}
+
+/* ==========================================================================
+   Chrome
+   ========================================================================== */
+
+/* Translucent header over the page; the solid colour is the fallback. */
+.header {
+    background-color: var(--site-color-bg);
+    background-color: color-mix(in srgb, var(--site-color-bg) 88%, transparent);
+    border-bottom-color: var(--site-color-border);
+    backdrop-filter: blur(16px) saturate(1.2);
+}
+
+#starlight__sidebar {
+    background-color: var(--site-color-bg-sidebar);
+}
+
+/* The mobile menu toggle is an affordance, not a primary action; keep it in
+   the surface palette instead of Starlight's solid white circle. */
+.sl-menu-button {
+    background-color: var(--site-color-surface-raised);
+    color: var(--site-color-text);
+    border: 1px solid var(--site-color-border);
+    box-shadow: var(--site-shadow-card);
+}
+
+.sl-menu-button:has(~ :popover-open) {
+    background-color: var(--site-color-surface-overlay);
+    color: var(--site-color-text);
+}
+
+html[data-theme='light'] .sl-menu-button {
+    background-color: var(--site-color-surface);
+    color: var(--site-color-text);
+}
+
+html[data-theme='light'] .sl-menu-button:has(~ :popover-open) {
+    background-color: var(--site-color-surface-sunken);
+}
+
+#starlight__sidebar a {
+    border-radius: var(--nd-radius-sm);
+}
+
+#starlight__sidebar a:hover {
+    background-color: var(--site-color-accent-soft);
+    color: var(--site-color-text);
+}
+
+/* Active navigation: a teal marker and a soft tint, not a solid fill. */
+#starlight__sidebar a[aria-current='page'],
+#starlight__sidebar a[aria-current='page']:hover {
+    color: var(--site-color-text);
+    background-color: var(--site-color-link-soft);
+    box-shadow: inset 2px 0 0 var(--site-color-link);
+    font-weight: var(--nd-weight-semibold);
+}
+
+/* Primary actions use indigo; Starlight wires primary buttons to the link
+   accent, so state it explicitly. */
+.sl-link-button.primary,
+.sl-link-button.primary:hover {
+    background: var(--site-color-accent);
+    border-color: var(--site-color-accent);
+    color: var(--site-color-on-accent);
+}
+
+.sl-link-button.primary:hover {
+    background: var(--site-color-accent-hover);
+    border-color: var(--site-color-accent-hover);
+}
+
+/* Inline prose links and the current TOC entry use the interaction teal. */
+.sl-markdown-content a,
+.sl-markdown-content a:visited {
+    color: var(--site-color-link);
+}
+
+.sl-markdown-content a:hover {
+    color: var(--site-color-link-hover);
+}
+
+.right-sidebar a[aria-current='true'] {
+    color: var(--site-color-link);
+    font-weight: var(--nd-weight-semibold);
+}
+
+/* Inactive entries stay quiet so the current section is the signal. */
+.right-sidebar a:not([aria-current='true']) {
+    color: var(--site-color-text-muted);
+}
+
+.right-sidebar a:not([aria-current='true']):hover {
+    color: var(--site-color-text);
+}
+
+::selection {
+    background: var(--site-color-selection);
+    color: inherit;
+}
+
+:root :is(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
+    outline: var(--nd-focus-ring-width) solid var(--site-color-focus);
+    outline-offset: var(--nd-focus-ring-offset);
+}
+
+/* ==========================================================================
+   Splash atmosphere
+   ========================================================================== */
+
+html[data-has-hero] body {
+    background-image:
+        radial-gradient(70rem 42rem at 78% -8%, var(--site-atmosphere-a), transparent 62%),
+        radial-gradient(48rem 34rem at 4% 18%, var(--site-atmosphere-b), transparent 66%);
+    background-repeat: no-repeat;
+}
+
+html[data-has-hero] .hero img {
+    filter: drop-shadow(0 24px 48px var(--site-hero-shadow));
+}
+
+/* ==========================================================================
+   Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .nd-card--interactive,
+    .nd-card--interactive:hover,
+    .nd-card--interactive:focus-within {
+        transition: none;
+        transform: none;
+    }
+}
