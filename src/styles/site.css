@@ -88,8 +88,8 @@
    Typography
    ========================================================================== */
 
-/* Michroma is a display face. Keep it for the one hero moment; UI and
-   long-form headings use Inter so they scan like docs. */
+/* Michroma is a display face. It marks the page title and the splash hero;
+   body and long-form headings use Inter so they scan like docs. */
 html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -107,26 +107,37 @@ h6 {
     text-wrap: balance;
 }
 
-/* The wordmark is an SVG, so only the splash hero needs the display face. */
+/* The wordmark is an SVG, so the display face needs explicit hooks: every
+   page title plus the splash hero. One branded moment per page, at the top,
+   where it never interrupts reading. */
 .hero h1,
-[data-page-title] {
+h1#_top {
     font-family: var(--nd-font-display);
     font-weight: var(--nd-weight-regular);
     letter-spacing: 0;
 }
 
-/* Documentation page titles: large enough to lead, tight enough to scan. */
+/* Documentation page titles: large enough to lead, tight enough to scan.
+   Michroma is wide, so a long single word may need a break on small screens. */
 h1#_top {
     font-size: clamp(1.875rem, 1.6rem + 1.1vw, 2.375rem);
     line-height: 1.2;
-    letter-spacing: -0.025em;
+    overflow-wrap: break-word;
 }
 
-/* The splash hero is the one place the display face leads. */
-html[data-has-hero] .hero h1 {
+/* The splash hero is the one place the display face leads. The ID keeps the
+   hero size above the docs title rule, which also targets h1#_top. */
+html[data-has-hero] .hero h1#_top {
     font-size: clamp(2.25rem, 1.7rem + 2.4vw, 3.25rem);
     line-height: 1.08;
     letter-spacing: -0.01em;
+}
+
+/* Phones: the display face is wide, so long single words need a step down. */
+@media (max-width: 26rem) {
+    h1#_top {
+        font-size: 1.625rem;
+    }
 }
 
 /* Tighter docs rhythm than Starlight's default display scale. */
@@ -273,11 +284,12 @@ html[data-has-hero] .hero h1 {
    Chrome
    ========================================================================== */
 
-/* Translucent header over the page; the solid colour is the fallback. */
+/* Translucent header over the page; the solid colour is the fallback. The
+   indigo tint is the brand's anchor on every page without casting the body. */
 .header {
-    background-color: var(--site-color-bg);
-    background-color: color-mix(in srgb, var(--site-color-bg) 88%, transparent);
-    border-bottom-color: var(--site-color-border);
+    background-color: var(--site-color-bg-header);
+    background-color: color-mix(in srgb, var(--site-color-bg-header) 94%, transparent);
+    border-bottom-color: var(--site-color-border-brand);
     backdrop-filter: blur(16px) saturate(1.2);
 }
 

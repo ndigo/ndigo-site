@@ -34,6 +34,10 @@
     --site-color-border: light-dark(#e2e8f2, rgb(174 190 230 / 0.14));
     --site-color-border-strong: light-dark(#cbd5e5, rgb(174 190 230 / 0.24));
 
+    /* Chrome carries the brand tint so the content canvas can stay neutral. */
+    --site-color-bg-header: light-dark(#eef2ff, #0d1430);
+    --site-color-border-brand: light-dark(#d7ddf8, rgb(108 124 255 / 0.22));
+
     /* ---------- Text ---------- */
     --site-color-text: light-dark(#0f172a, #eef2ff);
     --site-color-text-muted: light-dark(#52607a, #a3aec8);
