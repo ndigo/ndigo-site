@@ -532,7 +532,16 @@ html[data-has-hero] body {
     background-repeat: no-repeat;
 }
 
+/* Tighter splash geometry so the pre-release notice and the intro sit at the
+   fold instead of a full viewport below it. */
+html[data-has-hero] .hero {
+    padding-block:
+        clamp(2.5rem, 1.25rem + 3vw, 3.5rem)
+        clamp(1.75rem, 0.75rem + 2.5vw, 2.5rem);
+}
+
 html[data-has-hero] .hero img {
+    max-width: 20rem;
     filter: drop-shadow(0 24px 48px var(--site-hero-shadow));
 }
 
