@@ -416,12 +416,104 @@ html[data-has-hero] .hero h1#_top {
 }
 
 /* ==========================================================================
+   Docs surfaces
+   ========================================================================== */
+
+/* Previous/next: two quiet cards side by side instead of stacked panels. */
+.pagination-links {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--nd-space-3);
+}
+
+@media (min-width: 48rem) {
+    .pagination-links {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.pagination-links a {
+    padding: 0.875rem 1rem;
+    color: var(--site-color-text-muted);
+    background: var(--site-color-surface);
+    border: 1px solid var(--site-color-border);
+    border-radius: var(--nd-radius-lg);
+    box-shadow: var(--site-shadow-card);
+    transition:
+        transform var(--nd-duration-fast) var(--nd-ease-standard),
+        border-color var(--nd-duration-fast) var(--nd-ease-standard),
+        box-shadow var(--nd-duration-fast) var(--nd-ease-standard);
+}
+
+.pagination-links a:hover {
+    border-color: var(--site-color-border-strong);
+    box-shadow: var(--site-shadow-glow);
+    transform: translateY(-2px);
+}
+
+.pagination-links a > span {
+    font-size: var(--nd-text-xs);
+    font-weight: var(--nd-weight-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.pagination-links .link-title {
+    font-size: 1rem;
+    font-weight: var(--nd-weight-semibold);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--site-color-text);
+    text-transform: none;
+}
+
+.pagination-links svg {
+    color: var(--site-color-link);
+}
+
+/* Tables: a framed surface with quiet header labels, and a cell floor so a
+   wide table scrolls instead of collapsing into ribbons. Markdown tables only
+   — the registry's .nd-table keeps its own styling on the demo page. */
+.sl-markdown-content table:not(.nd-table) {
+    border: 1px solid var(--site-color-border);
+    border-radius: var(--nd-radius-md);
+    background: var(--site-color-surface);
+    font-size: var(--nd-text-sm);
+}
+
+.sl-markdown-content table:not(.nd-table) :is(th, td) {
+    min-width: 6.5rem;
+    padding: 0.5rem 0.875rem;
+    vertical-align: top;
+    border-bottom: 1px solid var(--site-color-border);
+}
+
+.sl-markdown-content table:not(.nd-table) :is(th, td):first-child {
+    padding-inline-start: 0.875rem;
+}
+
+.sl-markdown-content table:not(.nd-table) thead :is(th, td) {
+    background: var(--site-color-surface-sunken);
+    border-bottom-color: var(--site-color-border-strong);
+    color: var(--site-color-text-muted);
+    font-size: var(--nd-text-xs);
+    font-weight: var(--nd-weight-semibold);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.sl-markdown-content table:not(.nd-table) tbody tr:last-child :is(th, td) {
+    border-bottom: 0;
+}
+
+/* ==========================================================================
    Chrome
    ========================================================================== */
 
 /* Translucent header over the page; the solid colour is the fallback. The
-   indigo tint is the brand's anchor on every page without casting the body. */
-.header {
+   indigo tint is the brand's anchor on every page without casting the body.
+   Scope to header.header: Expressive Code's title bars are figcaption.header,
+   and a bare .header rule tinted every code frame on the site. */
+header.header {
     background-color: var(--site-color-bg-header);
     background-color: color-mix(in srgb, var(--site-color-bg-header) 94%, transparent);
     border-bottom-color: var(--site-color-border-brand);
@@ -566,6 +658,14 @@ html[data-has-hero] .hero img {
     .bento .bento__tile:focus-visible,
     .bento .bento__tile:hover .bento__arrow,
     .bento .bento__tile:focus-visible .bento__arrow {
+        transform: none;
+    }
+
+    .pagination-links a {
+        transition: none;
+    }
+
+    .pagination-links a:hover {
         transform: none;
     }
 }
