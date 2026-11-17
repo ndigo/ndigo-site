@@ -31,7 +31,11 @@ export default defineConfig({
             social: [
                 { icon: 'github', label: 'GitHub', href: 'https://github.com/ndigo/ndigo' },
             ],
-            customCss: ['./src/styles/tokens.css', './src/styles/ndigo-components.css'],
+            customCss: [
+                './src/styles/tokens.css',
+                './src/styles/ndigo-components.css',
+                './src/styles/site.css',
+            ],
             head: [
                 {
                     tag: 'link',
