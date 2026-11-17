@@ -281,6 +281,175 @@ html[data-has-hero] .hero h1#_top {
 }
 
 /* ==========================================================================
+   Homepage bento
+   ========================================================================== */
+
+/* Seven tiles on the splash page: six content tiles plus a pre-release strip.
+   Every tile is a single link, so the whole surface is the target. */
+.bento {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--nd-space-3);
+    margin-block: var(--nd-space-5) var(--nd-space-6);
+}
+
+.bento .bento__tile,
+.bento .bento__tile:visited {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.125rem 1.25rem;
+    color: var(--site-color-text);
+    text-decoration: none;
+    background: var(--site-color-surface);
+    border: 1px solid var(--site-color-border);
+    border-radius: var(--nd-radius-xl);
+    box-shadow: var(--site-shadow-card);
+    transition:
+        transform var(--nd-duration-fast) var(--nd-ease-standard),
+        border-color var(--nd-duration-fast) var(--nd-ease-standard),
+        box-shadow var(--nd-duration-fast) var(--nd-ease-standard);
+}
+
+.bento .bento__tile:hover,
+.bento .bento__tile:focus-visible {
+    color: var(--site-color-text);
+    border-color: var(--site-color-border-strong);
+    box-shadow: var(--site-shadow-glow);
+    transform: translateY(-2px);
+}
+
+.bento__title {
+    font-size: 0.9375rem;
+    font-weight: var(--nd-weight-semibold);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+}
+
+.bento__text {
+    font-size: var(--nd-text-sm);
+    line-height: 1.55;
+    color: var(--site-color-text-muted);
+}
+
+.bento__snippet {
+    display: grid;
+    gap: 0.25rem;
+    margin-block-start: auto;
+    padding: 0.625rem 0.75rem;
+    font-family: var(--nd-font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--site-color-text);
+    background: var(--site-color-code-bg);
+    border: 1px solid var(--site-color-border);
+    border-radius: var(--nd-radius-md);
+    overflow-x: auto;
+}
+
+.bento__snippet span {
+    white-space: nowrap;
+}
+
+.bento__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-block-start: auto;
+}
+
+.bento__chip {
+    padding: 0.0625rem 0.5rem;
+    font-family: var(--nd-font-mono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--site-color-text-muted);
+    background: var(--site-color-surface-sunken);
+    border: 1px solid var(--site-color-border);
+    border-radius: var(--nd-radius-full);
+}
+
+.bento__arrow {
+    font-size: 1.125rem;
+    line-height: 1;
+    color: var(--site-color-link);
+    transition: transform var(--nd-duration-fast) var(--nd-ease-standard);
+}
+
+.bento .bento__tile:hover .bento__arrow,
+.bento .bento__tile:focus-visible .bento__arrow {
+    transform: translateX(3px);
+}
+
+/* One accent tile: the quick start carries the brand tint. */
+.bento .bento__tile--accent {
+    background: color-mix(in srgb, var(--site-color-accent) 7%, var(--site-color-surface));
+    border-color: color-mix(in srgb, var(--site-color-accent) 24%, var(--site-color-border));
+}
+
+.bento__tile--accent .bento__title {
+    color: var(--site-color-accent-text);
+}
+
+.bento__tile--accent .bento__arrow {
+    align-self: flex-end;
+}
+
+/* The pre-release strip keeps the alert's warning affordance. */
+.bento .bento__tile--notice {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--nd-space-3);
+    background: color-mix(in srgb, var(--site-color-warning) 6%, var(--site-color-surface));
+    border-color: color-mix(in srgb, var(--site-color-warning) 22%, var(--site-color-border));
+}
+
+.bento__tile--notice .bento__title {
+    color: var(--site-color-warning);
+}
+
+.bento__icon {
+    display: grid;
+    flex: none;
+    place-items: center;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    font-size: 0.8125rem;
+    font-weight: var(--nd-weight-bold);
+    color: var(--site-color-warning);
+    background: color-mix(in srgb, var(--site-color-warning) 16%, transparent);
+    border-radius: var(--nd-radius-full);
+}
+
+.bento__notice {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.bento__tile--wide,
+.bento__tile--full {
+    grid-column: 1 / -1;
+}
+
+@media (min-width: 48rem) {
+    .bento {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 64rem) {
+    .bento {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .bento__tile--wide {
+        grid-column: span 2;
+    }
+}
+
+/* ==========================================================================
    Chrome
    ========================================================================== */
 
@@ -410,6 +579,18 @@ html[data-has-hero] .hero img {
     .nd-card--interactive:hover,
     .nd-card--interactive:focus-within {
         transition: none;
+        transform: none;
+    }
+
+    .bento .bento__tile,
+    .bento__arrow {
+        transition: none;
+    }
+
+    .bento .bento__tile:hover,
+    .bento .bento__tile:focus-visible,
+    .bento .bento__tile:hover .bento__arrow,
+    .bento .bento__tile:focus-visible .bento__arrow {
         transform: none;
     }
 }
