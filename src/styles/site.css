@@ -429,6 +429,12 @@ html[data-has-hero] .hero h1#_top {
     .pagination-links {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    /* A lone next link belongs on the right, under its own arrow. A lone
+       previous link already sits left, which matches its direction. */
+    .pagination-links > a[rel='next']:only-child {
+        grid-column: 2;
+    }
 }
 
 .pagination-links a {
