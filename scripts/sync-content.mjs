@@ -60,6 +60,12 @@ const CONCEPT_PAGES = [
         description: 'Trust boundaries and the defense layers that protect an application.',
     },
     {
+        src: 'docs/architecture/annotation-and-transformer-model.md',
+        dest: 'annotation-and-transformer-model.md',
+        title: 'Annotation, Advice & Member Transformer',
+        description: 'The declaration and execution model: annotations, advice, member transformers, and the decorator inventory by mechanism.',
+    },
+    {
         src: 'STYLE_GUIDE.md',
         dest: 'style-guide.md',
         title: 'Style Guide',
@@ -150,6 +156,12 @@ function rewriteLinks(text) {
         const h = hash || '';
         return `](https://github.com/ndigo/ndigo/blob/main/${path}${h})`;
     });
+    // Scrub internal decision-record links and ADR identifiers. The framework
+    // repo is private, so ADR ids and links to docs/decisions are not
+    // publishable; replace them with neutral prose.
+    text = text.replace(/\[[^\]]*\]\((?:\.\.\/)*(?:docs\/)?decisions\/[^)]*\.md(#[^)]*)?\)/g, 'a prior decision record');
+    text = text.replace(/\bAD-\d+\b/g, 'a prior decision');
+    text = text.replace(/\bSEC(?:-AUD\d+)?-\d+\b/g, 'a security finding');
     // Generic fallback: rewrite any remaining relative .md links to GitHub
     text = text.replace(/\]\((\.\.\/)+([^)]+\.md)(#[^)]*)?\)/g, (m, dots, path, hash) => {
         const h = hash || '';
