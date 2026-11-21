@@ -284,8 +284,9 @@ html[data-has-hero] .hero h1#_top {
    Homepage bento
    ========================================================================== */
 
-/* Seven tiles on the splash page: six content tiles plus a pre-release strip.
-   Every tile is a single link, so the whole surface is the target. */
+/* Seven tiles on the splash page: one wide tile plus six regular tiles; the
+   quick start carries the accent. Every tile is a single link, so the whole
+   surface is the target. */
 .bento {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
