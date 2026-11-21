@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/ndigo/.github/raw/main/profile/assets/ndigo.svg" alt="Ndigo logo" width="120" height="120">
+</p>
+
 # ndigo-site
 
 Marketing site and documentation for [Ndigo](https://ndigo.dev) — a TypeScript
