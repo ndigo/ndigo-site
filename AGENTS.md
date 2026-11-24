@@ -40,8 +40,7 @@ NDIGO_REPO=/home/jeff/Workspace/ndigo-<issue>-<slug> npm run build
 - `src/styles/ndigo-tokens.css`, `ndigo-base.css`, `ndigo-components.css`
 
 Hand-authored pages are `src/content/docs/index.mdx`, `get-started.mdx`,
-`concepts/index.mdx`, `guides/index.mdx`, `reference/index.mdx`, and
-`ui/demo.mdx`.
+`concepts/index.mdx`, `guides/index.mdx`, and `ui/demo.mdx`.
 
 ## Source-of-truth map
 

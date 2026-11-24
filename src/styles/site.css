@@ -608,6 +608,18 @@ html[data-theme='light'] .sl-menu-button:has(~ :popover-open) {
     background-color: var(--site-color-surface-sunken);
 }
 
+/* Mobile: the toggle and sidebar rows need thumb-sized targets. Starlight
+   sizes the toggle from --sl-menu-button-size (2rem) and the rows at 32px. */
+@media (max-width: 50rem) {
+    :root {
+        --sl-menu-button-size: 2.75rem;
+    }
+
+    #starlight__sidebar a {
+        padding-block: 0.55rem;
+    }
+}
+
 #starlight__sidebar a {
     border-radius: var(--nd-radius-sm);
 }
