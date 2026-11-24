@@ -66,6 +66,12 @@ const CONCEPT_PAGES = [
         description: 'The declaration and execution model: annotations, advice, member transformers, and the decorator inventory by mechanism.',
     },
     {
+        src: 'docs/architecture/agent-first.md',
+        dest: 'agent-first.md',
+        title: 'Agent-First',
+        description: 'Authoring and runtime agents, capabilities as the installable unit, and verification as the executable contract.',
+    },
+    {
         src: 'STYLE_GUIDE.md',
         dest: 'style-guide.md',
         title: 'Style Guide',
