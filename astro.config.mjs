@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import mermaid from 'astro-mermaid';
 import starlightLinksValidator from 'starlight-links-validator';
+import { CONCEPT_PAGES } from './scripts/concept-pages.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -82,18 +83,17 @@ export default defineConfig({
                 },
                 {
                     label: 'Guides',
+                    collapsed: true,
                     items: [{ autogenerate: { directory: 'guides' } }],
                 },
                 {
                     label: 'Concepts',
                     items: [
-                        { label: 'Architecture Overview', slug: 'concepts/architecture-overview' },
-                        { label: 'Environment & Configuration', slug: 'concepts/environment' },
-                        { label: 'Lifecycle & Ownership', slug: 'concepts/lifecycle-and-ownership' },
-                        { label: 'Micro Frontends', slug: 'concepts/micro-frontends' },
-                        { label: 'Security', slug: 'concepts/security' },
-                        { label: 'Agent-First', slug: 'concepts/agent-first' },
-                        { label: 'Style Guide', slug: 'concepts/style-guide' },
+                        { label: 'Concepts map', link: '/concepts/' },
+                        ...CONCEPT_PAGES.map((page) => ({
+                            label: page.title,
+                            slug: `concepts/${page.dest.replace(/\.md$/, '')}`,
+                        })),
                     ],
                 },
                 {

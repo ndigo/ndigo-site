@@ -238,6 +238,60 @@ html[data-has-hero] .hero h1#_top {
     color: var(--site-color-accent-text);
 }
 
+/* Guide index: compact task lists inside the shared card grid. */
+.guide-card__text {
+    margin-block: 0;
+    font-size: var(--nd-text-sm);
+    line-height: 1.55;
+    color: var(--site-color-text-muted);
+}
+
+.guide-list {
+    display: grid;
+    gap: 0.35rem;
+    margin-block: 0.75rem 0;
+    padding-inline-start: 1.05rem;
+    font-size: var(--nd-text-sm);
+    line-height: 1.45;
+}
+
+.guide-list li::marker {
+    color: var(--site-color-link);
+}
+
+.guide-sections {
+    display: grid;
+    gap: var(--nd-space-3);
+    margin-block: var(--nd-space-5) var(--nd-space-6);
+}
+
+@media (min-width: 48rem) {
+    .guide-sections {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.guide-section {
+    padding: clamp(1rem, calc(0.5rem + 2vw), 1.75rem);
+    background: var(--site-color-surface);
+    border: 1px solid var(--site-color-border);
+    border-radius: var(--nd-radius-lg);
+    box-shadow: var(--site-shadow-card);
+}
+
+.guide-section h2 {
+    margin-block: 0 0.5rem;
+    font-size: 1.25rem;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+}
+
+/* The section headings are index labels, not prose anchors; the right-hand
+   TOC still links to them. */
+.guide-section .sl-anchor-link {
+    display: none;
+}
+
 .nd-card--interactive {
     transition:
         transform var(--nd-duration-fast) var(--nd-ease-standard),

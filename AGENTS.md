@@ -40,7 +40,8 @@ NDIGO_REPO=/home/jeff/Workspace/ndigo-<issue>-<slug> npm run build
 - `src/styles/ndigo-tokens.css`, `ndigo-base.css`, `ndigo-components.css`
 
 Hand-authored pages are `src/content/docs/index.mdx`, `get-started.mdx`,
-`concepts/index.mdx`, `reference/index.mdx`, and `ui/demo.mdx`.
+`concepts/index.mdx`, `guides/index.mdx`, `reference/index.mdx`, and
+`ui/demo.mdx`.
 
 ## Source-of-truth map
 
@@ -60,7 +61,8 @@ Hand-authored pages are `src/content/docs/index.mdx`, `get-started.mdx`,
 | `ui/*.md`, `public/r/` | `packages/ndigo-ui/registry.json` |
 
 Concepts is a flat section. Its page list, titles, and descriptions live in
-`scripts/sync-content.mjs` (`CONCEPT_PAGES`); add or reorder pages there.
+`scripts/concept-pages.mjs` (`CONCEPT_PAGES`), shared by the content sync and
+the sidebar config; add or reorder pages there.
 
 ## Content rules
 
