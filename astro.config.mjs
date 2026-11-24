@@ -13,6 +13,7 @@ export default defineConfig({
         '/concepts/architecture/lifecycle-and-ownership': '/concepts/lifecycle-and-ownership',
         '/concepts/architecture/micro-frontends': '/concepts/micro-frontends',
         '/concepts/architecture/security': '/concepts/security',
+        '/concepts/architecture/agent-first': '/concepts/agent-first',
     },
     integrations: [
         mermaid({ autoTheme: true }),
@@ -91,6 +92,7 @@ export default defineConfig({
                         { label: 'Lifecycle & Ownership', slug: 'concepts/lifecycle-and-ownership' },
                         { label: 'Micro Frontends', slug: 'concepts/micro-frontends' },
                         { label: 'Security', slug: 'concepts/security' },
+                        { label: 'Agent-First', slug: 'concepts/agent-first' },
                         { label: 'Style Guide', slug: 'concepts/style-guide' },
                     ],
                 },
