@@ -89,7 +89,7 @@ export default defineConfig({
                 {
                     label: 'Concepts',
                     items: [
-                        { label: 'Concepts map', link: '/concepts/' },
+                        { label: 'Concepts Map', link: '/concepts/' },
                         ...CONCEPT_PAGES.map((page) => ({
                             label: page.title,
                             slug: `concepts/${page.dest.replace(/\.md$/, '')}`,
