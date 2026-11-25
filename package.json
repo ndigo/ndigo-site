@@ -10,7 +10,8 @@
     "sync:registry": "node scripts/sync-registry.mjs",
     "sync:api": "node scripts/sync-api.mjs",
     "check:concepts": "node scripts/check-concepts.mjs",
-    "build": "npm run sync && npm run check:concepts && astro build",
+    "check:guide-groups": "node scripts/check-guide-groups.mjs",
+    "build": "npm run sync && npm run check:guide-groups && npm run check:concepts && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
