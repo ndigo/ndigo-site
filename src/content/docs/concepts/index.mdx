@@ -1,5 +1,5 @@
 ---
-title: Concepts
+title: Concepts Map
 description: How Ndigo is structured and why.
 order: 0
 ---
@@ -7,30 +7,47 @@ order: 0
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
 <CardGrid>
-	<Card title="Architecture Overview" icon="open-book" href="/concepts/architecture-overview/">
-		Layers, principles, package map, and design patterns.
-	</Card>
-	<Card title="Environment & Configuration" icon="seti:config" href="/concepts/environment/">
-		Configuration precedence, profiles, typed binding, and fail-loud
-		validation.
-	</Card>
-	<Card title="Lifecycle & Ownership" icon="seti:clock" href="/concepts/lifecycle-and-ownership/">
-		Initialization, shutdown, and who owns each resource.
-	</Card>
-	<Card title="Micro Frontends" icon="seti:folder" href="/concepts/micro-frontends/">
-		Hosted feature contexts, islands, and the boundaries between them.
-	</Card>
-	<Card title="Security" icon="seti:lock" href="/concepts/security/">
-		Trust boundaries and the defense layers that protect an application.
-	</Card>
-	<Card title="Annotation, Advice & Member Transformer" icon="puzzle" href="/concepts/annotation-and-transformer-model/">
-		Annotations, advice, member transformers, and the decorator inventory.
-	</Card>
-	<Card title="Agent-First" icon="rocket" href="/concepts/agent-first/">
-		Authoring and runtime agents, capabilities as the installable unit,
-		and verification as the executable contract.
-	</Card>
-	<Card title="Style Guide" icon="pencil" href="/concepts/style-guide/">
-		Naming, formatting, and code organization conventions.
-	</Card>
+	<a class="concept-card" href="/concepts/architecture-overview/">
+		<Card title="Architecture Overview" icon="open-book">
+			Layers, principles, package map, and design patterns.
+		</Card>
+	</a>
+	<a class="concept-card" href="/concepts/environment/">
+		<Card title="Environment & Configuration" icon="seti:config">
+			Configuration precedence, profiles, typed binding, and fail-loud
+			validation.
+		</Card>
+	</a>
+	<a class="concept-card" href="/concepts/lifecycle-and-ownership/">
+		<Card title="Lifecycle & Ownership" icon="seti:clock">
+			Initialization, shutdown, and who owns each resource.
+		</Card>
+	</a>
+	<a class="concept-card" href="/concepts/micro-frontends/">
+		<Card title="Micro Frontends" icon="seti:folder">
+			Hosted feature contexts, islands, and the boundaries between them.
+		</Card>
+	</a>
+	<a class="concept-card" href="/concepts/security/">
+		<Card title="Security" icon="seti:lock">
+			Trust boundaries and the defense layers that protect an application.
+		</Card>
+	</a>
+	<a class="concept-card" href="/concepts/annotation-and-transformer-model/">
+		<Card title="Annotation, Advice & Transformer" icon="puzzle">
+			Declarations that describe a member, advice that runs around a call,
+			and definition-time replacement.
+		</Card>
+	</a>
+	<a class="concept-card" href="/concepts/agent-first/">
+		<Card title="Agent-First" icon="rocket">
+			Authoring and runtime agents, capabilities as the installable unit,
+			and verification as the executable contract.
+		</Card>
+	</a>
+	<a class="concept-card" href="/concepts/style-guide/">
+		<Card title="Style Guide" icon="pencil">
+			Naming, formatting, and code organization conventions.
+		</Card>
+	</a>
 </CardGrid>

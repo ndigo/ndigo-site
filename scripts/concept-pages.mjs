@@ -40,8 +40,8 @@ export const CONCEPT_PAGES = [
     {
         src: 'docs/architecture/annotation-and-transformer-model.md',
         dest: 'annotation-and-transformer-model.md',
-        title: 'Annotation, Advice & Member Transformer',
-        description: 'The declaration and execution model: annotations, advice, member transformers, and the decorator inventory by mechanism.',
+        title: 'Annotation, Advice & Transformer',
+        description: 'Declarations that describe a member, advice that runs around a call, and definition-time replacement.',
     },
     {
         src: 'docs/architecture/agent-first.md',

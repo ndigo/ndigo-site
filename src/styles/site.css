@@ -229,6 +229,23 @@ html[data-has-hero] .hero h1#_top {
     gap: var(--nd-space-3);
 }
 
+/* Starlight's Card no longer accepts an href, so the Concepts map wraps each
+   tile in a link. The anchor is the grid item; the card fills it. */
+.concept-card {
+    display: block;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+
+.concept-card .card {
+    height: 100%;
+}
+
+.concept-card:hover .card {
+    border-color: var(--site-color-border-strong);
+}
+
 /* Starlight's Card picks a different hue per child; one quiet icon treatment
    is calmer and keeps the palette to indigo and teal. */
 .card .icon {
