@@ -81,7 +81,7 @@ function rewriteLinks(text) {
         // the repo, not for visitors (decision docs are not published).
         [/\.\/docs\/decisions\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/docs/decisions/README.md'],
         [/docs\/decisions\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/docs/decisions/README.md'],
-        [/docs\/guides\/README\.md/g, '/guides/00-core-concepts/'],
+        [/(?:\.\/)?docs\/guides\/README\.md/g, '/guides/00-core-concepts/'],
         [/src\/oxlint\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/src/oxlint/README.md'],
         [/tools\/generators\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/tools/generators/README.md'],
     ];
@@ -100,6 +100,16 @@ function rewriteLinks(text) {
     text = text.replace(/\]\((?:\.\.\/)*(?:\.\/)?(?:docs\/)?architecture\/([a-z0-9-]+)\.md(#[^)]*)?\)/g, (m, name, hash) => {
         return `](/concepts/${name}/${hash || ''})`;
     });
+    // Sibling concept pages are flattened too: ./design-principles.md →
+    // /concepts/design-principles/. Match only registered concept destinations
+    // so unrelated relative links are left alone.
+    for (const page of CONCEPT_PAGES) {
+        const dest = page.dest.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const base = page.dest.replace(/\.md$/, '');
+        text = text.replace(new RegExp(`\\]\\(\\./${dest}(#[^)]*)?\\)`, 'g'), (m, hash) => {
+            return `](/concepts/${base}/${hash || ''})`;
+        });
+    }
     // Rewrite ./docs/README.md
     text = text.replace(/\]\((\.\/)?docs\/README\.md\)/g, '](/reference/contributing/)');
     // Rewrite any remaining docs/...md links to GitHub
