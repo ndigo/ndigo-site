@@ -276,6 +276,14 @@ html[data-has-hero] .hero h1#_top {
     color: var(--site-color-link);
 }
 
+.guide-number {
+    display: inline-block;
+    min-inline-size: 2ch;
+    margin-inline-end: 0.15rem;
+    color: var(--site-color-text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
 .guide-sections {
     display: grid;
     gap: var(--nd-space-3);

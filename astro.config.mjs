@@ -4,6 +4,7 @@ import starlight from '@astrojs/starlight';
 import mermaid from 'astro-mermaid';
 import starlightLinksValidator from 'starlight-links-validator';
 import { CONCEPT_PAGES } from './scripts/concept-pages.mjs';
+import { GUIDE_GROUPS, guideLabel } from './scripts/guide-groups.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -84,7 +85,17 @@ export default defineConfig({
                 {
                     label: 'Guides',
                     collapsed: true,
-                    items: [{ autogenerate: { directory: 'guides' } }],
+                    items: [
+                        { label: 'All Guides', link: '/guides/' },
+                        ...GUIDE_GROUPS.map((group) => ({
+                            label: group.label,
+                            collapsed: true,
+                            items: group.guides.map((guide) => ({
+                                label: guideLabel(guide),
+                                link: `/guides/${guide.slug}/`,
+                            })),
+                        })),
+                    ],
                 },
                 {
                     label: 'Concepts',

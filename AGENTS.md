@@ -63,6 +63,11 @@ Concepts is a flat section. Its page list, titles, and descriptions live in
 `scripts/concept-pages.mjs` (`CONCEPT_PAGES`), shared by the content sync and
 the sidebar config; add or reorder pages there.
 
+Guides are grouped for navigation in `scripts/guide-groups.mjs`
+(`GUIDE_GROUPS`), shared by the All Guides index and the Guides sidebar; add or
+reorder guides there. `npm run check:guide-groups` fails when a synced guide is
+missing from the groups, or a group entry has no page.
+
 ## Content rules
 
 - No `AD-##` IDs, `P0`/`D6` phase tags, `SEC-*` IDs, commit hashes, or links
