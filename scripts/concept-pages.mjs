@@ -11,7 +11,19 @@ export const CONCEPT_PAGES = [
         src: 'ARCHITECTURE.md',
         dest: 'architecture-overview.md',
         title: 'Architecture Overview',
-        description: 'Layers, principles, package map, and design patterns.',
+        description: 'Philosophy, the eight layers, core building blocks, and the application lifecycle.',
+    },
+    {
+        src: 'docs/architecture/design-principles.md',
+        dest: 'design-principles.md',
+        title: 'Design Principles',
+        description: 'SOLID, DRY/AHA, design patterns, and the shared contract vocabulary.',
+    },
+    {
+        src: 'docs/architecture/decorators.md',
+        dest: 'decorators.md',
+        title: 'Decorators',
+        description: 'The decorator catalog, metadata, performance, and custom decorators.',
     },
     {
         src: 'docs/architecture/environment.md',
