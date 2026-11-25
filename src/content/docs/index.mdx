@@ -17,13 +17,9 @@ hero:
       variant: minimal
 ---
 
-<div class="nd-alert" data-variant="warning" role="status">
-  <span class="nd-alert__icon" aria-hidden="true">!</span>
-  <div class="nd-alert__content">
-    <p class="nd-alert__title">Pre-release</p>
-    <p class="nd-alert__description">Ndigo is in pre-release and still subject to changes. APIs may change between commits; Semantic Versioning guarantees arrive at <code>1.0.0</code>.</p>
-  </div>
-</div>
+import PreReleaseAlert from '../../components/PreReleaseAlert.astro';
+
+<PreReleaseAlert />
 
 ## What is Ndigo?
 

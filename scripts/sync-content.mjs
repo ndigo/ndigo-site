@@ -19,6 +19,7 @@ import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync, rmSync }
 import { join, basename, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CONCEPT_PAGES } from './concept-pages.mjs';
+import { renderPreReleaseAlert } from '../src/components/pre-release-alert.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const REPO = process.env.NDIGO_REPO || join(ROOT, '..', 'ndigo');
@@ -135,11 +136,27 @@ function rewriteLinks(text) {
     return text;
 }
 
+/**
+ * The framework keeps its Status note as a plain blockquote for GitHub readers.
+ * The site renders the canonical pre-release alert instead.
+ */
+function transformPreReleaseNote(text) {
+    if (!text.includes('**Status:** Ndigo is pre-1.0.')) return text;
+    const transformed = text.replace(
+        /> \*\*Status:\*\* Ndigo is pre-1\.0\.[\s\S]*?`1\.0\.0`\./,
+        renderPreReleaseAlert(),
+    );
+    if (transformed === text) {
+        console.warn('  pre-release Status note found but not transformed');
+    }
+    return transformed;
+}
+
 function copyMd(srcFile, destFile, extra = {}, titleOverride = '') {
     ensureDir(join(destFile, '..'));
     const raw = readFileSync(srcFile, 'utf8');
     const fallback = basename(srcFile, extname(srcFile));
-    const rewritten = rewriteLinks(raw);
+    const rewritten = rewriteLinks(transformPreReleaseNote(raw));
     writeFileSync(destFile, injectFrontmatter(rewritten, fallback, extra, titleOverride), 'utf8');
 }
 
