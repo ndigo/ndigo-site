@@ -8,8 +8,8 @@ sidebar:
 
 import { GUIDE_GROUPS } from '../../../../scripts/guide-groups.mjs';
 
-The guide numbers are stable identifiers, not a reading order. Start with
-[Core Concepts & Mental Model](/guides/00-core-concepts/) if the package names
+Guides are grouped by the job you are doing. Start with
+[Core Concepts & Mental Model](/guides/core-concepts/) if the package names
 are new, or jump to the group that matches what you are building.
 
 <div class="guide-sections">
@@ -21,7 +21,6 @@ are new, or jump to the group that matches what you are building.
                 {group.guides.map((guide) => (
                     <li key={guide.slug}>
                         <a href={`/guides/${guide.slug}/`}>
-                            <span class="guide-number">{guide.number}</span>{' '}
                             {guide.title}
                         </a>
                     </li>
