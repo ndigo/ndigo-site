@@ -190,28 +190,6 @@ html[data-has-hero] .hero h1#_top {
     margin-block-end: var(--nd-space-2);
 }
 
-/* Guide number eyebrow: the one warm accent in Phase 1, with a short rule
-   that gives guide pages an editorial marker. */
-.guide-label {
-    margin: 0 0 var(--nd-space-1);
-    font-family: var(--nd-font-sans);
-    font-size: var(--nd-text-xs);
-    font-weight: var(--nd-weight-semibold);
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--site-color-warm);
-}
-
-.guide-label::after {
-    content: '';
-    display: block;
-    width: 2.25rem;
-    height: 2px;
-    margin-block-start: 0.55rem;
-    background: currentColor;
-    opacity: 0.5;
-}
-
 /* ==========================================================================
    Surfaces and elevation
    ========================================================================== */
@@ -276,13 +254,6 @@ html[data-has-hero] .hero h1#_top {
     color: var(--site-color-link);
 }
 
-.guide-number {
-    display: inline-block;
-    min-inline-size: 2ch;
-    margin-inline-end: 0.15rem;
-    color: var(--site-color-text-muted);
-    font-variant-numeric: tabular-nums;
-}
 
 .guide-sections {
     display: grid;
