@@ -11,6 +11,7 @@ src/content/docs/concepts/*.md
 src/content/docs/concepts/architecture/*.md
 src/content/docs/reference/changelog.md
 src/content/docs/reference/contributing.md
+src/content/docs/reference/contributing/*.md
 
 # generated UI registry channel and catalogue (npm run sync:registry)
 public/r/

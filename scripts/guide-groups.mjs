@@ -15,5 +15,8 @@ const manifest = JSON.parse(readFileSync(MANIFEST, 'utf8'));
 
 export const GUIDE_GROUPS = manifest.groups;
 
+/** Contributor standards published under Reference → Contributing. */
+export const CONTRIBUTING_DOCS = manifest.contributing ?? [];
+
 /** Every guide in navigation order, flattened across the groups. */
 export const GUIDES = GUIDE_GROUPS.flatMap((group) => group.guides);
