@@ -12,7 +12,8 @@ site-specific traps.
 
 ```bash
 npm ci                  # after package-lock.json changes
-npm run sync            # pull docs + UI registry from ../ndigo
+npm run sync            # pull docs, UI registry, and standalone READMEs
+npm run sync:external   # only ../create-ndigo-app + ../ndigo-skills
 npm run check:concepts  # guard generated Concepts content
 npm run build           # sync + check + astro build
 npm run preview         # Astro 7 preview daemon
@@ -26,6 +27,13 @@ NDIGO_REPO=/home/jeff/Workspace/ndigo-<issue>-<slug> npm run sync
 NDIGO_REPO=/home/jeff/Workspace/ndigo-<issue>-<slug> npm run build
 ```
 
+The standalone sources default to sibling checkouts. Override them the same way:
+
+```bash
+CREATE_NDIGO_APP_REPO=/path/to/create-ndigo-app \
+NDIGO_SKILLS_REPO=/path/to/ndigo-skills npm run sync:external
+```
+
 ## Generated content — never edit these
 
 `npm run sync` overwrites them:
@@ -34,6 +42,7 @@ NDIGO_REPO=/home/jeff/Workspace/ndigo-<issue>-<slug> npm run build
 - `src/content/docs/concepts/*.md`
 - `src/content/docs/reference/changelog.md` and `contributing.md`
 - `src/content/docs/reference/packages.mdx`
+- `src/content/docs/reference/scaffolding.md` and `skills.md`
 - `src/content/docs/examples.mdx`
 - `src/content/docs/ui/index.md` and `src/content/docs/ui/<item>.md`
 - `public/r/`
@@ -55,7 +64,9 @@ Hand-authored pages are `src/content/docs/index.mdx`, `get-started.mdx`,
 | `guides/NN-*.md` | `docs/guides/NN-*.md` |
 | `reference/changelog.md` | `CHANGELOG.md` |
 | `reference/contributing.md` | `CONTRIBUTING.md` |
-| `reference/packages.mdx` | `packages/*/package.json` |
+| `reference/packages.mdx` | `packages/*/package.json` + standalone repo manifests |
+| `reference/scaffolding.md` | `../create-ndigo-app/README.md` |
+| `reference/skills.md` | `../ndigo-skills/README.md` + `*/SKILL.md` |
 | `examples.mdx` | `apps/*/README.md` |
 | `ui/*.md`, `public/r/` | `packages/ndigo-ui/registry.json` |
 
@@ -85,12 +96,15 @@ missing from the groups, or a group entry has no page.
 
 ## Deployment
 
-- GitHub Actions (`.github/workflows/deploy.yml`) checks out both `ndigo-site`
-  and the private `ndigo`, builds, runs `check:concepts`, and uploads `dist`
-  with `wrangler pages deploy`.
+- GitHub Actions (`.github/workflows/deploy.yml`) checks out `ndigo-site`,
+  `ndigo`, `create-ndigo-app`, and `ndigo-skills`, builds, runs
+  `check:concepts`, and uploads `dist` with `wrangler pages deploy`.
 - The Cloudflare Pages project is **`ndigo-site`**, Direct Upload. Do not
   enable Cloudflare's Git integration: its build only clones `ndigo-site`, so
-  `sync-content` fails on the missing `../ndigo`.
+  `sync-content` and `sync-external` fail on the missing sibling checkouts.
+- The standalone repos are public and need no token; `NDIGO_REPO_TOKEN` is for
+  the framework repo. Paths are passed through `NDIGO_REPO`,
+  `CREATE_NDIGO_APP_REPO`, and `NDIGO_SKILLS_REPO`.
 - Required repo secrets: `NDIGO_REPO_TOKEN`, `CLOUDFLARE_API_TOKEN`,
   `CLOUDFLARE_ACCOUNT_ID`.
 - `wrangler.toml` is Pages-only (`pages_build_output_dir`). Switching to a

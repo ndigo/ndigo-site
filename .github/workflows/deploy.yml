@@ -14,6 +14,8 @@ jobs:
       deployments: write
     env:
       NDIGO_REPO: ${{ github.workspace }}/ndigo
+      CREATE_NDIGO_APP_REPO: ${{ github.workspace }}/create-ndigo-app
+      NDIGO_SKILLS_REPO: ${{ github.workspace }}/ndigo-skills
     steps:
       - name: Checkout site
         uses: actions/checkout@v4
@@ -26,6 +28,20 @@ jobs:
           repository: ndigo/ndigo
           path: ndigo
           token: ${{ secrets.NDIGO_REPO_TOKEN }}
+
+      # The standalone repositories are public, so the default token can read
+      # them. The sync scripts take their paths from the env block above.
+      - name: Checkout scaffolder (source for the Scaffolding page)
+        uses: actions/checkout@v4
+        with:
+          repository: ndigo/create-ndigo-app
+          path: create-ndigo-app
+
+      - name: Checkout skills (source for the Agent Skills page)
+        uses: actions/checkout@v4
+        with:
+          repository: ndigo/ndigo-skills
+          path: ndigo-skills
 
       - name: Setup Node
         uses: actions/setup-node@v4

@@ -205,7 +205,7 @@ const LAYERS = [
     { name: 'Cross-cutting', dirs: ['ndigo-log', 'ndigo-telemetry', 'ndigo-telemetry-node', 'ndigo-telemetry-web', 'ndigo-management', 'ndigo-proxy', 'ndigo-resilience', 'ndigo-flags', 'ndigo-flags-openfeature', 'ndigo-content', 'ndigo-content-i18next', 'ndigo-mcp', 'ndigo-inspect'] },
     { name: 'Browser', dirs: ['ndigo-signals', 'ndigo-host', 'ndigo-dom'] },
     { name: 'UI', dirs: ['ndigo-ui', 'ndigo-ui-web'] },
-    { name: 'Tooling', dirs: ['ndigo-cli', 'ndigo-oxlint-plugin', 'create-ndigo-app', 'ndigo-test', 'ndigo-ai', 'ndigo-ai-sdk'] },
+    { name: 'Tooling', dirs: ['ndigo-cli', 'ndigo-oxlint-plugin', 'ndigo-test', 'ndigo-ai', 'ndigo-ai-sdk'] },
 ];
 
 // Generate index.

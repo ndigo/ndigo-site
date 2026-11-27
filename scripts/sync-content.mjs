@@ -19,6 +19,7 @@ import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync, rmSync, 
 import { join, basename, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CONCEPT_PAGES } from './concept-pages.mjs';
+import { EXTERNAL_REPOS, packageMeta } from './external-repos.mjs';
 import { renderPreReleaseAlert } from '../src/components/pre-release-alert.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -283,6 +284,17 @@ function syncPackages() {
         const escPkg = (v) => v.replace(/"/g, '&quot;');
         cards.push(`\t<LinkCard title="${escPkg(meta.name)}" href="https://github.com/ndigo/ndigo/tree/main/packages/${dir}" description="${escPkg(short)}" />`);
     }
+    const externalCards = EXTERNAL_REPOS.flatMap((repo) => {
+        if (!existsSync(join(repo.dir, 'package.json'))) {
+            console.warn(`  skipped external package card: ${repo.dir} not found`);
+            return [];
+        }
+        const meta = packageMeta(repo);
+        const desc = meta.description.replace(/\s+/g, ' ').trim();
+        const short = desc.length > 140 ? desc.slice(0, 137) + '...' : desc;
+        const escPkg = (v) => v.replace(/"/g, '&quot;');
+        return [`\t<LinkCard title="${escPkg(meta.name)}" href="${repo.repo}" description="${escPkg(short)}" />`];
+    });
     const body = [
         '---',
         'title: Packages',
@@ -291,11 +303,26 @@ function syncPackages() {
         '',
         "import { LinkCard, CardGrid } from '@astrojs/starlight/components';",
         '',
-        'Ndigo is a monorepo of focused packages. Add only what your app needs.',
+        'Ndigo is a monorepo of focused packages, plus standalone tools that live',
+        'in their own repositories. Add only what your app needs.',
         '',
         '<CardGrid>',
         cards.join('\n'),
         '</CardGrid>',
+        ...(externalCards.length > 0
+            ? [
+                  '',
+                  '## Standalone tools',
+                  '',
+                  'These repositories ship on their own cadence and are not published',
+                  'from the framework monorepo. See [Scaffolding](/reference/scaffolding/)',
+                  'and [Agent Skills](/reference/skills/) for their site pages.',
+                  '',
+                  '<CardGrid>',
+                  externalCards.join('\n'),
+                  '</CardGrid>',
+              ]
+            : []),
         '',
         '> Generated API reference (TypeDoc) is published per package under',
         '> `packages/<name>/api/` in the framework repo.',

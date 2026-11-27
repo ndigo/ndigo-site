@@ -124,6 +124,8 @@ export default defineConfig({
                     items: [
                         { label: 'API', link: '/reference/api/' },
                         { label: 'Packages', link: '/reference/packages/' },
+                        { label: 'Scaffolding', link: '/reference/scaffolding/' },
+                        { label: 'Agent Skills', link: '/reference/skills/' },
                         { label: 'Changelog', link: '/reference/changelog/' },
                         {
                             label: 'Contributing',
