@@ -5,6 +5,7 @@ import mermaid from 'astro-mermaid';
 import starlightLinksValidator from 'starlight-links-validator';
 import { CONCEPT_PAGES } from './scripts/concept-pages.mjs';
 import { GUIDE_GROUPS, CONTRIBUTING_DOCS } from './scripts/guide-groups.mjs';
+import { UI_SIDEBAR } from './src/data/ui-sidebar.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -116,7 +117,7 @@ export default defineConfig({
                 {
                     label: 'UI',
                     collapsed: true,
-                    items: [{ autogenerate: { directory: 'ui' } }],
+                    items: UI_SIDEBAR,
                 },
                 {
                     label: 'Reference',

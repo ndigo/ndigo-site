@@ -1,5 +1,5 @@
-# build output
-dist/
+# generated UI sidebar (npm run sync:registry)
+src/data/ui-sidebar.mjs
 # generated types
 .astro/
 
