@@ -22,17 +22,17 @@ const nav = [
 <div class="header">
 	<div class="title-wrapper sl-flex"><SiteTitle /></div>
 	<div class="sl-flex print:hidden">{shouldRenderSearch && <Search />}</div>
-	<nav class="site-nav sl-hidden md:sl-flex print:hidden" aria-label="Primary">
-		{nav.map((item) => (
-			<a
-				href={item.href}
-				aria-current={path.startsWith(item.match) ? 'page' : undefined}
-			>
-				{item.label}
-			</a>
-		))}
-	</nav>
 	<div class="sl-hidden md:sl-flex print:hidden right-group">
+		<nav class="site-nav sl-flex" aria-label="Primary">
+			{nav.map((item) => (
+				<a
+					href={item.href}
+					aria-current={path.startsWith(item.match) ? 'page' : undefined}
+				>
+					{item.label}
+				</a>
+			))}
+		</nav>
 		<div class="sl-flex social-icons"><SocialIcons /></div>
 		<ThemeSelect />
 		<LanguageSelect />
@@ -77,6 +77,7 @@ const nav = [
 			color: var(--sl-color-text);
 			text-decoration: none;
 			font-size: var(--sl-text-sm);
+			white-space: nowrap;
 		}
 		.site-nav a:hover,
 		.site-nav a:focus-visible {
