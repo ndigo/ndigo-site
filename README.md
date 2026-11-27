@@ -22,7 +22,8 @@ framework for the web.
 ```bash
 npm install          # install deps
 npm run dev          # local dev server
-npm run sync         # pull docs and the UI registry from the ndigo monorepo (../ndigo)
+npm run sync         # pull docs, registry, and standalone READMEs
+npm run sync:external # pull ../create-ndigo-app + ../ndigo-skills only
 npm run check:concepts # guard generated Concepts pages against internal refs
 npm run build        # sync + check + build static site -> dist/
 npm run preview      # preview the built site
@@ -34,6 +35,11 @@ Documentation source of truth lives in the `ndigo` monorepo (`docs/`,
 `ARCHITECTURE.md`, `STYLE_GUIDE.md`, `CHANGELOG.md`). `npm run sync` (also runs
 as part of `npm run build`) copies and normalizes that content into
 `src/content/docs/` (gitignored).
+
+Two extracted repositories are synced the same way: `../create-ndigo-app`
+supplies `/reference/scaffolding/`, and `../ndigo-skills` supplies
+`/reference/skills/`. Those pages are generated from their READMEs and skill
+frontmatter; `npm run sync:external` refreshes just those pages.
 
 Concepts is a flat section: `ARCHITECTURE.md` becomes Architecture Overview,
 `STYLE_GUIDE.md` becomes Style Guide, and each `docs/architecture/*.md` page
@@ -47,6 +53,7 @@ a link to the private framework repo leaks into the generated pages.
 stays in the ndigo repo.
 
 Override the source repo path with `NDIGO_REPO=/path/to/ndigo npm run sync`.
+Standalone sources use `CREATE_NDIGO_APP_REPO` and `NDIGO_SKILLS_REPO`.
 For local channel testing, set `NDIGO_REGISTRY_BASE=http://127.0.0.1:4321/r`
 before `npm run sync:registry` so item dependencies resolve against the local
 preview server.
