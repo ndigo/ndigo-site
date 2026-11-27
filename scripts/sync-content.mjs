@@ -54,8 +54,8 @@ function rewriteLinks(text) {
         // Repo-root documents.
         [/\.\.\/\.\.\/ARCHITECTURE\.md/g, '/concepts/architecture-overview/'],
         [/\.\.\/ARCHITECTURE\.md/g, '/concepts/architecture-overview/'],
-        [/\.\.\/\.\.\/STYLE_GUIDE\.md/g, '/concepts/style-guide/'],
-        [/\.\.\/STYLE_GUIDE\.md/g, '/concepts/style-guide/'],
+        [/\.\.\/\.\.\/STYLE_GUIDE\.md/g, '/reference/contributing/style-guide/'],
+        [/\.\.\/STYLE_GUIDE\.md/g, '/reference/contributing/style-guide/'],
         [/\.\.\/\.\.\/CONTRIBUTING\.md/g, '/reference/contributing/'],
         [/\.\.\/CONTRIBUTING\.md/g, '/reference/contributing/'],
         [/\.\.\/\.\.\/CHANGELOG\.md/g, '/reference/changelog/'],
@@ -66,8 +66,13 @@ function rewriteLinks(text) {
         [/\.\.\/BENCHMARKS\.md/g, 'https://github.com/ndigo/ndigo/blob/main/BENCHMARKS.md'],
         [/\]\(BENCHMARKS\.md(#[^)]*)?\)/g, '](https://github.com/ndigo/ndigo/blob/main/BENCHMARKS.md$1)'],
         [/\.\/ARCHITECTURE\.md/g, '/concepts/architecture-overview/'],
-        [/\.\/STYLE_GUIDE\.md/g, '/concepts/style-guide/'],
+        [/\.\/STYLE_GUIDE\.md/g, '/reference/contributing/style-guide/'],
         [/\.\/CONTRIBUTING\.md/g, '/reference/contributing/'],
+        // Contributor standards: sibling links and docs/guides/ paths.
+        [/\]\((?:\.\.\/)*(?:\.\/)?(?:docs\/)?guides\/package-documentation\.md(#[^)]*)?\)/g, '](/reference/contributing/package-documentation/$1)'],
+        [/\]\((?:\.\.\/)*(?:\.\/)?(?:docs\/)?guides\/application-conventions\.md(#[^)]*)?\)/g, '](/reference/contributing/application-conventions/$1)'],
+        [/\]\((?:\.\/)?package-documentation\.md(#[^)]*)?\)/g, '](/reference/contributing/package-documentation/$1)'],
+        [/\]\((?:\.\/)?application-conventions\.md(#[^)]*)?\)/g, '](/reference/contributing/application-conventions/$1)'],
         [/\.\/CHANGELOG\.md/g, '/reference/changelog/'],
         [/\.\/API\.md/g, 'https://github.com/ndigo/ndigo/blob/main/API.md'],
         [/\.\/README\.md/g, '/'],
@@ -75,7 +80,7 @@ function rewriteLinks(text) {
         // the repo, not for visitors (decision docs are not published).
         [/\.\/docs\/decisions\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/docs/decisions/README.md'],
         [/docs\/decisions\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/docs/decisions/README.md'],
-        [/(?:\.\/)?docs\/guides\/README\.md/g, '/guides/core-concepts/'],
+        [/(?:\.\/)?docs\/guides\/README\.md/g, '/guides/'],
         [/src\/oxlint\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/src/oxlint/README.md'],
         [/tools\/generators\/README\.md/g, 'https://github.com/ndigo/ndigo/blob/main/tools/generators/README.md'],
     ];
@@ -206,13 +211,42 @@ function syncReferenceTopLevel() {
     const pairs = [
         ['CHANGELOG.md', join(DOCS, 'reference', 'changelog.md')],
         ['CONTRIBUTING.md', join(DOCS, 'reference', 'contributing.md')],
+        ['STYLE_GUIDE.md', join(DOCS, 'reference', 'contributing', 'style-guide.md')],
     ];
     for (const [name, dest] of pairs) {
         try {
-            if (statSync(join(REPO, name)).isFile()) copyMd(join(REPO, name), dest);
-        } catch { /* skip missing */ }
+            if (statSync(join(REPO, name)).isFile()) {
+                ensureDir(join(dest, '..'));
+                copyMd(join(REPO, name), dest);
+            }
+        } catch (e) { console.error('  ERROR copying', name, ':', e.message); }
     }
     console.log('  synced reference docs');
+}
+
+function syncContributing() {
+    const destDir = join(DOCS, 'reference', 'contributing');
+    ensureDir(destDir);
+    // Remove previously synced contributing docs (keep the hand-authored
+    // contributing.md index and the Style Guide, which is synced above).
+    try {
+        const manifest = JSON.parse(readFileSync(join(REPO, 'docs', 'guides', 'guides.json'), 'utf8'));
+        const docs = manifest.contributing ?? [];
+        const slugs = new Set(docs.map((d) => `${d.slug}.md`));
+        for (const f of readdirSync(destDir)) {
+            if (f.endsWith('.md') && f !== 'contributing.md' && f !== 'style-guide.md' && slugs.has(f)) {
+                rmSync(join(destDir, f), { force: true });
+            }
+        }
+        for (const doc of docs) {
+            const srcPath = join(REPO, 'docs', 'guides', `${doc.slug}.md`);
+            if (!existsSync(srcPath)) continue;
+            copyMd(srcPath, join(destDir, `${doc.slug}.md`), {}, doc.title);
+        }
+        console.log('  synced contributing docs');
+    } catch (e) {
+        console.warn('  skipped contributing docs:', e.message);
+    }
 }
 
 function syncTokens() {
@@ -331,10 +365,12 @@ try { rmSync(join(DOCS, 'synced'), { recursive: true, force: true }); } catch {}
 ensureDir(join(DOCS, 'guides'));
 ensureDir(join(DOCS, 'concepts'));
 ensureDir(join(DOCS, 'reference'));
+ensureDir(join(DOCS, 'reference', 'contributing'));
 
 syncGuides();
 syncConcepts();
 syncReferenceTopLevel();
+syncContributing();
 syncTokens();
 syncPackages();
 syncExamples();

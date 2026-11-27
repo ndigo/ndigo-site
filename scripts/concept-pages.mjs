@@ -62,9 +62,9 @@ export const CONCEPT_PAGES = [
         description: 'Authoring and runtime agents, capabilities as the installable unit, and verification as the executable contract.',
     },
     {
-        src: 'STYLE_GUIDE.md',
-        dest: 'style-guide.md',
-        title: 'Style Guide',
-        description: 'Naming, formatting, and code organization conventions.',
+        src: 'docs/architecture/conventions-and-idioms.md',
+        dest: 'conventions-and-idioms.md',
+        title: 'Conventions & Idioms',
+        description: 'The durable idioms: the five nouns, naming that carries meaning, module boundaries, errors, and documentation habits.',
     },
 ];

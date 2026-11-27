@@ -4,7 +4,7 @@ import starlight from '@astrojs/starlight';
 import mermaid from 'astro-mermaid';
 import starlightLinksValidator from 'starlight-links-validator';
 import { CONCEPT_PAGES } from './scripts/concept-pages.mjs';
-import { GUIDE_GROUPS } from './scripts/guide-groups.mjs';
+import { GUIDE_GROUPS, CONTRIBUTING_DOCS } from './scripts/guide-groups.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,6 +16,9 @@ export default defineConfig({
         '/concepts/architecture/micro-frontends': '/concepts/micro-frontends',
         '/concepts/architecture/security': '/concepts/security',
         '/concepts/architecture/agent-first': '/concepts/agent-first',
+        '/concepts/style-guide/': '/reference/contributing/style-guide/',
+        '/guides/package-documentation/': '/reference/contributing/package-documentation/',
+        '/guides/application-conventions/': '/reference/contributing/application-conventions/',
     },
     integrations: [
         mermaid({ autoTheme: true }),
@@ -118,7 +121,18 @@ export default defineConfig({
                         { label: 'API', link: '/reference/api/' },
                         { label: 'Packages', link: '/reference/packages/' },
                         { label: 'Changelog', link: '/reference/changelog/' },
-                        { label: 'Contributing to Ndigo', link: '/reference/contributing/' },
+                        {
+                            label: 'Contributing',
+                            collapsed: false,
+                            items: [
+                                { label: 'Contributing to Ndigo', link: '/reference/contributing/' },
+                                { label: 'Style Guide', link: '/reference/contributing/style-guide/' },
+                                ...CONTRIBUTING_DOCS.map((doc) => ({
+                                    label: doc.title,
+                                    link: `/reference/contributing/${doc.slug}/`,
+                                })),
+                            ],
+                        },
                     ],
                 },
             ],
