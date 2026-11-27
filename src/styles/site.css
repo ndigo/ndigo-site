@@ -585,7 +585,6 @@ header.header {
 /* The mobile menu toggle is an affordance, not a primary action; keep it in
    the surface palette instead of Starlight's solid white circle. */
 .sl-menu-button {
-    display: flex;
     align-items: center;
     justify-content: center;
     background-color: var(--site-color-surface-raised);
