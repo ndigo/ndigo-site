@@ -335,7 +335,27 @@ function syncExamples() {
                 if (idx >= 0 && lines[idx + 1]) desc = lines[idx + 1];
             }
         } catch { /* skip */ }
-        const short = desc.length > 140 ? desc.slice(0, 137) + '...' : desc;
+        // Strip Markdown (links, backticks, emphasis) so it does not leak
+        // into the card description attribute.
+        desc = desc
+            .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+            .replace(/`([^`]+)`/g, '$1')
+            .replace(/\*{1,3}([^*]+)\*{1,3}/g, '$1')
+            .replace(/_{1,3}([^_]+)_{1,3}/g, '$1')
+            .replace(/\s+/g, ' ')
+            .trim();
+        // Truncate at a sentence or word boundary, never mid-word.
+        if (desc.length > 140) {
+            const sentence = desc.match(/^(.{20,140}?[.!?])(?:\s|$)/);
+            if (sentence) {
+                desc = sentence[1];
+            } else {
+                const cut = desc.slice(0, 137);
+                const lastSpace = cut.lastIndexOf(' ');
+                desc = (lastSpace > 40 ? cut.slice(0, lastSpace) : cut).trim() + '…';
+            }
+        }
+        const short = desc;
         const esc = (v) => v.replace(/"/g, '&quot;');
         cards.push(`\t<LinkCard title="${esc(title)}" href="https://github.com/ndigo/ndigo/tree/main/apps/${dir}" description="${esc(short)}" />`);
     }
@@ -347,8 +367,10 @@ function syncExamples() {
         '',
         "import { LinkCard, CardGrid } from '@astrojs/starlight/components';",
         '',
-        'The `apps/` directory in the framework repo contains runnable demos covering',
-        'every major feature. Use them as starting templates.',
+        'These are runnable reference implementations, not tutorials. Start with',
+        '[Get Started](/get-started/) if you are new, or read',
+        '[Core Concepts & Mental Model](/guides/core-concepts/) for the model;',
+        'then open the app that matches what you are building.',
         '',
         '<CardGrid>',
         cards.join('\n'),
