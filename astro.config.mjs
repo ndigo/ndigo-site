@@ -34,6 +34,9 @@ export default defineConfig({
                 alt: 'Ndigo',
                 replacesTitle: true,
             },
+            components: {
+                Header: './src/components/Header.astro',
+            },
             social: [
                 { icon: 'github', label: 'GitHub', href: 'https://github.com/ndigo/ndigo' },
             ],

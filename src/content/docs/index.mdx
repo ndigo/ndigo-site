@@ -1,8 +1,9 @@
 ---
-title: Ndigo
+title: TypeScript framework for the web
 description: TypeScript framework for the web. One context, one dispatcher, one view model — shared by browser and Node.
 template: splash
 hero:
+  title: Ndigo
   tagline: One context, one dispatcher, one view model — shared by browser and Node. Server-rendered islands, micro frontends, SPAs, and APIs on the same primitives.
   image:
     file: ../../assets/ndigo.svg
@@ -31,7 +32,7 @@ Views, HTTP, ORM, auth, and telemetry are adopted only when needed — you pay f
     <span class="bento__title">One context</span>
     <span class="bento__text">A single <code>ApplicationContext</code> powers dependency injection in Node and the browser — one mental model for both runtimes.</span>
     <span class="bento__snippet">
-      <span>const ctx = app.context;</span>
+      <span>const ctx = app.context;</span>{' '}
       <span>const clock = ctx.getValue(CLOCK);</span>
     </span>
   </a>
@@ -48,10 +49,10 @@ Views, HTTP, ORM, auth, and telemetry are adopted only when needed — you pay f
     <span class="bento__title">Adopt incrementally</span>
     <span class="bento__text">Start with routing and context; add the rest only when your app needs it.</span>
     <span class="bento__chips">
-      <span class="bento__chip">@ndigo/http</span>
-      <span class="bento__chip">@ndigo/orm</span>
-      <span class="bento__chip">@ndigo/auth-server</span>
-      <span class="bento__chip">@ndigo/cache</span>
+      <span class="bento__chip">@ndigo/http</span>{' '}
+      <span class="bento__chip">@ndigo/orm</span>{' '}
+      <span class="bento__chip">@ndigo/auth-server</span>{' '}
+      <span class="bento__chip">@ndigo/cache</span>{' '}
       <span class="bento__chip">@ndigo/jobs</span>
     </span>
   </a>
@@ -60,27 +61,28 @@ Views, HTTP, ORM, auth, and telemetry are adopted only when needed — you pay f
     <span class="bento__title">TypeScript first</span>
     <span class="bento__text">TC39 decorators, strict types, ESM-only. Built for Node ≥ 24.</span>
     <span class="bento__snippet">
-      <span>@entry</span>
+      <span>@entry</span>{' '}
       <span>clock(): Clock</span>
     </span>
   </a>
 
-  <a class="bento__tile" href="/guides/">
+  <div class="bento__tile">
     <span class="bento__title">Docs</span>
-    <span class="bento__text">50+ guides and the concepts map cover the framework end to end.</span>
+    <span class="bento__text">Guides, concepts, the API reference, and the UI catalogue.</span>
     <span class="bento__chips">
-      <span class="bento__chip">Concepts</span>
-      <span class="bento__chip">Guides</span>
-      <span class="bento__chip">Reference</span>
+      <a class="bento__chip" href="/concepts/">Concepts</a>{' '}
+      <a class="bento__chip" href="/guides/">Guides</a>{' '}
+      <a class="bento__chip" href="/reference/packages/">Reference</a>{' '}
+      <a class="bento__chip" href="/ui/">UI</a>
     </span>
-  </a>
+  </div>
 
   <a class="bento__tile" href="/concepts/agent-first/">
     <span class="bento__title">Agent-first</span>
     <span class="bento__text">Built for coding agents: version-matched skills, installable capabilities, and <code>ndigo verify</code> to prove the wiring.</span>
     <span class="bento__snippet">
-      <span>ndigo ai:init</span>
-      <span>ndigo add &lt;capability&gt;</span>
+      <span>ndigo ai:init</span>{' '}
+      <span>ndigo add &lt;capability&gt;</span>{' '}
       <span>ndigo verify</span>
     </span>
   </a>
@@ -89,8 +91,8 @@ Views, HTTP, ORM, auth, and telemetry are adopted only when needed — you pay f
     <span class="bento__title">Quick start</span>
     <span class="bento__text">Scaffold an app, install, and run the dev server.</span>
     <span class="bento__snippet">
-      <span>pnpm create ndigo-app app</span>
-      <span>cd app &amp;&amp; pnpm install</span>
+      <span>pnpm create ndigo-app app</span>{' '}
+      <span>cd app &amp;&amp; pnpm install</span>{' '}
       <span>pnpm dev</span>
     </span>
     <span class="bento__arrow" aria-hidden="true">→</span>
@@ -99,11 +101,17 @@ Views, HTTP, ORM, auth, and telemetry are adopted only when needed — you pay f
 
 ## Where to go next
 
-The docs cover the framework end to end: 50+ guides, the
-[concepts map](/concepts/), the [API reference](/reference/api/), and the
-[UI catalogue](/ui/). Start with
-[Core Concepts & Mental Model](/guides/core-concepts/), or browse
-[all guides](/guides/) by task.
+Choose the path that matches where you are:
+
+- **Build your first app** — [Get Started](/get-started/) walks through
+  scaffolding, installing, and running an app in under five minutes.
+- **Understand the model** — [Core Concepts & Mental Model](/guides/core-concepts/)
+  names the five nouns and shows how a request becomes a rendered view.
+- **Browse the catalogue** — the [UI catalogue](/ui/) and
+  [Reference](/reference/packages/) cover every package and component.
+
+Or jump straight to [all guides](/guides/) grouped by task, the
+[concepts map](/concepts/), or the [example apps](https://github.com/ndigo/ndigo/tree/main/apps).
 
 > **Following along:** the [changelog](/reference/changelog/) tracks what
 > changed, and the [example apps](https://github.com/ndigo/ndigo/tree/main/apps)
