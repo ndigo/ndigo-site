@@ -3,7 +3,7 @@ title: Get Started
 description: Install Ndigo and run your first application in under five minutes.
 ---
 
-import { Steps, Aside } from '@astrojs/starlight/components';
+import { Steps } from '@astrojs/starlight/components';
 
 Ndigo targets **Node.js ≥ 24** and **pnpm ≥ 12**. Make sure both are installed
 before continuing.
@@ -100,8 +100,10 @@ before continuing.
   working patterns (auth, ORM, caching, real-time, and more).
 - Explore the [API reference](/reference/api/) for package-level documentation.
 
-<Aside type="tip">
-  Prefer a specific feature? Ndigo ships focused packages — `@ndigo/orm`,
-  `@ndigo/auth-*`, `@ndigo/cache`, `@ndigo/jobs`, `@ndigo/socket`, and more.
-  Add only what your app needs.
-</Aside>
+<div class="nd-alert" data-variant="info" role="status">
+  <span class="nd-alert__icon" aria-hidden="true">ℹ</span>
+  <div class="nd-alert__content">
+    <p class="nd-alert__title">Tip</p>
+    <p class="nd-alert__description">Prefer a specific feature? Ndigo ships focused packages — <code>@ndigo/orm</code>, <code>@ndigo/auth-*</code>, <code>@ndigo/cache</code>, <code>@ndigo/jobs</code>, <code>@ndigo/socket</code>, and more. Add only what your app needs.</p>
+  </div>
+</div>
